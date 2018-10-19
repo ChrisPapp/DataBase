@@ -1,32 +1,25 @@
+import java.util.*;
 
 public class DatabaseProcessing {
-	//Process data from database
-	private Database data;
-	
-	public DatabaseProcessing(Database data) {
-		this.data = data;	
+	// Process data from database
+
+	public DatabaseProcessing() {
+
 	}
 
-	public Database getData() {
-		return data;
+	public static void removeLine(ArrayList<ArrayList<Object>> lists, int line) {
+		for (int i = 0; i < lists.size(); i++) {
+			lists.get(i).remove(line);
+		}
 	}
 
-	public void setData(Database data) {
-		this.data = data;
+	public static void swap(ArrayList<ArrayList<Object>> lists, int a, int b) {
+		for (int i = 0; i < lists.size(); i++) {
+			Collections.swap(lists.get(i), a, b);
+		}
 	}
-	
-	public void dataInput(Database data) {
-	
-		
-	}
-	
-	public void dataRemove(Database data) {
-		
-		
-	}
-	
-	public void dataChange(Database data) {
-		
-		
+
+	public static void dataChange(ArrayList<ArrayList<Object>> lists) {
+
 	}
 }

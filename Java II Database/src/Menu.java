@@ -7,19 +7,23 @@ public class Menu {
 		this.data = data;
 	}
 
+	
+	public void printMenu() {
+
+		
+		
+		
+	}
+	
+	public void performAction() {
+		
+	}
+
 	public Database getData() {
 		return data;
 	}
-
+	
 	public void setData(Database data) {
 		this.data = data;
 	}
-	
-	public void printAndChoose() {
-
-		
-		
-		
-	}
-
 }
