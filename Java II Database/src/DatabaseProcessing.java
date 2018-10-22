@@ -7,15 +7,17 @@ public class DatabaseProcessing {
 
 	}
 
-	//auto einai swsto nmz
+	//AYTO einai swsto
 	public static void displayData(ArrayList<String> fields, ArrayList<ArrayList<Object>> lists) {
-		for (int i = 0; i < fields.size(); i++) {
-			System.out.printf(" %+15s ", fields.get(i));
+		for (int field = 0; field < fields.size(); field++) {
+			System.out.print(fields.get(field) + " "); //Prota typono onomata pedion
 		}
-		
-		for (int i = 0; i < lists.size(); i++) {
-			for (int j = 0; j < lists.get(i).size(); j++) {
-				System.out.printf(" %+15s ", lists.get(i).get(j));
+		System.out.println();
+		int counter = 0;
+		for (int line = 0; line < lists.get(0).size(); line++) {
+			for (int field = 0; field < lists.size(); field++) {
+				System.out.print(lists.get(field).get(line) + " ");
+				if (++counter % lists.size() == 0) System.out.println(); //kathe lists.size() stoixeia katebainei grammi
 			}
 		}
 	}
