@@ -8,10 +8,7 @@ public class DatabaseProcessing {
 	}
 
 	//AYTO einai swsto
-	public static void displayData(ArrayList<String> fields, ArrayList<ArrayList<Object>> lists) {
-		for (int field = 0; field < fields.size(); field++) {
-			System.out.print(fields.get(field) + " "); //Prota typono onomata pedion
-		}
+	public static void displayData(ArrayList<ArrayList<Object>> lists) {
 		System.out.println();
 		int counter = 0;
 		for (int line = 0; line < lists.get(0).size(); line++) {
@@ -59,6 +56,16 @@ public class DatabaseProcessing {
 			}
 			i++; 
 		} while (boo == true && i < lists.size());
+	}
+	
+	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
+		System.out.println("Which line do you want to remove");
+		Scanner input = new Scanner(System.in);
+		int line = Integer.parseInt(input.nextLine());
+		//input.close();
+		for (int i = 0; i < lists.size(); i++) {
+			lists.get(i).remove(line);
+		}
 	}
 	
 	public static void swapData(ArrayList<ArrayList<Object>> lists, int a, int b) {

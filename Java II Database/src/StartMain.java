@@ -12,7 +12,7 @@ public class StartMain {
 		// gia na tou dwsw timh kai den dexetai
 		// an den katalavainetai aurio apo konta
 		
-		new Database(); 
+		new Menu(new Database());
 	}
 
 }
