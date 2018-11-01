@@ -13,11 +13,12 @@ public class Menu {
 	private void menu() {
 		printMenu();
 		performAction();
-		menu(); //Afou ginei i performAction() ksanakalei to Menu
+		menu(); //After an action is completed, the menu is called again
 
 	}
 
 	public static void printMenu() {
+		System.out.println();
 		System.out.println("   *** DATABASE MENU ***\n");
 		System.out.println("  1. DISPLAY DATA ");
 		System.out.println("  2. INPUT DATA ");
@@ -38,7 +39,7 @@ public class Menu {
 			data.inputData();
 			break;
 		case 3:
-			System.out.println("Work In Progress...");
+			DatabaseProcessing.changeData(data.getList());
 			break;
 		case 4:
 			DatabaseProcessing.removeLine(data.getList());

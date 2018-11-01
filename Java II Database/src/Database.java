@@ -22,8 +22,8 @@ public class Database {
 			
 			category = scanner.nextLine(); 	
 			if ((category.equals("exit") || category.equals("Exit") || category.equals("EXIT")) == false) {
-				list.add(new ArrayList<Object>()); //bazei mia kainouria lista
-				list.get(list.size() - 1).add(category); //bazei stin teleytaia thesi tis megalisS listas to category
+				list.add(new ArrayList<Object>()); //Add a new List
+				list.get(list.size() - 1).add(category); //Add category to the last position
 			} else break;
 		
 		} while (true);
@@ -36,14 +36,14 @@ public class Database {
 		
 		while (true) {
 			System.out.println("PRESS ENTER TO ADD A LINE OR ENTER 'EXIT' TO STOP");
-			String answer = scanner.nextLine(); //diabazei mia fora
+			String answer = scanner.nextLine(); //Read user's answer
 			if (!(answer.equals("exit") || answer.equals("Exit") || answer.equals("EXIT"))) {
 				for (int field = 0; field < list.size(); field++) {
 					System.out.println("ADD DATA TO: " + list.get(field).get(0));
 					data = scanner.nextLine();
 					list.get(field).add(data);
-					System.out.println("Added data to:" + list.get(field).get(0)); //get(0) stin proti grammi einai to onoma
-					System.out.println(); //Adeia Grammi
+					System.out.println("Added data to:" + list.get(field).get(0)); //The first line has the field names
+					System.out.println(); //Empty Line
 				}
 			} else {
 				System.out.println("DATA INSERTION STOPPED");
