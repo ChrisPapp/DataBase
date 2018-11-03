@@ -1,4 +1,6 @@
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Scanner;
+import java.util.Collections;
 
 public class DatabaseProcessing {
 	// Process data from database
@@ -24,37 +26,52 @@ public class DatabaseProcessing {
 	public static void displayData(ArrayList<ArrayList<Object>> lists) {
 		DatabaseProcessing.rotate(lists); //Every ArrayList is now a line (Line mode)
 		System.out.println();
+		ArrayList<String> array1 = new ArrayList<String>(); //for lines
+		ArrayList<String> array2 = new ArrayList<String>(); //for columns
+		for(int i=0; i<lists.size(); i++) {
+			array1.add(String.valueOf(i));
+		}
+		
+		for (int i=0; i<lists.get(0).size(); i++) {
+			array2.add(String.valueOf(i));
+			System.out.printf("%-2s%-18s"," ",array2.get(i));
+		}
+		System.out.println();
 		for (int line = 0; line < lists.size(); line++) {
+			System.out.print (array1.get(line) + "|");
 			for (int field = 0; field < lists.get(line).size(); field++) {
-				System.out.print(lists.get(line).get(field) + " ");
+				System.out.printf("%-20s",lists.get(line).get(field));
 			}
 			System.out.println(); // After printing a line, print a new line
 		}
+		System.out.println();
 		DatabaseProcessing.rotate(lists); //Rotates back to Column mode
 	}
 
 	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
-		System.out.println("Which line do you want to remove");
+		System.out.print("Which line do you want to remove? ");
 		Scanner input = new Scanner(System.in);
 		int line = Integer.parseInt(input.nextLine());
+		System.out.println();
 		//input.close();
 		DatabaseProcessing.rotate(lists); //Line mode
 		lists.remove(line);
 		DatabaseProcessing.rotate(lists); //Back to column mode
-	}
+	} 
 	
 	public static void changeData(ArrayList<ArrayList<Object>> lists) {
 		DatabaseProcessing.rotate(lists); //Line mode
-		System.out.println("Which Field");
-		System.out.println(lists.get(0)); //Line with fields
+		System.out.println("Which data do you want to change? (Type position)");
 		Scanner input = new Scanner(System.in);
-		int column = Integer.parseInt(input.nextLine());
-		DatabaseProcessing.rotate(lists); //Column mode
-		System.out.println("Which one?");
-		System.out.println(lists.get(column)); //Print the column selected
+		System.out.print("Type line: ");
 		int line = Integer.parseInt(input.nextLine());
-		System.out.println("Enter new data");
+		System.out.print("Type column: ");
+		int column = Integer.parseInt(input.nextLine());
+		System.out.println();
+		DatabaseProcessing.rotate(lists); //Column mode
+		System.out.print("Enter new data for '" + lists.get(column).get(line) + "': ");
 		String data = input.nextLine();
+		System.out.println();
 		lists.get(column).set(line, data);
 	}
 
