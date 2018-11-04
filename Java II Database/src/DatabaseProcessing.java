@@ -78,6 +78,26 @@ public class DatabaseProcessing {
 	public static boolean isNumber(String data) {
 		return (data.matches("[+-]?(\\d+|\\d*\\.?\\d+)"));
 	}
+	
+	public static int CodeToNum(String code) {
+		int num = 0;
+		for (int i = 0; i < code.length(); i++) {
+			num *= 26; // 26 characters on English Alphabet
+			num += code.charAt(i) - ('A' - 1); // Transposes character from ASCII to (A=1, B=2...Z=26)
+												// and adds this value to num
+		}
+		return num;
+	}
+
+	public static String NumToCode(int num) { //This is the inverse function of CodeToNum
+		StringBuilder sb = new StringBuilder();
+		while (num-- > 0) { // "num--" required for a bug fix
+			int lastCharASCIIcode = num % 26 + 'A'; // Find last character
+			sb.append((char) lastCharASCIIcode); // Add last character to a string
+			num /= 26;
+		}
+		return sb.reverse().toString(); // Return the reverse
+	}
 
 	public static void swapLine(ArrayList<ArrayList<Object>> lists, int a, int b) {
 		for (int i = 0; i < lists.size(); i++) {
