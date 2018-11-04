@@ -26,21 +26,21 @@ public class DatabaseProcessing {
 	public static void displayData(ArrayList<ArrayList<Object>> lists) {
 		DatabaseProcessing.rotate(lists); // Every ArrayList is now a line (Line mode)
 		System.out.println();
-		ArrayList<String> array1 = new ArrayList<String>(); // for lines
+		ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
 		ArrayList<String> array2 = new ArrayList<String>(); // for columns
 		for (int i = 0; i < lists.size(); i++) {
-			array1.add(String.valueOf(i));
+			array1.add(i + 1);
 		}
-
 		for (int i = 0; i < lists.get(0).size(); i++) {
-			array2.add(String.valueOf(i));
-			System.out.printf("%-2s%-18s", " ", array2.get(i));
+			String cell = numToCode(i + 1);
+			array2.add(cell);
+			System.out.printf("%-5s%-20s", " ",  array2.get(i));
 		}
 		System.out.println();
 		for (int line = 0; line < lists.size(); line++) {
-			System.out.print(array1.get(line) + "|");
+			System.out.printf("%4d%s", array1.get(line),  "|");
 			for (int field = 0; field < lists.get(line).size(); field++) {
-				System.out.printf("%-20s", lists.get(line).get(field));
+				System.out.printf("%-25s", lists.get(line).get(field));
 			}
 			System.out.println(); // After printing a line, print a new line
 		}
@@ -49,7 +49,7 @@ public class DatabaseProcessing {
 	}
 
 	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
-		System.out.print("Which line do you want to remove? ");
+		System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
 		int line = Integer.parseInt(input.nextLine());
 		System.out.println();
@@ -61,15 +61,17 @@ public class DatabaseProcessing {
 
 	public static void changeData(ArrayList<ArrayList<Object>> lists) {
 		DatabaseProcessing.rotate(lists); // Line mode
-		System.out.println("Which data do you want to change? (Type position)");
+		System.out.println("WHICH LINE DO YOU WANT TO CHANGE? (Type position)");
 		Scanner input = new Scanner(System.in);
-		System.out.print("Type line: ");
-		int line = Integer.parseInt(input.nextLine());
-		System.out.print("Type column: ");
-		int column = Integer.parseInt(input.nextLine());
+		System.out.print("Type line (1 - " + lists.size() + "): ");
+		int line = Integer.parseInt(input.nextLine()) - 1;
 		System.out.println();
+		System.out.print("Type cell (A - " + numToCode(lists.get(0).size()) +"): ");
+		String cell = input.nextLine();
+		System.out.println();
+		int column = codeToNum(cell) - 1;
 		DatabaseProcessing.rotate(lists); // Column mode
-		System.out.print("Enter new data for '" + lists.get(column).get(line) + "': ");
+		System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
 		String data = input.nextLine();
 		System.out.println();
 		lists.get(column).set(line, data);
@@ -79,7 +81,7 @@ public class DatabaseProcessing {
 		return (data.matches("[+-]?(\\d+|\\d*\\.?\\d+)"));
 	}
 	
-	public static int CodeToNum(String code) {
+	public static int codeToNum(String code) {
 		int num = 0;
 		for (int i = 0; i < code.length(); i++) {
 			num *= 26; // 26 characters on English Alphabet
@@ -89,7 +91,7 @@ public class DatabaseProcessing {
 		return num;
 	}
 
-	public static String NumToCode(int num) { //This is the inverse function of CodeToNum
+	public static String numToCode(int num) { //This is the inverse function of CodeToNum
 		StringBuilder sb = new StringBuilder();
 		while (num-- > 0) { // "num--" required for a bug fix
 			int lastCharASCIIcode = num % 26 + 'A'; // Find last character

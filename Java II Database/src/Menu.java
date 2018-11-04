@@ -19,7 +19,7 @@ public class Menu {
 
 	public static void printMenu() {
 		System.out.println();
-		System.out.println("   *** DATABASE MENU ***\n");
+		System.out.println("*** DATABASE MENU ***\n");
 		System.out.println("  1. DISPLAY DATA ");
 		System.out.println("  2. INPUT DATA ");
 		System.out.println("  3. CHANGE DATA ");
