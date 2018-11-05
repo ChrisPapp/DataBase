@@ -34,11 +34,11 @@ public class DatabaseProcessing {
 		for (int i = 0; i < lists.get(0).size(); i++) {
 			String cell = numToCode(i + 1);
 			array2.add(cell);
-			System.out.printf("%-5s%-20s", " ",  array2.get(i));
+			System.out.printf("%-5s%-20s", " ", array2.get(i));
 		}
 		System.out.println();
 		for (int line = 0; line < lists.size(); line++) {
-			System.out.printf("%4d%s", array1.get(line),  "|");
+			System.out.printf("%4d%s", array1.get(line), "|");
 			for (int field = 0; field < lists.get(line).size(); field++) {
 				System.out.printf("%-25s", lists.get(line).get(field));
 			}
@@ -51,8 +51,7 @@ public class DatabaseProcessing {
 	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
 		System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
-		int line = Integer.parseInt(input.nextLine());
-		System.out.println();
+		int line = Integer.parseInt(input.nextLine()) - 1; // Subtract 1 (ArrayList indexes start from 0)
 		// input.close();
 		DatabaseProcessing.rotate(lists); // Line mode
 		lists.remove(line);
@@ -61,26 +60,36 @@ public class DatabaseProcessing {
 
 	public static void changeData(ArrayList<ArrayList<Object>> lists) {
 		DatabaseProcessing.rotate(lists); // Line mode
-		System.out.println("WHICH LINE DO YOU WANT TO CHANGE? (Type position)");
+		System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
 		Scanner input = new Scanner(System.in);
-		System.out.print("Type line (1 - " + lists.size() + "): ");
-		int line = Integer.parseInt(input.nextLine()) - 1;
-		System.out.println();
-		System.out.print("Type cell (A - " + numToCode(lists.get(0).size()) +"): ");
 		String cell = input.nextLine();
-		System.out.println();
-		int column = codeToNum(cell) - 1;
-		DatabaseProcessing.rotate(lists); // Column mode
-		System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
-		String data = input.nextLine();
-		System.out.println();
-		lists.get(column).set(line, data);
+		if (cell.matches("\\d+")) { // cell given has only digits
+			System.out.println("Work in Progress... ChangeLine(Integer.parseInt(cell))"); // Change whole Line
+		} else if (cell.matches("[A-Z]+")) { // cell given has only upper case characters
+			System.out.println("Work in Progress... ChangeColumn(CodeToNum() -1)"); // Change whole column
+		} else if (cell.matches("[A-Z]+\\d+")) { // cell given has the structure we want
+			StringBuilder sb = new StringBuilder(); // Build a new sequence that will contain only the characters
+			int i = 0;
+			do {
+				char currentCharacter = cell.charAt(i);
+				sb.append(currentCharacter);
+			} while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a digit
+			String columnCode = sb.toString();
+			int line = Integer.parseInt(cell.substring(i)) - 1; // Add the remaining characters (the numbers) to line
+			int column = codeToNum(columnCode) - 1;
+			DatabaseProcessing.rotate(lists); // Column mode
+			System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
+			String data = input.nextLine();
+			System.out.println();
+			lists.get(column).set(line, data);
+		} else
+			System.out.println("PROBLEM");
 	}
 
 	public static boolean isNumber(String data) {
 		return (data.matches("[+-]?(\\d+|\\d*\\.?\\d+)"));
 	}
-	
+
 	public static int codeToNum(String code) {
 		int num = 0;
 		for (int i = 0; i < code.length(); i++) {
@@ -91,7 +100,7 @@ public class DatabaseProcessing {
 		return num;
 	}
 
-	public static String numToCode(int num) { //This is the inverse function of CodeToNum
+	public static String numToCode(int num) { // This is the inverse function of CodeToNum
 		StringBuilder sb = new StringBuilder();
 		while (num-- > 0) { // "num--" required for a bug fix
 			int lastCharASCIIcode = num % 26 + 'A'; // Find last character
