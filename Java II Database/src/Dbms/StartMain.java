@@ -1,3 +1,6 @@
+package Dbms;
+
+import Menus.MainMenu;
 
 public class StartMain {
 //StartMain is responsible for calling all the methods needed
@@ -5,7 +8,7 @@ public class StartMain {
 		System.out.println("****** BITSPLEASE ****** ");
 		System.out.println("WELCOME TO THE BITSPLEASE DATABASE \n");
 		
-		new Menu(new Database());
+		new MainMenu(new Database(), true);
 	}
 
 }
