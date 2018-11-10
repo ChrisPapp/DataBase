@@ -1,5 +1,5 @@
 import java.util.Scanner;
-
+import java.awt.Toolkit;
 public class Menu {
 	// Print main menu and run user's choice
 	private static Database data;
@@ -28,8 +28,31 @@ public class Menu {
 	}
 
 	public static void performAction() {
+		int choice=0;
+		boolean flag = true;
+		char ch = inputChoice.next().charAt(0);
+		do {
+			if (!(Character.isDigit(ch))) {
+				System.out.println("\n WRONG ");
+				Toolkit.getDefaultToolkit().beep();
+				printMenu();
+				ch = inputChoice.next().charAt(0);
+			} else {
+				choice = Character.getNumericValue(ch);
+				if ((choice < 1)||(choice > 4)) {
+					System.out.println("\n WRONG ");
+					Toolkit.getDefaultToolkit().beep();
+					printMenu();
+					ch = inputChoice.next().charAt(0);
+				} else {
+					flag = false;
+				}
+			}
+		}
+		while (flag);
 
-		int choice = inputChoice.nextInt();
+
+
 
 		switch (choice) {
 		case 1:
@@ -45,6 +68,7 @@ public class Menu {
 			DatabaseProcessing.removeLine(data.getList());
 
 		}
+
 
 	}
 
