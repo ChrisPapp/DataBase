@@ -1,4 +1,5 @@
 package Dbms;
+
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
@@ -30,10 +31,10 @@ public class DatabaseProcessing {
 		ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
 		ArrayList<String> array2 = new ArrayList<String>(); // for columns
 		for (int i = 0; i < lists.size(); i++) {
-			array1.add(i + 1);
+			array1.add(i);
 		}
 		for (int i = 0; i < lists.get(0).size(); i++) {
-			String cell = numToCode(i + 1);
+			String cell = numToCode(i);
 			array2.add(cell);
 			System.out.printf("%-5s%-20s", " ", array2.get(i));
 		}
@@ -52,7 +53,7 @@ public class DatabaseProcessing {
 	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
 		System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
-		int line = Integer.parseInt(input.nextLine()) - 1; // Subtract 1 (ArrayList indexes start from 0)
+		int line = Integer.parseInt(input.nextLine());
 		// input.close();
 		DatabaseProcessing.rotate(lists); // Line mode
 		lists.remove(line);
@@ -64,7 +65,9 @@ public class DatabaseProcessing {
 		System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
 		Scanner input = new Scanner(System.in);
 		String cell = input.nextLine();
-		if (cell.matches("\\d+")) { // cell given has only digits
+		if (equalsExit(cell)) {
+			System.out.println("DATA CHANGE STOPPED");
+		} else if (cell.matches("\\d+")) { // cell given has only digits
 			System.out.println("Work in Progress... ChangeLine(Integer.parseInt(cell))"); // Change whole Line
 		} else if (cell.matches("[A-Z]+")) { // cell given has only upper case characters
 			System.out.println("Work in Progress... ChangeColumn(CodeToNum() -1)"); // Change whole column
@@ -76,15 +79,19 @@ public class DatabaseProcessing {
 				sb.append(currentCharacter);
 			} while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a digit
 			String columnCode = sb.toString();
-			int line = Integer.parseInt(cell.substring(i)) - 1; // Add the remaining characters (the numbers) to line
-			int column = codeToNum(columnCode) - 1;
-			DatabaseProcessing.rotate(lists); // Column mode
-			System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
-			String data = input.nextLine();
-			System.out.println();
-			lists.get(column).set(line, data);
+			int line = Integer.parseInt(cell.substring(i)); // Add the remaining characters (the numbers) to line
+			int column = codeToNum(columnCode);
+			if (line < lists.get(0).size() & column < lists.size()) { // Catch OutOfBoundsException
+				DatabaseProcessing.rotate(lists); // Column mode
+				System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
+				String data = input.nextLine();
+				System.out.println();
+				lists.get(column).set(line, data);
+			} else {
+				System.out.println("OUT OF BOUNDS");
+			}
 		} else
-			System.out.println("PROBLEM");
+			System.out.println("WRONG INPUT");
 	}
 
 	public static boolean isNumber(String data) {
@@ -95,20 +102,27 @@ public class DatabaseProcessing {
 		int num = 0;
 		for (int i = 0; i < code.length(); i++) {
 			num *= 26; // 26 characters on English Alphabet
-			num += code.charAt(i) - ('A' - 1); // Transposes character from ASCII to (A=1, B=2...Z=26)
-												// and adds this value to num
+			num += code.charAt(i) - 'A'; // Transposes character from ASCII to (A=0, B=1...Z=25)
+											// and adds this value to num
 		}
 		return num;
 	}
 
 	public static String numToCode(int num) { // This is the inverse function of CodeToNum
 		StringBuilder sb = new StringBuilder();
-		while (num-- > 0) { // "num--" required for a bug fix
+		do {
 			int lastCharASCIIcode = num % 26 + 'A'; // Find last character
 			sb.append((char) lastCharASCIIcode); // Add last character to a string
 			num /= 26;
-		}
+		} while (num > 0);
 		return sb.reverse().toString(); // Return the reverse
+	}
+
+	public static boolean equalsExit(String answer) { // Used when it is needed to check if user types exit
+		if (answer.equals("exit") || answer.equals("Exit") || answer.equals("EXIT")) {
+			return true;
+		} else
+			return false;
 	}
 
 	public static void swapLine(ArrayList<ArrayList<Object>> lists, int a, int b) {

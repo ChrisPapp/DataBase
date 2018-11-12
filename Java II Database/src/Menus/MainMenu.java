@@ -1,5 +1,7 @@
 package Menus;
 
+import java.awt.Toolkit;
+
 import Dbms.*;
 
 public class MainMenu extends AbstractMenu {
@@ -8,8 +10,28 @@ public class MainMenu extends AbstractMenu {
 	}
 
 	public void performAction() {
-
-		int choice = inputChoice.nextInt();
+		int choice=0;
+		boolean flag = true;
+		char ch = inputChoice.next().charAt(0);
+		do {
+			if (!(Character.isDigit(ch))) {
+				System.out.println("\n WRONG ");
+				Toolkit.getDefaultToolkit().beep();
+				printMenu();
+				ch = inputChoice.next().charAt(0);
+			} else {
+				choice = Character.getNumericValue(ch);
+				if ((choice < 1)||(choice > 4)) {
+					System.out.println("\n WRONG ");
+					Toolkit.getDefaultToolkit().beep();
+					printMenu();
+					ch = inputChoice.next().charAt(0);
+				} else {
+					flag = false;
+				}
+			}
+		}
+		while (flag);
 
 		switch (choice) {
 		case 1:

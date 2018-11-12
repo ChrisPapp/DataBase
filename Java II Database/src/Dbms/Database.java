@@ -22,7 +22,7 @@ public class Database {
 			System.out.println("OR IF YOU ARE DONE JUST ENTER EXIT");
 			
 			category = scanner.nextLine(); 	
-			if ((category.equals("exit") || category.equals("Exit") || category.equals("EXIT")) == false) {
+			if (!(DatabaseProcessing.equalsExit(category))) { // If category is not "exit"
 				list.add(new ArrayList<Object>()); //Add a new List
 				list.get(list.size() - 1).add(category); //Add category to the last position
 			} else break;
@@ -38,7 +38,7 @@ public class Database {
 		while (true) {
 			System.out.println("PRESS ENTER TO ADD A LINE OR ENTER 'EXIT' TO STOP");
 			String answer = scanner.nextLine(); //Read user's answer
-			if (!(answer.equals("exit") || answer.equals("Exit") || answer.equals("EXIT"))) {
+			if (!(DatabaseProcessing.equalsExit(answer))) { 
 				for (int field = 0; field < list.size(); field++) {
 					System.out.println("ADD DATA TO: " + list.get(field).get(0));
 					data = scanner.nextLine();
