@@ -42,11 +42,7 @@ public class Database {
 				for (int field = 0; field < list.size(); field++) {
 					System.out.println("ADD DATA TO: " + list.get(field).get(0));
 					data = scanner.nextLine();
-					while (data.length() > 20) {
-						System.out.print("*TOO BIG FOR '" + list.get(field).get(0) + "'*\nENTER AGAIN: ");
-						data = scanner.nextLine();
-						System.out.println();
-					}
+					System.out.println();
 					list.get(field).add(data);
 					System.out.println("Added data to:" + list.get(field).get(0)); //The first line has the field names
 					System.out.println(); //Empty Line

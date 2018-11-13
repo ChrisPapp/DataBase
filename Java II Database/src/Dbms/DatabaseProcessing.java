@@ -31,7 +31,7 @@ public class DatabaseProcessing {
 		ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
 		ArrayList<String> array2 = new ArrayList<String>(); // for columns
 		for (int i = 0; i < lists.size(); i++) {
-			array1.add(i);
+			array1.add(i + 1);
 		}
 		for (int i = 0; i < lists.get(0).size(); i++) {
 			String cell = numToCode(i);
@@ -42,7 +42,12 @@ public class DatabaseProcessing {
 		for (int line = 0; line < lists.size(); line++) {
 			System.out.printf("%4d%s", array1.get(line), "|");
 			for (int field = 0; field < lists.get(line).size(); field++) {
-				System.out.printf("%-25s", lists.get(line).get(field));
+				if (((String) lists.get(line).get(field)).length() > 20) {
+					System.out.printf("%-20s%s", ((String) lists.get(line).get(field)).substring(0,20), "...  ");
+				} else {
+					System.out.printf("%-25s", lists.get(line).get(field));
+				}
+				
 			}
 			System.out.println(); // After printing a line, print a new line
 		}
