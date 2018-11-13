@@ -2,6 +2,8 @@ package Menus;
 
 import java.awt.Toolkit;
 
+import java.util.Scanner;
+
 import Dbms.*;
 
 public class MainMenu extends AbstractMenu {
@@ -10,6 +12,7 @@ public class MainMenu extends AbstractMenu {
 	}
 
 	public void performAction() {
+
 		int choice=0;
 		boolean flag = true;
 		char ch = inputChoice.next().charAt(0);
@@ -41,7 +44,10 @@ public class MainMenu extends AbstractMenu {
 			data.inputData();
 			break;
 		case 3:
-			DatabaseProcessing.changeData(data.getList());
+			System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
+			Scanner input = new Scanner(System.in);
+			String cell = input.nextLine();
+			DatabaseProcessing.changeData(data.getList() , cell);
 			break;
 		case 4:
 			DatabaseProcessing.removeLine(data.getList());
@@ -52,12 +58,12 @@ public class MainMenu extends AbstractMenu {
 
 	@Override
 	protected void printMenu() {
-		System.out.println("*** DATABASE MENU ***\n" + 
-				"  1. DISPLAY DATA \n" + 
-				"  2. INPUT DATA \n" + 
-				"  3. CHANGE DATA\n" + 
-				"  4. REMOVE LINE\n" + 
+		System.out.println("*** DATABASE MENU ***\n" +
+				"  1. DISPLAY DATA \n" +
+				"  2. INPUT DATA \n" +
+				"  3. CHANGE DATA\n" +
+				"  4. REMOVE LINE\n" +
 				"  SELECT AN OPTION:");
-		
+
 	}
 }

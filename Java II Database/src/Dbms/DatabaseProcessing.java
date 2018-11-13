@@ -60,17 +60,22 @@ public class DatabaseProcessing {
 		DatabaseProcessing.rotate(lists); // Back to column mode
 	}
 
-	public static void changeData(ArrayList<ArrayList<Object>> lists) {
-		DatabaseProcessing.rotate(lists); // Line mode
-		System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
+	public static void changeData(ArrayList<ArrayList<Object>> lists , String cell) {
+
 		Scanner input = new Scanner(System.in);
-		String cell = input.nextLine();
 		if (equalsExit(cell)) {
 			System.out.println("DATA CHANGE STOPPED");
 		} else if (cell.matches("\\d+")) { // cell given has only digits
 			System.out.println("Work in Progress... ChangeLine(Integer.parseInt(cell))"); // Change whole Line
+			for (int i = 0; i < lists.size(); i++) {
+				changeData(lists , numToCode(i) + cell);
+			}
 		} else if (cell.matches("[A-Z]+")) { // cell given has only upper case characters
 			System.out.println("Work in Progress... ChangeColumn(CodeToNum() -1)"); // Change whole column
+			for (int i = 0; i < lists.get(0).size(); i++) {
+
+				changeData(lists , cell + Integer.toString(i));
+			}
 		} else if (cell.matches("[A-Z]+\\d+")) { // cell given has the structure we want
 			StringBuilder sb = new StringBuilder(); // Build a new sequence that will contain only the characters
 			int i = 0;
@@ -82,7 +87,7 @@ public class DatabaseProcessing {
 			int line = Integer.parseInt(cell.substring(i)); // Add the remaining characters (the numbers) to line
 			int column = codeToNum(columnCode);
 			if (line < lists.get(0).size() & column < lists.size()) { // Catch OutOfBoundsException
-				DatabaseProcessing.rotate(lists); // Column mode
+
 				System.out.print("ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
 				String data = input.nextLine();
 				System.out.println();
