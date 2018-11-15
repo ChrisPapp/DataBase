@@ -7,6 +7,8 @@ import java.util.Scanner;
 import Dbms.*;
 
 public class MainMenu extends AbstractMenu {
+	private static Scanner inputOperation = new Scanner(System.in);
+	
 	public MainMenu(Database data, boolean showAgain) {
 		super(data, showAgain);
 	}
@@ -24,7 +26,7 @@ public class MainMenu extends AbstractMenu {
 				ch = inputChoice.next().charAt(0);
 			} else {
 				choice = Character.getNumericValue(ch);
-				if ((choice < 1)||(choice > 4)) {
+				if ((choice < 1)||(choice > 6)) {
 					System.out.println("\n WRONG ");
 					Toolkit.getDefaultToolkit().beep();
 					printMenu();
@@ -51,7 +53,22 @@ public class MainMenu extends AbstractMenu {
 			break;
 		case 4:
 			DatabaseProcessing.removeLine(data.getList());
-
+		case 5:
+			System.out.println(" SELECT COLUMN: ");
+			int askedColumn = inputChoice.nextInt() - 1;
+			if (DataProcessingMore.areAllNumbers(data.getList(), askedColumn)) {
+				DataProcessingMore.sumOfAll(data.getList(), askedColumn);
+				DataProcessingMore.productOfAll(data.getList(), askedColumn);
+				DataProcessingMore.averageOfAll(data.getList(), askedColumn);
+				DataProcessingMore.displayMore();
+				break;
+			} else {
+				System.out.println("Check your data and change the ones that are not numbers!");
+			}
+		case 6:
+			System.out.println(" GIVE OPERATION ");
+			String askedOperation = inputOperation.nextLine();
+			DataProcessingMore.extraordinaryOption(data.getList(), askedOperation);
 		}
 
 	}
@@ -63,6 +80,8 @@ public class MainMenu extends AbstractMenu {
 				"  2. INPUT DATA \n" +
 				"  3. CHANGE DATA\n" +
 				"  4. REMOVE LINE\n" +
+				"  5. MORE CALCULATIONS \n" +
+				"  6. OPERATIONS BETWEEN COLUMNS \n" +
 				"  SELECT AN OPTION:");
 
 	}
