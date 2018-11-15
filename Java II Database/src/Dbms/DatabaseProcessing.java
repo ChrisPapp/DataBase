@@ -36,16 +36,16 @@ public class DatabaseProcessing {
 		for (int i = 0; i < lists.get(0).size(); i++) {
 			String cell = numToCode(i);
 			array2.add(cell);
-			System.out.printf("%-5s%-20s", " ", array2.get(i));
+			System.out.printf("%-5s%-10s", " ", array2.get(i));
 		}
 		System.out.println();
 		for (int line = 0; line < lists.size(); line++) {
 			System.out.printf("%4d%s", array1.get(line), "|");
 			for (int field = 0; field < lists.get(line).size(); field++) {
-				if (((String) lists.get(line).get(field)).length() > 20) {
-					System.out.printf("%-20s%s", ((String) lists.get(line).get(field)).substring(0,20), "...  ");
+				if (((String) lists.get(line).get(field)).length() > 10) {
+					System.out.printf("%-10s%s", ((String) lists.get(line).get(field)).substring(0,10), "...  ");
 				} else {
-					System.out.printf("%-25s", lists.get(line).get(field));
+					System.out.printf("%-15s", lists.get(line).get(field));
 				}
 				
 			}
@@ -58,7 +58,7 @@ public class DatabaseProcessing {
 	public static void removeLine(ArrayList<ArrayList<Object>> lists) {
 		System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
-		int line = Integer.parseInt(input.nextLine());
+		int line = Integer.parseInt(input.nextLine()) - 1;
 		// input.close();
 		DatabaseProcessing.rotate(lists); // Line mode
 		lists.remove(line);
@@ -89,7 +89,7 @@ public class DatabaseProcessing {
 				sb.append(currentCharacter);
 			} while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a digit
 			String columnCode = sb.toString();
-			int line = Integer.parseInt(cell.substring(i)); // Add the remaining characters (the numbers) to line
+			int line = Integer.parseInt(cell.substring(i)) - 1; // Add the remaining characters (the numbers) to line
 			int column = codeToNum(columnCode);
 			if (line < lists.get(0).size() & column < lists.size()) { // Catch OutOfBoundsException
 
@@ -139,6 +139,26 @@ public class DatabaseProcessing {
 		for (int i = 0; i < lists.size(); i++) {
 			Collections.swap(lists.get(i), a, b);
 		}
+	}
+	public static void printLine(ArrayList<ArrayList<Object>> lists, int line) {
+		System.out.printf("%4d%s", line + 1, "|");
+		for (int field = 0; field < lists.get(line).size(); field++) {
+			if (((String) lists.get(line).get(field)).length() > 10) {
+				System.out.printf("%-10s%s", ((String) lists.get(line).get(field)).substring(0,10), "...  ");
+			} else {
+				System.out.printf("%-15s", lists.get(line).get(field));
+			}
+			
+		}
+		System.out.println();
+	}
+	public static void printColumn(ArrayList<ArrayList<Object>> lists, String column) {
+		System.out.println(column);
+		int columnNumber = codeToNum(column);
+		for (int line = 0; line < lists.size(); line++) {
+				System.out.printf("%s\n", lists.get(line).get(columnNumber));
+		}
+		
 	}
 
 }

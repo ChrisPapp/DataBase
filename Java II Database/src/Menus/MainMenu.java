@@ -26,7 +26,7 @@ public class MainMenu extends AbstractMenu {
 				ch = inputChoice.next().charAt(0);
 			} else {
 				choice = Character.getNumericValue(ch);
-				if ((choice < 1)||(choice > 6)) {
+				if ((choice < 1)||(choice > 8)) {
 					System.out.println("\n WRONG ");
 					Toolkit.getDefaultToolkit().beep();
 					printMenu();
@@ -53,6 +53,7 @@ public class MainMenu extends AbstractMenu {
 			break;
 		case 4:
 			DatabaseProcessing.removeLine(data.getList());
+			break;
 		case 5:
 			System.out.println(" SELECT COLUMN: ");
 			int askedColumn = inputChoice.nextInt() - 1;
@@ -61,28 +62,49 @@ public class MainMenu extends AbstractMenu {
 				DataProcessingMore.productOfAll(data.getList(), askedColumn);
 				DataProcessingMore.averageOfAll(data.getList(), askedColumn);
 				DataProcessingMore.displayMore();
-				break;
 			} else {
 				System.out.println("Check your data and change the ones that are not numbers!");
 			}
+			break;
 		case 6:
 			System.out.println(" GIVE OPERATION ");
 			String askedOperation = inputOperation.nextLine();
 			DataProcessingMore.extraordinaryOption(data.getList(), askedOperation);
+			break;
+		case 7:
+			DatabaseProcessing.rotate(data.getList());//Line mode
+			System.out.print("WHICH LINE DO YOU WANT TO SEE? (1 - " + data.getList().size() + ") ");
+			Scanner sc = new Scanner(System.in);
+			int line = sc.nextInt() - 1;
+			System.out.println();
+			DatabaseProcessing.printLine(data.getList(),line);
+			DatabaseProcessing.rotate(data.getList());//Column mode
+			break;
+		case 8: 
+			DatabaseProcessing.rotate(data.getList());//Line mode
+			System.out.print("WHICH COLUMN DO YOU WANT TO SEE? (A - " + DatabaseProcessing.numToCode(data.getList().get(0).size() - 1) + ") ");
+			Scanner in = new Scanner(System.in);
+			String column = in.nextLine();
+			System.out.println();
+			DatabaseProcessing.printColumn(data.getList(), column);
+			DatabaseProcessing.rotate(data.getList());//Column mode
+			break;
 		}
 
 	}
 
 	@Override
 	protected void printMenu() {
-		System.out.println("*** DATABASE MENU ***\n" +
+		System.out.println("\n*** DATABASE MENU ***\n" +
 				"  1. DISPLAY DATA \n" +
 				"  2. INPUT DATA \n" +
 				"  3. CHANGE DATA\n" +
 				"  4. REMOVE LINE\n" +
 				"  5. MORE CALCULATIONS \n" +
 				"  6. OPERATIONS BETWEEN COLUMNS \n" +
-				"  SELECT AN OPTION:");
+				"  7. PRINT A LINE \n" +
+				"  8. PRINT A COLUMN \n" + 
+				"  SELECT AN OPTION: ");
 
 	}
 }
