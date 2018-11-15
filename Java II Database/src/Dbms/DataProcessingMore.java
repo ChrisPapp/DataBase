@@ -26,7 +26,7 @@ public class DataProcessingMore {
 	}
 
 	public static void displayMore() {
-		System.out.printf("%f %f %f", sum, product, average);
+		System.out.printf("%f %f %f \n\n", sum, product, average);
 	}
 
 	public static void extraordinaryOption(ArrayList<ArrayList<Object>> lists, String mathOperation) {
