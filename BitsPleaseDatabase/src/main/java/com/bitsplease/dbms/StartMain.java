@@ -1,6 +1,6 @@
-package Dbms;
+package com.bitsplease.dbms;
 
-import Menus.MainMenu;
+import com.bitsplease.menus.MainMenu;
 
 public class StartMain {
 //StartMain is responsible for calling all the methods needed

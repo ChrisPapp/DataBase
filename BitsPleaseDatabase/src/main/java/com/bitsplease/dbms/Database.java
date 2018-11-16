@@ -1,4 +1,4 @@
-package Dbms;
+package com.bitsplease.dbms;
 import java.util.ArrayList;
 import java.util.Scanner;
 
