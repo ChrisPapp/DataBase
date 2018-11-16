@@ -82,8 +82,6 @@ public class DataProcessingMore {
         i = j;
       }
     }
-
-    // apo thn database
     countFields = 0;
     countDigits = 0;
     while (countHasStopped < position.size()) {

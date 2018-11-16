@@ -10,13 +10,12 @@ import com.bitsplease.dbms.DatabaseProcessing;
 
 public class MainMenu extends AbstractMenu {
   private static Scanner inputOperation = new Scanner(System.in);
-
+  
   public MainMenu(Database data, boolean showAgain) {
     super(data, showAgain);
   }
 
   public void performAction() {
-
     int choice = 0;
     boolean flag = true;
     char ch = inputChoice.next().charAt(0);
@@ -38,7 +37,6 @@ public class MainMenu extends AbstractMenu {
         }
       }
     } while (flag);
-
     switch (choice) {
     case 1:
       DatabaseProcessing.displayData(data.getList());
@@ -107,6 +105,6 @@ public class MainMenu extends AbstractMenu {
         + "  5. MORE CALCULATIONS \n" + "  6. OPERATIONS BETWEEN COLUMNS \n"
         + "  7. PRINT A LINE \n" + "  8. PRINT A COLUMN \n"
         + "  SELECT AN OPTION: ");
-
   }
 }
+

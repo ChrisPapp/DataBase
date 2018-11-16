@@ -6,9 +6,7 @@ import java.util.Scanner;
 public class Database {
   // Fill in our Database with fields and data
   private ArrayList<ArrayList<Object>> list = new ArrayList<ArrayList<Object>>();
-
   private Scanner scanner = new Scanner(System.in);
-
   public Database() {
     inputFields();
     inputData();
@@ -16,9 +14,7 @@ public class Database {
 
   public void inputFields() {
     String category;
-
     do {
-
       System.out.println(
           "PLEASE ENTER THE FIELD #" + (list.size() + 1) + " OF YOUR DATABASE");
       System.out.println("OR IF YOU ARE DONE JUST ENTER EXIT");
@@ -37,9 +33,7 @@ public class Database {
 
   public void inputData() {
     String data;
-
     System.out.println("PLEASE ENTER THE DATA IN YOUR DATABASE\n");
-
     while (true) {
       System.out.println("PRESS ENTER TO ADD A LINE OR ENTER 'EXIT' TO STOP");
       String answer = scanner.nextLine(); // Read user's answer
@@ -58,7 +52,6 @@ public class Database {
         break;
       }
     }
-
   }
 
   public ArrayList<ArrayList<Object>> getList() {
@@ -69,3 +62,4 @@ public class Database {
     this.list = list;
   }
 }
+

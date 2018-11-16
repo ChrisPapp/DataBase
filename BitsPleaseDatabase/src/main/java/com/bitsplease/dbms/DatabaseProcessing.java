@@ -4,15 +4,13 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
 
-public class DatabaseProcessing {
-  // Process data from database
-
+public class DatabaseProcessing { // Process data from database
   public DatabaseProcessing() {
 
   }
 
   public static void rotate(ArrayList<ArrayList<Object>> lists) {
-    ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
+      ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
     for (int line = 0; line < lists.get(0).size(); line++) {
       temp.add(new ArrayList<Object>());
       for (int column = 0; column < lists.size(); column++) {
@@ -49,7 +47,6 @@ public class DatabaseProcessing {
         } else {
           System.out.printf("%-15s", lists.get(line).get(field));
         }
-
       }
       System.out.println(); // After printing a line, print a new line
     }
@@ -69,7 +66,6 @@ public class DatabaseProcessing {
 
   public static void changeData(ArrayList<ArrayList<Object>> lists,
       String cell) {
-
     Scanner input = new Scanner(System.in);
     if (equalsExit(cell)) {
       System.out.println("DATA CHANGE STOPPED");
@@ -78,31 +74,27 @@ public class DatabaseProcessing {
       for (int i = 0; i < lists.size(); i++) {
         changeData(lists, numToCode(i) + cell);
       }
-    } else if (cell.matches("[A-Z]+")) { // cell given has only
-                                         // upper case characters
+    } else if (cell.matches("[A-Z]+")) { 
+      // cell given has only upper case characters
       // Change whole column
       for (int i = 0; i < lists.get(0).size(); i++) {
-
         changeData(lists, cell + Integer.toString(i));
       }
-    } else if (cell.matches("[A-Z]+\\d+")) { // cell given has the structure we
-                                             // want
-      StringBuilder sb = new StringBuilder(); // Build a new sequence that will
-                                              // contain only the characters
+    } else if (cell.matches("[A-Z]+\\d+")) { 
+      // cell given has the structure we want
+      // Build a new sequence that will contain only the characters
+      StringBuilder sb = new StringBuilder(); 
       int i = 0;
       do {
         char currentCharacter = cell.charAt(i);
         sb.append(currentCharacter);
-      } while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a
-                                                      // digit
+      } while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a digit
       String columnCode = sb.toString();
-      int line = Integer.parseInt(cell.substring(i)) - 1; // Add the remaining
-                                                          // characters (the
-                                                          // numbers) to line
+      // Add the remaining characters (the numbers) to line
+      int line = Integer.parseInt(cell.substring(i)) - 1; 
       int column = codeToNum(columnCode);
       if (line < lists.get(0).size() & column < lists.size()) {
         // Catch OutOfBoundsException
-
         System.out.print(
             "ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
         String data = input.nextLine();
@@ -124,14 +116,14 @@ public class DatabaseProcessing {
     int num = 0;
     for (int i = 0; i < code.length(); i++) {
       num *= 26; // 26 characters on English Alphabet
-      num += code.charAt(i) - 'A'; // Transposes character from ASCII to (A=0,
-                                   // B=1...Z=25)
+      // Transposes character from ASCII to (A=0, B=1...Z=25)
       // and adds this value to num
-    }
+      num += code.charAt(i) - 'A'; 
+     }
     return num;
   }
 
-  public static String numToCode(final int num) {
+  public static String numToCode(int num) {
     // This is the inverse function of CodeToNum
     StringBuilder sb = new StringBuilder();
     do {
@@ -142,8 +134,8 @@ public class DatabaseProcessing {
     return sb.reverse().toString(); // Return the reverse
   }
 
-  public static boolean equalsExit(String answer) { // Used when it is needed to
-                                                    // check if user types exit
+  public static boolean equalsExit(String answer) { 
+ // Used when it is needed to check if user types exit
     if (answer.equals("exit") || answer.equals("Exit")
         || answer.equals("EXIT")) {
       return true;
@@ -167,7 +159,6 @@ public class DatabaseProcessing {
       } else {
         System.out.printf("%-15s", lists.get(line).get(field));
       }
-
     }
     System.out.println();
   }
@@ -179,7 +170,5 @@ public class DatabaseProcessing {
     for (int line = 0; line < lists.size(); line++) {
       System.out.printf("%s\n", lists.get(line).get(columnNumber));
     }
-
   }
-
 }
