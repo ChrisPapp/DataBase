@@ -130,6 +130,8 @@ public class DataProcessingMore {
               lists.get(lists.size() - 1).set(b, String.valueOf(temp1 / temp2));
             }
             break;
+          default:
+            break;
           }
           countHasStopped = countHasStopped + 2;
           countFields++;
@@ -193,8 +195,8 @@ public class DataProcessingMore {
     }
   }
 
-  public static int whereIsField(ArrayList<ArrayList<Object>> lists,
-      String given) {
+  public static int whereIsField(final ArrayList<ArrayList<Object>> lists,
+      final String given) {
     int i = 0;
     for (i = 0; i < lists.size(); i++) {
       if (lists.get(i).get(0).equals(given)) {
@@ -204,12 +206,12 @@ public class DataProcessingMore {
     return i;
   }
 
-  public static boolean areAllNumbers(ArrayList<ArrayList<Object>> lists,
-      int askedColumn) {
+  public static boolean areAllNumbers(final ArrayList<ArrayList<Object>> lists,
+      final int askedColumn) {
     boolean areAllNumbers = true;
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
-      if (DatabaseProcessing
-          .isNumber((String) lists.get(askedColumn).get(i)) == false) {
+      if (!DatabaseProcessing
+          .isNumber((String) lists.get(askedColumn).get(i))) {
         System.out.println("ERROR! \nInvalid String at line " + i + ".");
         System.out.println("Please enter another value.");
         areAllNumbers = false;

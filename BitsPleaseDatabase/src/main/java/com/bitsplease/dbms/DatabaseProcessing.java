@@ -94,20 +94,24 @@ public class DatabaseProcessing { // Process data from database
       // Add the remaining characters (the numbers) to line
       int line = Integer.parseInt(cell.substring(i)) - 1;
       int column = codeToNum(columnCode);
-      if (line < lists.get(0).size() & column < lists.size()) {
-        // Catch OutOfBoundsException
-        System.out.print(
-            "ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
-        String data = input.nextLine();
-        System.out.println();
-        lists.get(column).set(line, data);
+      if (column < lists.size()) {
+        if (line < lists.get(column).size()) {
+          // Catch OutOfBoundsException
+          System.out.print(
+              "ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
+          String data = input.nextLine();
+          System.out.println();
+          lists.get(column).set(line, data);
+        } else {
+          System.out.println("OUT OF BOUNDS");
+        }
       } else {
         System.out.println("OUT OF BOUNDS");
       }
     } else {
       System.out.println("WRONG INPUT");
     }
-    // input.close();
+
   }
 
   public static boolean isNumber(String data) {
@@ -152,7 +156,8 @@ public class DatabaseProcessing { // Process data from database
     }
   }
 
-  public static void printLine(ArrayList<ArrayList<Object>> lists, int line) {
+  public static void printLine(ArrayList<ArrayList<Object>> lists,
+      final int line) {
     System.out.printf("%4d%s", line + 1, "|");
     for (int field = 0; field < lists.get(line).size(); field++) {
       if (((String) lists.get(line).get(field)).length() > 10) {
@@ -165,8 +170,8 @@ public class DatabaseProcessing { // Process data from database
     System.out.println();
   }
 
-  public static void printColumn(ArrayList<ArrayList<Object>> lists,
-      String column) {
+  public static void printColumn(final ArrayList<ArrayList<Object>> lists,
+      final String column) {
     System.out.println(column);
     int columnNumber = codeToNum(column);
     for (int line = 0; line < lists.size(); line++) {

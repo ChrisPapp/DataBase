@@ -35,7 +35,4 @@ public abstract class AbstractMenu {
     return data;
   }
 
-  public void setData(Database data) {
-    AbstractMenu.data = data;
-  }
 }
