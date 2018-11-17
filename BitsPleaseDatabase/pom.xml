@@ -1,5 +1,7 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE xml>
+
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.bitsplease</groupId>
@@ -48,7 +50,6 @@
 					<source>1.7</source>
 					<target>1.7</target>
 					<fork>true</fork>
-					<executable>C:\Program Files\Java\jdk1.8.0_181\bin\javac</executable>
 				</configuration>
 			</plugin>
 

@@ -10,7 +10,7 @@ public class DatabaseProcessing { // Process data from database
   }
 
   public static void rotate(ArrayList<ArrayList<Object>> lists) {
-      ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
+    ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
     for (int line = 0; line < lists.get(0).size(); line++) {
       temp.add(new ArrayList<Object>());
       for (int column = 0; column < lists.size(); column++) {
@@ -74,24 +74,25 @@ public class DatabaseProcessing { // Process data from database
       for (int i = 0; i < lists.size(); i++) {
         changeData(lists, numToCode(i) + cell);
       }
-    } else if (cell.matches("[A-Z]+")) { 
+    } else if (cell.matches("[A-Z]+")) {
       // cell given has only upper case characters
       // Change whole column
       for (int i = 0; i < lists.get(0).size(); i++) {
         changeData(lists, cell + Integer.toString(i));
       }
-    } else if (cell.matches("[A-Z]+\\d+")) { 
+    } else if (cell.matches("[A-Z]+\\d+")) {
       // cell given has the structure we want
       // Build a new sequence that will contain only the characters
-      StringBuilder sb = new StringBuilder(); 
+      StringBuilder sb = new StringBuilder();
       int i = 0;
       do {
         char currentCharacter = cell.charAt(i);
         sb.append(currentCharacter);
-      } while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a digit
+      } while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a
+                                                      // digit
       String columnCode = sb.toString();
       // Add the remaining characters (the numbers) to line
-      int line = Integer.parseInt(cell.substring(i)) - 1; 
+      int line = Integer.parseInt(cell.substring(i)) - 1;
       int column = codeToNum(columnCode);
       if (line < lists.get(0).size() & column < lists.size()) {
         // Catch OutOfBoundsException
@@ -106,6 +107,7 @@ public class DatabaseProcessing { // Process data from database
     } else {
       System.out.println("WRONG INPUT");
     }
+    // input.close();
   }
 
   public static boolean isNumber(String data) {
@@ -118,8 +120,8 @@ public class DatabaseProcessing { // Process data from database
       num *= 26; // 26 characters on English Alphabet
       // Transposes character from ASCII to (A=0, B=1...Z=25)
       // and adds this value to num
-      num += code.charAt(i) - 'A'; 
-     }
+      num += code.charAt(i) - 'A';
+    }
     return num;
   }
 
@@ -134,8 +136,8 @@ public class DatabaseProcessing { // Process data from database
     return sb.reverse().toString(); // Return the reverse
   }
 
-  public static boolean equalsExit(String answer) { 
- // Used when it is needed to check if user types exit
+  public static boolean equalsExit(String answer) {
+    // Used when it is needed to check if user types exit
     if (answer.equals("exit") || answer.equals("Exit")
         || answer.equals("EXIT")) {
       return true;
