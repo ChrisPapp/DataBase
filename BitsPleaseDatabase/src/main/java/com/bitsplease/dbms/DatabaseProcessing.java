@@ -23,35 +23,63 @@ public class DatabaseProcessing { // Process data from database
 
   }
 
-  public static void displayData(ArrayList<ArrayList<Object>> lists) {
-    DatabaseProcessing.rotate(lists);
-    // Every ArrayList is now a line (Line mode)
-    System.out.println();
+  public static void displayData(ArrayList<ArrayList<Object>> lists, int press) {
+    
     ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
     ArrayList<String> array2 = new ArrayList<String>(); // for columns
     for (int i = 0; i < lists.size(); i++) {
       array1.add(i + 1);
     }
-    for (int i = 0; i < lists.get(0).size(); i++) {
-      String cell = numToCode(i);
-      array2.add(cell);
-      System.out.printf("%-5s%-10s", " ", array2.get(i));
-    }
-    System.out.println();
-    for (int line = 0; line < lists.size(); line++) {
-      System.out.printf("%4d%s", array1.get(line), "|");
-      for (int field = 0; field < lists.get(line).size(); field++) {
-        if (((String) lists.get(line).get(field)).length() > 10) {
-          System.out.printf("%-10s%s",
-              ((String) lists.get(line).get(field)).substring(0, 10), "...  ");
-        } else {
-          System.out.printf("%-15s", lists.get(line).get(field));
+    if (press == 1) {//display whole names
+      ArrayList<Integer> dataLength = new ArrayList<Integer>();
+      for (int i = 0; i < lists.size(); i++) {
+        int length = ((String) lists.get(i).get(0)).length();
+        for(int j = 0; j < lists.get(0).size(); j++) {
+          if (((String) lists.get(i).get(j)).length() > length) {
+            length = ((String) lists.get(i).get(j)).length();
+          }
         }
+        dataLength.add(length);
       }
-      System.out.println(); // After printing a line, print a new line
+      DatabaseProcessing.rotate(lists);//Line mode
+      array2.add(numToCode(0));
+      System.out.printf("%-5s%-" + dataLength.get(0) + "s", " ", array2.get(0));
+      for (int i = 1; i < lists.get(0).size(); i++) {
+        String cell = numToCode(i);
+        array2.add(cell);
+        System.out.printf("%-3s%-" + dataLength.get(i) + "s", " ", array2.get(i));
+      }
+      System.out.println();
+      for (int line = 0; line < lists.size(); line++) {
+        System.out.printf("%4d%s", array1.get(line), "|");
+        for (int field = 0; field < lists.get(0).size(); field++) {
+          System.out.printf("%-" + dataLength.get(field) + "s   ", lists.get(line).get(field));
+        }
+        System.out.println();
+      }
+    } else {// display with "..."
+      DatabaseProcessing.rotate(lists);//Line mode
+      for (int i = 0; i < lists.get(0).size(); i++) {
+        String cell = numToCode(i);
+        array2.add(cell);
+        System.out.printf("%-5s%-10s", " ", array2.get(i));
+      }
+      System.out.println();
+      for (int line = 0; line < lists.size(); line++) {
+        System.out.printf("%4d%s", array1.get(line), "|");
+        for (int field = 0; field < lists.get(line).size(); field++) {
+          if (((String) lists.get(line).get(field)).length() > 10) {
+            System.out.printf("%-10s%s",
+                ((String) lists.get(line).get(field)).substring(0, 10), "...  ");
+          } else {
+            System.out.printf("%-15s", lists.get(line).get(field));
+          }
+        }
+        System.out.println(); // After printing a line, print a new line
+      }
     }
+    DatabaseProcessing.rotate(lists);//Back to column mode
     System.out.println();
-    DatabaseProcessing.rotate(lists); // Rotates back to Column mode
   }
 
   public static void removeLine(ArrayList<ArrayList<Object>> lists) {
@@ -112,7 +140,6 @@ public class DatabaseProcessing { // Process data from database
     } else {
       System.out.println("WRONG INPUT");
     }
-
   }
 
   public static boolean isNumber(String data) {

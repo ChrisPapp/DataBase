@@ -39,7 +39,10 @@ public class MainMenu extends AbstractMenu {
     } while (flag);
     switch (choice) {
     case 1:
-      DatabaseProcessing.displayData(data.getList());
+      Scanner obj = new Scanner(System.in);
+      System.out.println("IF YOU WANT TO SEE WHOLE DATA NAMES PRESS 1 OR ELSE PRESS 2");
+      int press = obj.nextInt();
+        DatabaseProcessing.displayData(data.getList(), press);
       break;
     case 2:
       data.inputData();
@@ -82,7 +85,6 @@ public class MainMenu extends AbstractMenu {
       DatabaseProcessing.rotate(data.getList()); // Column mode
       break;
     case 8:
-      DatabaseProcessing.rotate(data.getList()); // Line mode
       System.out.print("WHICH COLUMN DO YOU WANT TO SEE? (A - "
           + DatabaseProcessing.numToCode(data.getList().get(0).size() - 1)
           + ") ");
@@ -92,7 +94,6 @@ public class MainMenu extends AbstractMenu {
       System.out.println(column);
       DatabaseProcessing.printColumn(
           data.getList().get(DatabaseProcessing.codeToNum(column)));
-      DatabaseProcessing.rotate(data.getList()); // Column mode
       break;
     case 9:
       search();
