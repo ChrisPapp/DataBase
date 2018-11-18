@@ -3,7 +3,6 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
-import java.util.List;
 
 public class DatabaseProcessing { // Process data from database
   public DatabaseProcessing() {
