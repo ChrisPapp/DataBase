@@ -3,6 +3,7 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
+import java.util.List;
 
 public class DatabaseProcessing { // Process data from database
   public DatabaseProcessing() {
@@ -77,7 +78,8 @@ public class DatabaseProcessing { // Process data from database
     } else if (cell.matches("[A-Z]+")) {
       // cell given has only upper case characters
       // Change whole column
-      for (int i = 0; i < lists.get(0).size(); i++) {
+      int column = codeToNum(cell);
+      for (int i = 1; i <= lists.get(column).size(); i++) {
         changeData(lists, cell + Integer.toString(i));
       }
     } else if (cell.matches("[A-Z]+\\d+")) {
@@ -172,7 +174,7 @@ public class DatabaseProcessing { // Process data from database
 
   public static void printColumn(final ArrayList<Object> arrayList) {
     for (int i = 0; i < arrayList.size(); i++) {
-      System.out.printf("%s\n", arrayList.get(i));
+      System.out.printf("%s. %s\n", i + 1, arrayList.get(i));
     }
   }
 
@@ -189,4 +191,36 @@ public class DatabaseProcessing { // Process data from database
     }
     return cells;
   }
+
+  public static void sort(final ArrayList<ArrayList<Object>> lists,
+      final int column, final int low, final int high) {
+    // This is a Quicksort implementation
+    if (low < high) {
+
+      String pivot = (String) lists.get(column).get(high);
+      int i = low - 1;
+      boolean allAreNumbers = DataProcessingMore.areAllNumbers(lists, column);
+      for (int j = low; j < high; j++) {
+        String current = (String) lists.get(column).get(j);
+        if (allAreNumbers) {
+          // Numeric Sort
+          if (Double.parseDouble(pivot) >= Double.parseDouble(current)) {
+            i++;
+            swapLine(lists, i, j);
+          }
+        } else {
+          // Lexicographical Sort
+          if (pivot.compareTo(current) == 1 || pivot.equals(current)) {
+            i++;
+            swapLine(lists, i, j);
+          }
+        }
+      }
+      swapLine(lists, i + 1, high);
+      int pi = i + 1;
+      sort(lists, column, low, pi - 1);
+      sort(lists, column, pi + 1, high);
+    }
+  }
+
 }
