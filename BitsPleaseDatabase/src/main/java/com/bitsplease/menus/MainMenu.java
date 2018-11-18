@@ -1,7 +1,7 @@
 package com.bitsplease.menus;
 
 import java.awt.Toolkit;
-
+import java.util.ArrayList;
 import java.util.Scanner;
 
 import com.bitsplease.dbms.DataProcessingMore;
@@ -10,7 +10,7 @@ import com.bitsplease.dbms.DatabaseProcessing;
 
 public class MainMenu extends AbstractMenu {
   private static Scanner inputOperation = new Scanner(System.in);
-  
+
   public MainMenu(Database data, boolean showAgain) {
     super(data, showAgain);
   }
@@ -27,7 +27,7 @@ public class MainMenu extends AbstractMenu {
         ch = inputChoice.next().charAt(0);
       } else {
         choice = Character.getNumericValue(ch);
-        if ((choice < 1) || (choice > 8)) {
+        if ((choice < 1) || (choice > 9)) {
           System.out.println("\n WRONG ");
           Toolkit.getDefaultToolkit().beep();
           printMenu();
@@ -89,13 +89,32 @@ public class MainMenu extends AbstractMenu {
       Scanner in = new Scanner(System.in);
       String column = in.nextLine();
       System.out.println();
-      DatabaseProcessing.printColumn(data.getList(), column);
+      System.out.println(column);
+      DatabaseProcessing.printColumn(
+          data.getList().get(DatabaseProcessing.codeToNum(column)));
       DatabaseProcessing.rotate(data.getList()); // Column mode
       break;
+    case 9:
+      search();
     default:
       break;
     }
 
+  }
+
+  private void search() {
+    System.out.println("What are you looking for?");
+    Scanner input = new Scanner(System.in);
+    String item = input.nextLine();
+    ArrayList<Object> cells = new ArrayList<Object>(
+        DatabaseProcessing.find(data.getList(), item));
+    if (cells.size() == 0) {
+      System.out.println("The item was not found");
+    } else {
+      System.out.println("The item was found in these cells:");
+      DatabaseProcessing.printColumn(cells);
+    }
+    // input.close();
   }
 
   @Override
@@ -103,8 +122,7 @@ public class MainMenu extends AbstractMenu {
     System.out.println("\n*** DATABASE MENU ***\n" + "  1. DISPLAY DATA \n"
         + "  2. INPUT DATA \n" + "  3. CHANGE DATA\n" + "  4. REMOVE LINE\n"
         + "  5. MORE CALCULATIONS \n" + "  6. OPERATIONS BETWEEN COLUMNS \n"
-        + "  7. PRINT A LINE \n" + "  8. PRINT A COLUMN \n"
+        + "  7. PRINT A LINE \n" + "  8. PRINT A COLUMN \n" + "  8. SEARCH \n"
         + "  SELECT AN OPTION: ");
   }
 }
-

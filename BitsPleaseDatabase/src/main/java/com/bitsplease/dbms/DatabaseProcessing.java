@@ -170,12 +170,23 @@ public class DatabaseProcessing { // Process data from database
     System.out.println();
   }
 
-  public static void printColumn(final ArrayList<ArrayList<Object>> lists,
-      final String column) {
-    System.out.println(column);
-    int columnNumber = codeToNum(column);
-    for (int line = 0; line < lists.size(); line++) {
-      System.out.printf("%s\n", lists.get(line).get(columnNumber));
+  public static void printColumn(final ArrayList<Object> arrayList) {
+    for (int i = 0; i < arrayList.size(); i++) {
+      System.out.printf("%s\n", arrayList.get(i));
     }
+  }
+
+  public static ArrayList<Object> find(final ArrayList<ArrayList<Object>> lists,
+      final String item) {
+    ArrayList<Object> cells = new ArrayList<Object>();
+    for (int i = 0; i < lists.size(); i++) { // Search every column
+      int index = lists.get(i).indexOf(item);
+      if (index != -1) { // If file is found
+        // Traspose to cell format and add it to cells list
+        cells.add(numToCode(i) + (index + 1));
+      }
+
+    }
+    return cells;
   }
 }
