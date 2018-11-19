@@ -40,10 +40,9 @@ public class MainMenu extends AbstractMenu {
     switch (choice) {
     case 1:
       Scanner obj = new Scanner(System.in);
-      System.out.println(
-          "IF YOU WANT TO SEE WHOLE DATA NAMES PRESS 1 OR ELSE PRESS 2");
+      System.out.println("IF YOU WANT TO SEE WHOLE DATA NAMES PRESS 1 OR ELSE PRESS 2");
       int press = obj.nextInt();
-      DatabaseProcessing.displayData(data.getList(), press);
+        DatabaseProcessing.displayData(data.getList(), press);
       break;
     case 2:
       data.inputData();
