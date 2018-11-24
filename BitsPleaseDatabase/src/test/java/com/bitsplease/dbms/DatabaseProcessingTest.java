@@ -7,19 +7,19 @@ import org.junit.Before;
 import org.junit.Test;
 
 public class DatabaseProcessingTest {
-  ArrayList<ArrayList<Object>> randomList, sortedList;
+  ArrayList<ArrayList<String>> randomList, sortedList;
 
   @Before
   public void setupSort() {
-    randomList = new ArrayList<ArrayList<Object>>();
-    sortedList = new ArrayList<ArrayList<Object>>();
-    ArrayList<Object> random = new ArrayList<Object>();
+    randomList = new ArrayList<ArrayList<String>>();
+    sortedList = new ArrayList<ArrayList<String>>();
+    ArrayList<String> random = new ArrayList<String>();
     random.add("1");
     random.add("4");
     random.add("3");
     random.add("2");
     randomList.add(random);
-    ArrayList<Object> sorted = new ArrayList<Object>();
+    ArrayList<String> sorted = new ArrayList<String>();
     sorted.add("1");
     sorted.add("2");
     sorted.add("3");

@@ -5,11 +5,18 @@ import java.util.Scanner;
 
 public class Database {
   // Fill in our Database with fields and data
-  private ArrayList<ArrayList<Object>> list = new ArrayList<ArrayList<Object>>();
+  private String name;
+  private ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
   private Scanner scanner = new Scanner(System.in);
   public Database() {
+    inputName();
     inputFields();
     inputData();
+  }
+
+  private void inputName() {
+    System.out.println("Enter the name of this Table");
+    setName(scanner.nextLine());
   }
 
   public void inputFields() {
@@ -22,7 +29,7 @@ public class Database {
       category = scanner.nextLine();
       if (!(DatabaseProcessing.equalsExit(category))) { // If category is not
                                                         // "exit"
-        list.add(new ArrayList<Object>()); // Add a new List
+        list.add(new ArrayList<String>()); // Add a new List
         list.get(list.size() - 1).add(category); // Add category to the last
                                                  // position
       } else
@@ -54,12 +61,20 @@ public class Database {
     }
   }
 
-  public ArrayList<ArrayList<Object>> getList() {
+  public ArrayList<ArrayList<String>> getList() {
     return list;
   }
 
-  public void setList(ArrayList<ArrayList<Object>> list) {
+  public void setList(ArrayList<ArrayList<String>> list) {
     this.list = list;
+  }
+
+  public String getName() {
+    return name;
+  }
+
+  public void setName(String name) {
+    this.name = name;
   }
 }
 

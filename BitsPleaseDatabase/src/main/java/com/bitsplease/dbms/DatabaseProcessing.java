@@ -9,10 +9,10 @@ public class DatabaseProcessing { // Process data from database
 
   }
 
-  public static void rotate(ArrayList<ArrayList<Object>> lists) {
-    ArrayList<ArrayList<Object>> temp = new ArrayList<ArrayList<Object>>();
+  public static void rotate(ArrayList<ArrayList<String>> lists) {
+    ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
     for (int line = 0; line < lists.get(0).size(); line++) {
-      temp.add(new ArrayList<Object>());
+      temp.add(new ArrayList<String>());
       for (int column = 0; column < lists.size(); column++) {
         temp.get(line).add(lists.get(column).get(line));
       }
@@ -23,7 +23,7 @@ public class DatabaseProcessing { // Process data from database
 
   }
 
-  public static void displayData(ArrayList<ArrayList<Object>> lists,
+  public static void displayData(ArrayList<ArrayList<String>> lists,
       int press) {
 
     ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
@@ -86,7 +86,7 @@ public class DatabaseProcessing { // Process data from database
     System.out.println();
   }
 
-  public static void removeLine(ArrayList<ArrayList<Object>> lists) {
+  public static void removeLine(ArrayList<ArrayList<String>> lists) {
     System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
     Scanner input = new Scanner(System.in);
     int line = Integer.parseInt(input.nextLine()) - 1;
@@ -100,7 +100,7 @@ public class DatabaseProcessing { // Process data from database
     DatabaseProcessing.rotate(lists); // Back to column mode
   }
 
-  public static void removeColumn(ArrayList<ArrayList<Object>> lists) {
+  public static void removeColumn(ArrayList<ArrayList<String>> lists) {
     System.out.print("WHICH COLUMN DO YOU WANT TO REMOVE? ");
     Scanner input = new Scanner(System.in);
     int column = codeToNum(input.nextLine());
@@ -112,7 +112,7 @@ public class DatabaseProcessing { // Process data from database
     }
   }
 
-  public static void changeData(ArrayList<ArrayList<Object>> lists,
+  public static void changeData(ArrayList<ArrayList<String>> lists,
       String cell) {
     Scanner input = new Scanner(System.in);
     if (equalsExit(cell)) {
@@ -197,14 +197,14 @@ public class DatabaseProcessing { // Process data from database
       return false;
   }
 
-  public static void swapLine(final ArrayList<ArrayList<Object>> lists,
+  public static void swapLine(final ArrayList<ArrayList<String>> lists,
       final int a, final int b) {
     for (int i = 0; i < lists.size(); i++) {
       Collections.swap(lists.get(i), a, b);
     }
   }
 
-  public static void printLine(ArrayList<ArrayList<Object>> lists,
+  public static void printLine(ArrayList<ArrayList<String>> lists,
       final int line) {
     System.out.printf("%4d%s", line + 1, "|");
     for (int field = 0; field < lists.get(line).size(); field++) {
@@ -218,15 +218,15 @@ public class DatabaseProcessing { // Process data from database
     System.out.println();
   }
 
-  public static void printColumn(final ArrayList<Object> arrayList) {
+  public static void printColumn(final ArrayList<String> arrayList) {
     for (int i = 0; i < arrayList.size(); i++) {
       System.out.printf("%s. %s\n", i + 1, arrayList.get(i));
     }
   }
 
-  public static ArrayList<Object> find(final ArrayList<ArrayList<Object>> lists,
+  public static ArrayList<String> find(final ArrayList<ArrayList<String>> lists,
       final String item) {
-    ArrayList<Object> cells = new ArrayList<Object>();
+    ArrayList<String> cells = new ArrayList<String>();
     for (int i = 0; i < lists.size(); i++) { // Search every column
       int index = lists.get(i).indexOf(item);
       if (index != -1) { // If file is found
@@ -238,7 +238,7 @@ public class DatabaseProcessing { // Process data from database
     return cells;
   }
 
-  public static void sort(final ArrayList<ArrayList<Object>> lists,
+  public static void sort(final ArrayList<ArrayList<String>> lists,
       final int column, final int low, final int high) {
     // This is a Quicksort implementation
     if (low < high) {

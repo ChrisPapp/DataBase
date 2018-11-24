@@ -107,7 +107,7 @@ public class MainMenu extends AbstractMenu {
     System.out.println("What are you looking for?");
     Scanner input = new Scanner(System.in);
     String item = input.nextLine();
-    ArrayList<Object> cells = new ArrayList<Object>(
+    ArrayList<String> cells = new ArrayList<String>(
         DatabaseProcessing.find(data.getList(), item));
     if (cells.size() == 0) {
       System.out.println("The item was not found");

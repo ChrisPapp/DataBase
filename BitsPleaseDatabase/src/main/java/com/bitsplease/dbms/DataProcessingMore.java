@@ -7,7 +7,7 @@ public class DataProcessingMore {
   private static double product = 1;
   private static double average = 0;
 
-  public static void sumOfAll(ArrayList<ArrayList<Object>> lists,
+  public static void sumOfAll(ArrayList<ArrayList<String>> lists,
       int askedColumn) {
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
       double temp = Double.parseDouble((String) lists.get(askedColumn).get(i));
@@ -15,7 +15,7 @@ public class DataProcessingMore {
     }
   }
 
-  public static void productOfAll(ArrayList<ArrayList<Object>> lists,
+  public static void productOfAll(ArrayList<ArrayList<String>> lists,
       int askedColumn) {
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
       double temp = Double.parseDouble((String) lists.get(askedColumn).get(i));
@@ -23,7 +23,7 @@ public class DataProcessingMore {
     }
   }
 
-  public static void averageOfAll(ArrayList<ArrayList<Object>> lists,
+  public static void averageOfAll(ArrayList<ArrayList<String>> lists,
       int askedColumn) {
     average = sum / (lists.get(askedColumn).size() - 1);
   }
@@ -32,7 +32,7 @@ public class DataProcessingMore {
     System.out.printf("%f %f %f \n\n", sum, product, average);
   }
 
-  public static void extraordinaryOption(ArrayList<ArrayList<Object>> lists,
+  public static void extraordinaryOption(ArrayList<ArrayList<String>> lists,
       String mathOperation) {
     int countFields = 0;
     int countDigits = 0;
@@ -41,7 +41,7 @@ public class DataProcessingMore {
     String[] digits = new String[50];
     ArrayList<Integer> position = new ArrayList<Integer>();
     boolean wasInsideOnce = false;
-    lists.add(new ArrayList<Object>());
+    lists.add(new ArrayList<String>());
     lists.get(lists.size() - 1).add("Result");
 
     for (int i = 0; i < mathOperation.length(); i++) {
@@ -195,7 +195,7 @@ public class DataProcessingMore {
     }
   }
 
-  public static int whereIsField(final ArrayList<ArrayList<Object>> lists,
+  public static int whereIsField(final ArrayList<ArrayList<String>> lists,
       final String given) {
     int i = 0;
     for (i = 0; i < lists.size(); i++) {
@@ -206,7 +206,7 @@ public class DataProcessingMore {
     return i;
   }
 
-  public static boolean areAllNumbers(final ArrayList<ArrayList<Object>> lists,
+  public static boolean areAllNumbers(final ArrayList<ArrayList<String>> lists,
       final int askedColumn) {
     boolean areAllNumbers = true;
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
