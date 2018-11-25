@@ -6,7 +6,7 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class DatabaseProcessingTest {
+public class TableProcessingTest {
   ArrayList<ArrayList<String>> randomList, sortedList;
 
   @Before
@@ -25,13 +25,13 @@ public class DatabaseProcessingTest {
     sorted.add("3");
     sorted.add("4");
     sortedList.add(sorted);
-    DatabaseProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
+    TableProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
   }
 
   @Test
   public void testCodeToNum() {
     Assert.assertEquals("failure - wrong result",
-        DatabaseProcessing.codeToNum("A"), 0);
+        TableProcessing.codeToNum("A"), 0);
   }
 
   @Test

@@ -4,8 +4,8 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
 
-public class DatabaseProcessing { // Process data from database
-  public DatabaseProcessing() {
+public class TableProcessing { // Process table from database
+  public TableProcessing() {
 
   }
 
@@ -42,7 +42,7 @@ public class DatabaseProcessing { // Process data from database
         }
         dataLength.add(length);
       }
-      DatabaseProcessing.rotate(lists); // Line mode
+      TableProcessing.rotate(lists); // Line mode
       array2.add(numToCode(0));
       System.out.printf("%-5s%-" + dataLength.get(0) + "s", " ", array2.get(0));
       for (int i = 1; i < lists.get(0).size(); i++) {
@@ -61,7 +61,7 @@ public class DatabaseProcessing { // Process data from database
         System.out.println();
       }
     } else { // display with "..."
-      DatabaseProcessing.rotate(lists); // Line mode
+      TableProcessing.rotate(lists); // Line mode
       for (int i = 0; i < lists.get(0).size(); i++) {
         String cell = numToCode(i);
         array2.add(cell);
@@ -82,7 +82,7 @@ public class DatabaseProcessing { // Process data from database
         System.out.println(); // After printing a line, print a new line
       }
     }
-    DatabaseProcessing.rotate(lists); // Back to column mode
+    TableProcessing.rotate(lists); // Back to column mode
     System.out.println();
   }
 
@@ -91,13 +91,13 @@ public class DatabaseProcessing { // Process data from database
     Scanner input = new Scanner(System.in);
     int line = Integer.parseInt(input.nextLine()) - 1;
     // input.close();
-    DatabaseProcessing.rotate(lists); // Line mode
+    TableProcessing.rotate(lists); // Line mode
     if (line > 0 && line < lists.size()) {
       lists.remove(line);
     } else {
       System.out.println("OUT OF BOUNDS");
     }
-    DatabaseProcessing.rotate(lists); // Back to column mode
+    TableProcessing.rotate(lists); // Back to column mode
   }
 
   public static void removeColumn(ArrayList<ArrayList<String>> lists) {
@@ -245,7 +245,7 @@ public class DatabaseProcessing { // Process data from database
 
       String pivot = (String) lists.get(column).get(high);
       int i = low - 1;
-      boolean allAreNumbers = DataProcessingMore.areAllNumbers(lists, column);
+      boolean allAreNumbers = TableArithmetics.areAllNumbers(lists, column);
       for (int j = low; j < high; j++) {
         String current = (String) lists.get(column).get(j);
         if (allAreNumbers) {

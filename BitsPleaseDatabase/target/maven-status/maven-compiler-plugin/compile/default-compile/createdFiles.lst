@@ -1,6 +1,3 @@
-com\bitsplease\dbms\DatabaseProcessing.class
 com\bitsplease\dbms\Database.class
 com\bitsplease\dbms\StartMain.class
-com\bitsplease\menus\MainMenu.class
 com\bitsplease\menus\AbstractMenu.class
-com\bitsplease\dbms\DataProcessingMore.class

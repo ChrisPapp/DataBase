@@ -3,12 +3,12 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Database {
-  // Fill in our Database with fields and data
+public class Table {
+  // Fill in our Table with fields and table
   private String name;
   private ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
   private Scanner scanner = new Scanner(System.in);
-  public Database() {
+  public Table() {
     inputName();
     inputFields();
     inputData();
@@ -27,7 +27,7 @@ public class Database {
       System.out.println("OR IF YOU ARE DONE JUST ENTER EXIT");
 
       category = scanner.nextLine();
-      if (!(DatabaseProcessing.equalsExit(category))) { // If category is not
+      if (!(TableProcessing.equalsExit(category))) { // If category is not
                                                         // "exit"
         list.add(new ArrayList<String>()); // Add a new List
         list.get(list.size() - 1).add(category); // Add category to the last
@@ -44,14 +44,14 @@ public class Database {
     while (true) {
       System.out.println("PRESS ENTER TO ADD A LINE OR ENTER 'EXIT' TO STOP");
       String answer = scanner.nextLine(); // Read user's answer
-      if (!(DatabaseProcessing.equalsExit(answer))) {
+      if (!(TableProcessing.equalsExit(answer))) {
         for (int field = 0; field < list.size(); field++) {
           System.out.println("ADD DATA TO: " + list.get(field).get(0));
           data = scanner.nextLine();
           System.out.println();
           list.get(field).add(data);
           // The first line has the field names
-          System.out.println("Added data to:" + list.get(field).get(0));
+          System.out.println("Added table to:" + list.get(field).get(0));
           System.out.println(); // Empty Line
         }
       } else {

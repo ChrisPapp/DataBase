@@ -2,7 +2,7 @@ package com.bitsplease.dbms;
 
 import java.util.ArrayList;
 
-public class DataProcessingMore {
+public class TableArithmetics {
   private static double sum = 0;
   private static double product = 1;
   private static double average = 0;
@@ -136,7 +136,7 @@ public class DataProcessingMore {
           countHasStopped = countHasStopped + 2;
           countFields++;
         } else {
-          System.out.println("Not compatible data.");
+          System.out.println("Not compatible table.");
           break;
         }
       } else if (Character
@@ -188,7 +188,7 @@ public class DataProcessingMore {
           countHasStopped = countHasStopped + 2;
           countDigits++;
         } else {
-          System.out.println("Not compatible data.");
+          System.out.println("Not compatible table.");
           break;
         }
       }
@@ -210,7 +210,7 @@ public class DataProcessingMore {
       final int askedColumn) {
     boolean areAllNumbers = true;
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
-      if (!DatabaseProcessing
+      if (!TableProcessing
           .isNumber((String) lists.get(askedColumn).get(i))) {
         System.out.println("ERROR! \nInvalid String at line " + i + ".");
         System.out.println("Please enter another value.");
