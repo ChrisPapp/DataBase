@@ -4,11 +4,25 @@ import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.Collections;
 
-public class TableProcessing { // Process table from database
+/**
+ * This class is used to process a table.
+ * @author The BitsPlease Project
+ * @version 2.2
+ *
+ */
+public class TableProcessing {
+  
+  /**
+   * Default Constructor is used for this class.
+   */
   public TableProcessing() {
 
   }
 
+  /**
+   * This method rotates the given table.
+   * @param lists Given table.
+   */
   public static void rotate(ArrayList<ArrayList<String>> lists) {
     ArrayList<ArrayList<String>> temp = new ArrayList<ArrayList<String>>();
     for (int line = 0; line < lists.get(0).size(); line++) {
@@ -23,6 +37,12 @@ public class TableProcessing { // Process table from database
 
   }
 
+  /**
+   * This method is used to display the data stored in Database.
+   * This method has two options for display. Either display with full names or display stopped by dots.
+   * @param lists Given table to display.
+   * @param press Integer value of option provided from user.
+   */
   public static void displayData(ArrayList<ArrayList<String>> lists,
       int press) {
 
@@ -86,6 +106,10 @@ public class TableProcessing { // Process table from database
     System.out.println();
   }
 
+  /**
+   * This method is used to remove a line from the table processing. Dynamically asks the user which line wants to remove.
+   * @param lists Table processing.
+   */
   public static void removeLine(ArrayList<ArrayList<String>> lists) {
     System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
     Scanner input = new Scanner(System.in);
@@ -100,6 +124,10 @@ public class TableProcessing { // Process table from database
     TableProcessing.rotate(lists); // Back to column mode
   }
 
+  /**
+   * Similar to removeLine, removeColumn is responsible for removing a Column from the table.
+   * @param lists Table processing.
+   */
   public static void removeColumn(ArrayList<ArrayList<String>> lists) {
     System.out.print("WHICH COLUMN DO YOU WANT TO REMOVE? ");
     Scanner input = new Scanner(System.in);
@@ -112,6 +140,11 @@ public class TableProcessing { // Process table from database
     }
   }
 
+  /**
+   * This method is used to change the data stored in a specific cell of the table.
+   * @param lists Table Processing.
+   * @param cell String value of the specific cell user wants to change.
+   */
   public static void changeData(ArrayList<ArrayList<String>> lists,
       String cell) {
     Scanner input = new Scanner(System.in);
@@ -162,6 +195,11 @@ public class TableProcessing { // Process table from database
     }
   }
 
+  /**
+   * isNumber examines whether a string value is basically a number.
+   * @param data String user wants to examine.
+   * @return Returns true if the string given is a number, else returns false.
+   */
   public static boolean isNumber(String data) {
     return (data.matches("[+-]?(\\d+|\\d*\\.?\\d+)"));
   }
