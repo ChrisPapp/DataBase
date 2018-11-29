@@ -17,7 +17,7 @@ public class TableProcessingTest {
   }
 
   @Test
-  public void testÍumToCode() {
+  public void testNumToCode() {
     // Num to code must be the inverse function of CodeToNum
     Random rand = new Random();
     int num = rand.nextInt(10000);
@@ -26,7 +26,7 @@ public class TableProcessingTest {
   }
 
   @Test
-  public void testSort() {
+  public void testSortNumber() {
     randomList = new ArrayList<ArrayList<String>>();
     sortedList = new ArrayList<ArrayList<String>>();
     ArrayList<String> random = new ArrayList<String>();
@@ -43,21 +43,27 @@ public class TableProcessingTest {
     sortedList.add(sorted);
     TableProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
     Assert.assertEquals("failure - not sorted", randomList, sortedList);
+    
+  }
+  
+  @Test
+  public void testSortString() {
     randomList = new ArrayList<ArrayList<String>>();
     sortedList = new ArrayList<ArrayList<String>>();
-    random.set(0, "b");
-    random.set(0, "c");
-    random.set(0, "a");
-    random.set(0, "d");
+    ArrayList<String> random = new ArrayList<String>();
+    random.add("dab");
+    random.add("a");
+    random.add("c");
+    random.add("b");
     randomList.add(random);
-    sorted.set(0, "a");
-    sorted.set(0, "b");
-    sorted.set(0, "c");
-    sorted.set(0, "d");
+    ArrayList<String> sorted = new ArrayList<String>();
+    sorted.add("a");
+    sorted.add("b");
+    sorted.add("c");
+    sorted.add("dab");
     sortedList.add(sorted);
     TableProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
-    Assert.assertEquals("failure - not sorted", randomList, sortedList);
-    
+    Assert.assertEquals("failure - not sorted", randomList, sortedList);   
   }
   
 }
