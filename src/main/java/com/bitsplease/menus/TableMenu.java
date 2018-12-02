@@ -19,8 +19,6 @@ public class TableMenu extends AbstractMenu {
   public void runWith(Table table) {
     // Menu will run with this table
     this.table = table;
-    // Make showAgain true again (bug fix)
-    showAgain = true;
     run();
   }
 
