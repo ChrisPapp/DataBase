@@ -6,11 +6,12 @@ public abstract class AbstractMenu implements Runnable {
   // Print main menu and run user's choice
   protected Scanner inputChoice = new Scanner(System.in);
   protected static int choice;
-  protected boolean showAgain = true;
+  protected boolean showAgain;
 
   public void run() {
     // If showAgain is true, then this will run again
     // after an action is performed
+    showAgain = true;
     while (showAgain) {
       printMenu();
       performAction();

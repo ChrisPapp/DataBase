@@ -4,35 +4,48 @@ import com.bitsplease.dbms.Database;
 import com.bitsplease.dbms.Table;
 
 public class DatabaseMenu extends AbstractMenu {
-  private Database database;
-  private TableMenu tableMenu;
+	protected Database database;
+	private SettingsMenu settingsMenu;
+	private TableChoiceMenu tableChoiceMenu;
+	private RemoveTableMenu removeTableMenu;
 
-  public DatabaseMenu(Database database) {
-    this.database = database;
-    tableMenu = new TableMenu();
-  }
+	public DatabaseMenu(Database database) {
+		this.database = database;
+		removeTableMenu = new RemoveTableMenu(database);
+		tableChoiceMenu = new TableChoiceMenu(database);
+		settingsMenu = new SettingsMenu();
+	}
 
-  @Override
-  protected void printMenu() {
-    int i = 0;
-    for (i = 0; i < database.getTables().size(); i++) {
-      System.out
-          .println((i + 1) + ". " + database.getTables().get(i).getName());
-    }
-    System.out.println((i + 1) + ". Create new Table");
-  }
 
   @Override
-  protected void performAction() {
-    choice = inputChoice.nextInt() - 1;
-    if (choice == database.getTables().size()) {
-      database.getTables().add(new Table());
-    } else if (choice >= 0 && choice < database.getTables().size()) {
-      tableMenu.runWith(database.getTables().get(choice));
-    } else {
-      System.out.println("Out of bounds");
-    }
+	protected void printMenu() {
+		System.out.println("1. Edit a Table \n" + "2. Create new Table \n"
+				+ "3. Load Table \n" + "4. Remove Table \n" + "5. Settings \n");
+	}
 
-  }
+	@Override
+	protected void performAction() {
+		choice = inputChoice.nextInt();
+		switch (choice) {
+			case 1 :
+				tableChoiceMenu.run();
+				break;
+			case 2 :
+				database.getTables().add(new Table());
+				break;
+			case 3:
+			  System.out.println("Under Development");
+			  break;
+			case 4 :
+				removeTableMenu.run();
+				break;
+			case 5 :
+				settingsMenu.run();
+			default :
+				System.out.println("Out of bounds");
+				break;
+		}
+
+	}
 
 }
