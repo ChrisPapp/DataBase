@@ -283,7 +283,7 @@ public class TableProcessing {
 
       String pivot = (String) lists.get(column).get(high);
       int i = low - 1;
-      boolean allAreNumbers = TableArithmetics.areAllNumbers(lists, column);
+      boolean allAreNumbers = TableArithmetics.areAllNumbers(lists, column, false);
       for (int j = low; j < high; j++) {
         String current = (String) lists.get(column).get(j);
         if (allAreNumbers) {

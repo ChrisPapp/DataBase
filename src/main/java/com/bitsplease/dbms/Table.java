@@ -1,25 +1,38 @@
 package com.bitsplease.dbms;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-public class Table {
+public class Table implements Serializable {
+  /**
+   * 
+   */
+  private static final long serialVersionUID = 1L;
   // Fill in our Table with fields and table
   private String name;
+
   private ArrayList<ArrayList<String>> list = new ArrayList<ArrayList<String>>();
-  private Scanner scanner = new Scanner(System.in);
+
   public Table() {
     inputName();
     inputFields();
     inputData();
   }
+  public Table(String name, ArrayList<ArrayList<String>> list) {
+    super();
+    this.name = name;
+    this.list = list;
+  }
 
   private void inputName() {
+    Scanner scanner = new Scanner(System.in);
     System.out.println("Enter the name of this Table");
     setName(scanner.nextLine());
   }
 
   public void inputFields() {
+    Scanner scanner = new Scanner(System.in);
     String category;
     do {
       System.out.println(
@@ -28,7 +41,7 @@ public class Table {
 
       category = scanner.nextLine();
       if (!(TableProcessing.equalsExit(category))) { // If category is not
-                                                        // "exit"
+                                                     // "exit"
         list.add(new ArrayList<String>()); // Add a new List
         list.get(list.size() - 1).add(category); // Add category to the last
                                                  // position
@@ -39,6 +52,7 @@ public class Table {
   }
 
   public void inputData() {
+    Scanner scanner = new Scanner(System.in);
     String data;
     System.out.println("PLEASE ENTER THE DATA IN YOUR DATABASE\n");
     while (true) {
@@ -60,6 +74,19 @@ public class Table {
       }
     }
   }
+  @Override
+  public boolean equals(Object o) {
+    // If given Object is not a Table return false
+    if (!(o instanceof Table)) {
+      return false;
+    }
+    // If I am still here, that means o is a Table
+    Table table = (Table) o;
+    // I hereby declare that two Tables are equal
+    // only and only if their names are equal
+    return table.getName().equals(this.getName());
+
+  }
 
   public ArrayList<ArrayList<String>> getList() {
     return list;
@@ -77,4 +104,3 @@ public class Table {
     this.name = name;
   }
 }
-

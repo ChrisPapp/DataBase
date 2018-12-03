@@ -207,13 +207,14 @@ public class TableArithmetics {
   }
 
   public static boolean areAllNumbers(final ArrayList<ArrayList<String>> lists,
-      final int askedColumn) {
+      final int askedColumn, boolean printMessages) {
     boolean areAllNumbers = true;
     for (int i = 1; i < lists.get(askedColumn).size(); i++) {
-      if (!TableProcessing
-          .isNumber((String) lists.get(askedColumn).get(i))) {
-        System.out.println("ERROR! \nInvalid String at line " + i + ".");
-        System.out.println("Please enter another value.");
+      if (!TableProcessing.isNumber((String) lists.get(askedColumn).get(i))) {
+        if (printMessages) {
+          System.out.println("ERROR! \nInvalid String at line " + i + ".");
+          System.out.println("Please enter another value.");
+        }
         areAllNumbers = false;
       }
     }

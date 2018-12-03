@@ -3,10 +3,10 @@ package com.bitsplease.menus;
 import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Scanner;
-
 import com.bitsplease.dbms.TableArithmetics;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableProcessing;
+import com.bitsplease.utilities.MemoryCard;
 
 public class TableMenu extends AbstractMenu {
   private static Scanner inputOperation = new Scanner(System.in);
@@ -68,29 +68,18 @@ public class TableMenu extends AbstractMenu {
       TableProcessing.removeColumn(table.getList());
       break;
     case 6:
-      System.out.println(" SELECT COLUMN: ");
-      Scanner inputColumn = new Scanner(System.in);
-      int askedColumn = TableProcessing.codeToNum(inputColumn.nextLine());
-      if (TableArithmetics.areAllNumbers(table.getList(), askedColumn)) {
-        TableArithmetics.sumOfAll(table.getList(), askedColumn);
-        TableArithmetics.productOfAll(table.getList(), askedColumn);
-        TableArithmetics.averageOfAll(table.getList(), askedColumn);
-        TableArithmetics.displayMore();
-      } else {
-        System.out.println(
-            "Check your table and change the ones that are not numbers!");
-      }
-      break;
-    case 7:
       System.out.println(" GIVE OPERATION ");
       String askedOperation = inputOperation.nextLine();
       TableArithmetics.extraordinaryOption(table.getList(), askedOperation);
       break;
-    case 8:
+    case 7:
       search();
       break;
-    case 9:
+    case 8:
       sort();
+      break;
+    case 9:
+      MemoryCard.save(table);
       break;
     case 0:
       showAgain = false;
@@ -132,8 +121,8 @@ public class TableMenu extends AbstractMenu {
   protected final void printMenu() {
     System.out.println("\n*** DATABASE MENU ***\n" + "  1. DISPLAY DATA \n"
         + "  2. INPUT DATA \n" + "  3. CHANGE DATA\n" + "  4. REMOVE LINE\n"
-        + "  5. REMOVE COLUMN\n" + "  6. MORE CALCULATIONS \n"
-        + "  7. OPERATIONS BETWEEN COLUMNS \n" + "  8. SEARCH \n"
-        + "  9. SORT \n" + "  0. BACK \n" + "  SELECT AN OPTION: ");
+        + "  5. REMOVE COLUMN\n" + "  6. OPERATIONS BETWEEN COLUMNS \n"
+        + "  7. SEARCH \n" + "  8. SORT \n" + "  9. SAVE \n" + "  0. BACK \n"
+        + "  SELECT AN OPTION: ");
   }
 }
