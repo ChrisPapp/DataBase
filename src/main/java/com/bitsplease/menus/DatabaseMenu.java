@@ -10,6 +10,7 @@ public class DatabaseMenu extends AbstractMenu {
   private TableChoiceMenu tableChoiceMenu;
   private RemoveTableMenu removeTableMenu;
 
+
   public DatabaseMenu(Database database) {
     this.database = database;
     removeTableMenu = new RemoveTableMenu(database);
@@ -17,12 +18,13 @@ public class DatabaseMenu extends AbstractMenu {
     settingsMenu = new SettingsMenu();
   }
 
-  @Override
-  protected void printMenu() {
-    System.out.println("1. Edit a Table \n" + "2. Create new Table \n"
-        + "3. Load Table \n" + "4. Remove Table \n" + "5. Settings \n");
-  }
 
+
+  @Override
+	protected void printMenu() {
+		System.out.println("1. Edit a Table \n" + "2. Create new Table \n"
+				+ "3. Load Table \n" + "4. Remove Table \n" + "5. Settings \n");
+	}
   @Override
   protected void performAction() {
     choice = inputChoice.nextInt();
@@ -62,7 +64,6 @@ public class DatabaseMenu extends AbstractMenu {
         database.getTables().add(suspectTable);
       }
     }
-
-  }
+	}
 
 }
