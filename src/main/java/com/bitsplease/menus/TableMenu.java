@@ -68,9 +68,9 @@ public class TableMenu extends AbstractMenu {
       TableProcessing.removeColumn(table.getList());
       break;
     case 6:
-      System.out.println(" GIVE OPERATION ");
+      System.out.print(" GIVE OPERATION: ");
       String askedOperation = inputOperation.nextLine();
-      TableArithmetics.extraordinaryOption(table.getList(), askedOperation);
+      TableArithmetics.startingOperationsBetweenColumns(table.getList(), askedOperation);
       break;
     case 7:
       search();
