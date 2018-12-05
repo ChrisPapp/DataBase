@@ -11,7 +11,7 @@ public class SettingsMenu extends AbstractMenu {
 
   @Override
   protected void performAction() {
-    choice = inputChoice.nextInt();
+    readChoice();
     switch (choice) {
     case 1:
       System.out.println("Under Development");
@@ -22,6 +22,11 @@ public class SettingsMenu extends AbstractMenu {
     case 3:
       showAgain = false;
       break;
+    case -1:
+      error.printWrong("This is not a number");
+      break;
+    default:
+      error.printWrong("Out of bounds");
     }
 
   }

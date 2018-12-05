@@ -1,6 +1,6 @@
 package com.bitsplease.dbms;
 import java.awt.Toolkit;
-class Wrong {
+public class Wrong {
   private String soundFilename;
   private  boolean isDefault = false;
   public Wrong() {

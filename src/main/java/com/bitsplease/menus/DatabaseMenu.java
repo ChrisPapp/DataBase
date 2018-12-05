@@ -1,5 +1,7 @@
 package com.bitsplease.menus;
 
+import java.util.Scanner;
+
 import com.bitsplease.dbms.Database;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.utilities.MemoryCard;
@@ -27,7 +29,7 @@ public class DatabaseMenu extends AbstractMenu {
 	}
   @Override
   protected void performAction() {
-    choice = inputChoice.nextInt();
+    readChoice();
     switch (choice) {
     case 1:
       tableChoiceMenu.run();
@@ -43,6 +45,10 @@ public class DatabaseMenu extends AbstractMenu {
       break;
     case 5:
       settingsMenu.run();
+      break;
+    case -1:
+      error.printWrong("This is not a number");
+      break;
     default:
       System.out.println("Out of bounds");
       break;
@@ -52,7 +58,8 @@ public class DatabaseMenu extends AbstractMenu {
 
   private void load() {
     System.out.println("Enter Table name:");
-    String name = inputChoice.next();
+    Scanner scanner = new Scanner(System.in);
+    String name = scanner.next();
     Table suspectTable = (Table) MemoryCard.load(name);
     if (suspectTable != null) {
       if (database.getTables().contains(suspectTable)) {

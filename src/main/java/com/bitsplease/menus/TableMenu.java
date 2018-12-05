@@ -1,6 +1,5 @@
 package com.bitsplease.menus;
 
-import java.awt.Toolkit;
 import java.util.ArrayList;
 import java.util.Scanner;
 import com.bitsplease.dbms.TableArithmetics;
@@ -23,27 +22,7 @@ public class TableMenu extends AbstractMenu {
   }
 
   public void performAction() {
-    int choice = 0;
-    boolean flag = true;
-    char ch = inputChoice.next().charAt(0);
-    do {
-      if (!(Character.isDigit(ch))) {
-        System.out.println("\n WRONG ");
-        Toolkit.getDefaultToolkit().beep();
-        printMenu();
-        ch = inputChoice.next().charAt(0);
-      } else {
-        choice = Character.getNumericValue(ch);
-        if ((choice < 0) || (choice > 9)) {
-          System.out.println("\n WRONG ");
-          Toolkit.getDefaultToolkit().beep();
-          printMenu();
-          ch = inputChoice.next().charAt(0);
-        } else {
-          flag = false;
-        }
-      }
-    } while (flag);
+    readChoice();
     switch (choice) {
     case 1:
       Scanner obj = new Scanner(System.in);
@@ -84,7 +63,11 @@ public class TableMenu extends AbstractMenu {
     case 0:
       showAgain = false;
       break;
+    case -1:
+      error.printWrong("This is not a number");
+      break;
     default:
+      error.printWrong("Out of Bounds");
       break;
     }
 
