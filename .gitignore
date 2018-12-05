@@ -2,3 +2,8 @@ doc/*
 target/*
 /target/
 /bin/
+
+.classpath
+.project
+.checkstyle
+.settings/*
