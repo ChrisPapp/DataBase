@@ -36,76 +36,9 @@ public class TableProcessing {
     temp.clear(); // Free space
 
   }
-
-  /**
-   * This method is used to display the data stored in Database.
-   * This method has two options for display. Either display with full names or display stopped by dots.
-   * @param lists Given table to display.
-   * @param press Integer value of option provided from user.
-   */
-  public static void displayData(ArrayList<ArrayList<String>> lists,
-      int press) {
-
-    ArrayList<Integer> array1 = new ArrayList<Integer>(); // for lines
-    ArrayList<String> array2 = new ArrayList<String>(); // for columns
-    for (int i = 0; i < lists.get(0).size(); i++) {
-      array1.add(i + 1);
-    }
-    if (press == 1) { // display whole names
-      ArrayList<Integer> dataLength = new ArrayList<Integer>();
-      for (int i = 0; i < lists.size(); i++) {
-        int length = ((String) lists.get(i).get(0)).length();
-        for (int j = 0; j < lists.get(0).size(); j++) {
-          if (((String) lists.get(i).get(j)).length() > length) {
-            length = ((String) lists.get(i).get(j)).length();
-          }
-        }
-        dataLength.add(length);
-      }
-      TableProcessing.rotate(lists); // Line mode
-      array2.add(numToCode(0));
-      System.out.printf("%-5s%-" + dataLength.get(0) + "s", " ", array2.get(0));
-      for (int i = 1; i < lists.get(0).size(); i++) {
-        String cell = numToCode(i);
-        array2.add(cell);
-        System.out.printf("%-3s%-" + dataLength.get(i) + "s", " ",
-            array2.get(i));
-      }
-      System.out.println();
-      for (int line = 0; line < lists.size(); line++) {
-        System.out.printf("%4d%s", array1.get(line), "|");
-        for (int field = 0; field < lists.get(0).size(); field++) {
-          System.out.printf("%-" + dataLength.get(field) + "s   ",
-              lists.get(line).get(field));
-        }
-        System.out.println();
-      }
-    } else { // display with "..."
-      TableProcessing.rotate(lists); // Line mode
-      for (int i = 0; i < lists.get(0).size(); i++) {
-        String cell = numToCode(i);
-        array2.add(cell);
-        System.out.printf("%-5s%-10s", " ", array2.get(i));
-      }
-      System.out.println();
-      for (int line = 0; line < lists.size(); line++) {
-        System.out.printf("%4d%s", array1.get(line), "|");
-        for (int field = 0; field < lists.get(line).size(); field++) {
-          if (((String) lists.get(line).get(field)).length() > 10) {
-            System.out.printf("%-10s%s",
-                ((String) lists.get(line).get(field)).substring(0, 10),
-                "...  ");
-          } else {
-            System.out.printf("%-15s", lists.get(line).get(field));
-          }
-        }
-        System.out.println(); // After printing a line, print a new line
-      }
-    }
-    TableProcessing.rotate(lists); // Back to column mode
-    System.out.println();
-  }
-
+  
+  
+    
   /**
    * This method is used to remove a line from the table processing. Dynamically asks the user which line wants to remove.
    * @param lists Table processing.
@@ -242,19 +175,7 @@ public class TableProcessing {
     }
   }
 
-  public static void printLine(ArrayList<ArrayList<String>> lists,
-      final int line) {
-    System.out.printf("%4d%s", line + 1, "|");
-    for (int field = 0; field < lists.get(line).size(); field++) {
-      if (((String) lists.get(line).get(field)).length() > 10) {
-        System.out.printf("%-10s%s",
-            ((String) lists.get(line).get(field)).substring(0, 10), "...  ");
-      } else {
-        System.out.printf("%-15s", lists.get(line).get(field));
-      }
-    }
-    System.out.println();
-  }
+  
 
   public static void printColumn(final ArrayList<String> arrayList) {
     for (int i = 0; i < arrayList.size(); i++) {

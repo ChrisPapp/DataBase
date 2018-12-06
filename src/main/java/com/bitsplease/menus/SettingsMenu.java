@@ -1,7 +1,17 @@
 package com.bitsplease.menus;
 
-public class SettingsMenu extends AbstractMenu {
+import com.bitsplease.dbms.Database;
 
+public class SettingsMenu extends AbstractMenu {
+	
+	protected Database database;
+	private DisplayMenu displayMenu;
+
+  public SettingsMenu(Database database) {
+      this.database = database;
+	  DisplayMenu displayMenu = new DisplayMenu(database);
+  }
+  	
   @Override
   protected void printMenu() {
     System.out.println(

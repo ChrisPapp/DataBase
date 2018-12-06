@@ -5,6 +5,7 @@ import java.util.Scanner;
 import com.bitsplease.dbms.TableArithmetics;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableProcessing;
+import com.bitsplease.dbms.Printer;
 import com.bitsplease.utilities.MemoryCard;
 
 public class TableMenu extends AbstractMenu {
@@ -25,11 +26,12 @@ public class TableMenu extends AbstractMenu {
     readChoice();
     switch (choice) {
     case 1:
-      Scanner obj = new Scanner(System.in);
-      System.out.println(
-          "IF YOU WANT TO SEE WHOLE DATA NAMES PRESS 1 OR ELSE PRESS 2");
-      int press = obj.nextInt();
-      TableProcessing.displayData(table.getList(), press);
+    	DisplayMenu.style = true;
+    	if (DisplayMenu.style) {
+            Printer.displayData(table.getList());
+    	} else {
+    		Printer.printShortcut(table.getList());
+    	}
       break;
     case 2:
       table.inputData();
