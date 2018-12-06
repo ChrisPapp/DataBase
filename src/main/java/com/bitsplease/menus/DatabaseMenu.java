@@ -60,7 +60,7 @@ public class DatabaseMenu extends AbstractMenu {
     System.out.println("Enter Table name:");
     Scanner scanner = new Scanner(System.in);
     String name = scanner.next();
-    Table suspectTable = (Table) MemoryCard.load(name);
+    Table suspectTable = MemoryCard.load(name);
     if (suspectTable != null) {
       if (database.getTables().contains(suspectTable)) {
         System.out.println("Overwriting " + suspectTable.getName() + "\n");
