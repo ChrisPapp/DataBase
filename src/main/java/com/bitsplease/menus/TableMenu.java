@@ -26,7 +26,6 @@ public class TableMenu extends AbstractMenu {
     readChoice();
     switch (choice) {
     case 1:
-    	DisplayMenu.style = true;
     	if (DisplayMenu.style) {
             Printer.displayData(table.getList());
     	} else {
