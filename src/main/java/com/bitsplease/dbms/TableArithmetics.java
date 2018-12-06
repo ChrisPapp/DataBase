@@ -87,7 +87,7 @@ public class TableArithmetics {
 		int positionOfResult = -1;
 		boolean startsWithOperator = false;
 
-		if (!addSymbol) {
+		if (!addSymbol && !wasInsideOnce) {
 			addSymbol = true;
 			sbToString = addPlusSymbolAtStartOfOperation(sbToString);
 		}
@@ -178,8 +178,8 @@ public class TableArithmetics {
 		int countHasStoppedForPosition = 1;
 		int sizeOfPositions = position.size();
 		boolean boo = startsWithSymbol(sbToString);
-		boolean booForResult = resultStartsWithSymbol(sbToString, positionOfResult);
-		if (!boo || !booForResult) {
+
+		if (!boo) {
 			countHasStoppedForPosition = 0;
 		}
 
@@ -382,19 +382,6 @@ public class TableArithmetics {
 
 		mathOperation = sbmo.toString();
 		return mathOperation;
-	}
-
-	public static boolean resultStartsWithSymbol(String mathOperation, int whereIsResult) {
-		try {
-			whereIsResult--;
-			if (mathOperation.charAt(whereIsResult) == '+' || mathOperation.charAt(whereIsResult) == '-') {
-				return true;
-			} else {
-				return false;
-			}
-		} catch (StringIndexOutOfBoundsException e) {
-			return false;
-		}
 	}
 
 	public static boolean startsWithSymbol(String mathOperation) {
