@@ -3,6 +3,7 @@ package com.bitsplease.menus;
 import java.util.Scanner;
 
 import com.bitsplease.dbms.Database;
+import com.bitsplease.dbms.PlaySound;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.utilities.MemoryCard;
 
@@ -12,7 +13,6 @@ public class DatabaseMenu extends AbstractMenu {
   private TableChoiceMenu tableChoiceMenu;
   private RemoveTableMenu removeTableMenu;
 
-
   public DatabaseMenu(Database database) {
     this.database = database;
     removeTableMenu = new RemoveTableMenu(database);
@@ -20,13 +20,13 @@ public class DatabaseMenu extends AbstractMenu {
     settingsMenu = new SettingsMenu();
   }
 
-
-
   @Override
-	protected void printMenu() {
-		System.out.println("1. Edit a Table \n" + "2. Create new Table \n"
-				+ "3. Load Table \n" + "4. Remove Table \n" + "5. Settings \n");
-	}
+  protected void printMenu() {
+    System.out.println(
+        "1. Edit a Table \n" + "2. Create new Table \n" + "3. Load Table \n"
+            + "4. Remove Table \n" + "5. Settings \n" + "6. Exit \n");
+  }
+
   @Override
   protected void performAction() {
     readChoice();
@@ -46,6 +46,10 @@ public class DatabaseMenu extends AbstractMenu {
     case 5:
       settingsMenu.run();
       break;
+    case 6:
+      System.out.println("Exiting... Thanks for choosing BitsPlease");
+      new PlaySound().play("antegeia.wav");
+      System.exit(0);
     case -1:
       error.printWrong("This is not a number");
       break;
@@ -71,6 +75,6 @@ public class DatabaseMenu extends AbstractMenu {
         database.getTables().add(suspectTable);
       }
     }
-	}
+  }
 
 }
