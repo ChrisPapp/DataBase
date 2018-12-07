@@ -19,71 +19,71 @@ import com.bitsplease.dbms.Table;
  *
  */
 public class MemoryCard {
-  private static String filepath = FileSystemView.getFileSystemView()
-      .getDefaultDirectory().getPath() + "\\BitsPleaseTables";
+	private static String filepath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()
+			+ "\\BitsPleaseTables";
 
-  /**
-   * Saves a table to Documents (Windows) or Home (Linux)
-   * 
-   * @param table
-   *          to be saved
-   */
-  public static void save(Table table) {
-    makeDirectory();
-    File file = new File(filepath, table.getName());
-    FileOutputStream fos;
-    ObjectOutputStream oos;
-    try {
-      fos = new FileOutputStream(file);
-      oos = new ObjectOutputStream(fos);
-      oos.writeObject(table);
-      oos.close();
-    } catch (FileNotFoundException e) {
-      e.printStackTrace();
-    } catch (IOException e) {
-      e.printStackTrace();
-    }
-  }
+	/**
+	 * Saves a table to Documents (Windows) or Home (Linux)
+	 * 
+	 * @param table
+	 *            to be saved
+	 */
+	public static void save(Table table) {
+		makeDirectory();
+		File file = new File(filepath, table.getName());
+		FileOutputStream fos;
+		ObjectOutputStream oos;
+		try {
+			fos = new FileOutputStream(file);
+			oos = new ObjectOutputStream(fos);
+			oos.writeObject(table);
+			oos.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 
-  /**
-   * Makes BitsPleaseTables directory to Documents on Windows or Home on Linux,
-   * if it is not already there
-   */
-  public static void makeDirectory() {
-    File file = new File(filepath);
-    if (!file.exists()) {
-      if (file.mkdir()) {
-        System.out.println("BitsPleaseTables directory created");
-      } else {
-        System.out.println("Directory creation failed");
-      }
-    }
-  }
+	/**
+	 * Makes BitsPleaseTables directory to Documents on Windows or Home on Linux, if
+	 * it is not already there
+	 */
+	public static void makeDirectory() {
+		File file = new File(filepath);
+		if (!file.exists()) {
+			if (file.mkdir()) {
+				System.out.println("BitsPleaseTables directory created");
+			} else {
+				System.out.println("Directory creation failed");
+			}
+		}
+	}
 
-  /**
-   * Loads a table that's already saved
-   * 
-   * @param name
-   *          Name of table to be loaded
-   * @return required table if it exists, null if it does not
-   */
-  public static Table load(String name) {
-    FileInputStream fis;
-    ObjectInputStream ois;
-    try {
-      File file = new File(filepath, name);
-      fis = new FileInputStream(file);
-      ois = new ObjectInputStream(fis);
-      Table table = (Table) ois.readObject();
-      ois.close();
-      return table;
-    } catch (FileNotFoundException e) {
-      System.out.println("Error 404: Not found");
-    } catch (IOException e) {
-      System.out.println("IO Exception");
-    } catch (ClassNotFoundException e) {
-      System.out.println("Class not found");
-    }
-    return null;
-  }
+	/**
+	 * Loads a table that's already saved
+	 * 
+	 * @param name
+	 *            Name of table to be loaded
+	 * @return required table if it exists, null if it does not
+	 */
+	public static Table load(String name) {
+		FileInputStream fis;
+		ObjectInputStream ois;
+		try {
+			File file = new File(filepath, name);
+			fis = new FileInputStream(file);
+			ois = new ObjectInputStream(fis);
+			Table table = (Table) ois.readObject();
+			ois.close();
+			return table;
+		} catch (FileNotFoundException e) {
+			System.out.println("Error 404: Not found");
+		} catch (IOException e) {
+			System.out.println("IO Exception");
+		} catch (ClassNotFoundException e) {
+			System.out.println("Class not found");
+		}
+		return null;
+	}
 }
