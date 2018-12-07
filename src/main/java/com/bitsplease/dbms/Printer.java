@@ -3,12 +3,15 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 
 public class Printer {
+  
+  // By default, print data with variable margin
+  private static boolean marginVariable = true;
 	
 	public Printer() {
 		
 	}
 	
-	public static ArrayList<Integer> dataLength(ArrayList<ArrayList<String>> arraylist) {
+	private static ArrayList<Integer> dataLength(ArrayList<ArrayList<String>> arraylist) {
 		TableProcessing.rotate(arraylist);
 	    ArrayList<Integer> stringLength = new ArrayList<Integer>();
 	    for (int i = 0; i < arraylist.size(); i++) {
@@ -24,7 +27,7 @@ public class Printer {
 	    return stringLength;
 	}
 
-	public static void columnName(ArrayList<ArrayList<String>> arraylist) {
+	private static void columnName(ArrayList<ArrayList<String>> arraylist) {
 		TableProcessing.rotate(arraylist);
 	    ArrayList<String> names = new ArrayList<String>();
 	    ArrayList<Integer> length = dataLength(arraylist);
@@ -90,4 +93,12 @@ public class Printer {
 	    }
 	    TableProcessing.rotate(arraylist);
 	}
+
+  public static boolean isMarginVariable() {
+    return marginVariable;
+  }
+
+  public static void setMarginVariable(boolean marginVariable) {
+    Printer.marginVariable = marginVariable;
+  }
 }

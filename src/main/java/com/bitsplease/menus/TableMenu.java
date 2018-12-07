@@ -26,11 +26,7 @@ public class TableMenu extends AbstractMenu {
     readChoice();
     switch (choice) {
     case 1:
-    	if (DisplayMenu.style) {
-            Printer.displayData(table.getList());
-    	} else {
-    		Printer.printShortcut(table.getList());
-    	}
+      table.print();
       break;
     case 2:
       table.inputData();
@@ -50,7 +46,8 @@ public class TableMenu extends AbstractMenu {
     case 6:
       System.out.print(" GIVE OPERATION: ");
       String askedOperation = inputOperation.nextLine();
-      TableArithmetics.startingOperationsBetweenColumns(table.getList(), askedOperation);
+      TableArithmetics.startingOperationsBetweenColumns(table.getList(),
+          askedOperation);
       break;
     case 7:
       search();

@@ -17,7 +17,7 @@ public class DatabaseMenu extends AbstractMenu {
     this.database = database;
     removeTableMenu = new RemoveTableMenu(database);
     tableChoiceMenu = new TableChoiceMenu(database);
-    settingsMenu = new SettingsMenu(database);
+    settingsMenu = new SettingsMenu();
   }
 
   @Override

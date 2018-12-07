@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import com.bitsplease.menus.DisplayMenu;
+
 public class Table implements Serializable {
   /**
    * 
@@ -19,6 +21,7 @@ public class Table implements Serializable {
     inputFields();
     inputData();
   }
+
   public Table(String name, ArrayList<ArrayList<String>> list) {
     super();
     this.name = name;
@@ -74,6 +77,7 @@ public class Table implements Serializable {
       }
     }
   }
+
   @Override
   public boolean equals(Object o) {
     // If given Object is not a Table return false
@@ -86,6 +90,14 @@ public class Table implements Serializable {
     // only and only if their names are equal
     return table.getName().equals(this.getName());
 
+  }
+
+  public void print() {
+    if (Printer.isMarginVariable()) {
+      Printer.displayData(this.getList());
+    } else {
+      Printer.printShortcut(this.getList());
+    }
   }
 
   public ArrayList<ArrayList<String>> getList() {

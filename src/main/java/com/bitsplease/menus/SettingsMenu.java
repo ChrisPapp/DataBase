@@ -1,17 +1,9 @@
 package com.bitsplease.menus;
 
-import com.bitsplease.dbms.Database;
-
 public class SettingsMenu extends AbstractMenu {
-	
-	protected Database database;
-	private DisplayMenu displayMenu;
 
-  public SettingsMenu(Database database) {
-      this.database = database;
-	  DisplayMenu displayMenu = new DisplayMenu(database);
-  }
-  	
+  private DisplayMenu displayMenu = new DisplayMenu();
+
   @Override
   protected void printMenu() {
     System.out.println(
@@ -24,7 +16,7 @@ public class SettingsMenu extends AbstractMenu {
     readChoice();
     switch (choice) {
     case 1:
-      System.out.println("Under Development");
+      displayMenu.run();
       break;
     case 2:
       System.out.println("Under Development");
