@@ -36,58 +36,81 @@ public class TableArithmetics {
 	public static void startingOperationsBetweenColumns(ArrayList<ArrayList<String>> lists, String mathOperation) {
 
 		ArrayList<Integer> positionOfParenthesis = new ArrayList<Integer>();
-		positionOfParenthesis = searchingForParenthesis(mathOperation);
+		int[] startFrom = new int[2];
+		int numberOfParentheses;
+		int count = 0;
 
-		for (int i = 0; i < positionOfParenthesis.size(); i++) {
-			System.out.println(positionOfParenthesis.get(i));
-		}
-
-		positionOfParenthesis.clear();
 		mathOperation = addParenthesisWhereIsNecessary(mathOperation);
+		System.out.println(mathOperation);
 		positionOfParenthesis = searchingForParenthesis(mathOperation);
+		numberOfParentheses = positionOfParenthesis.size() / 2;
+		System.out.println(numberOfParentheses);
+		startFrom = whereToStart(positionOfParenthesis, mathOperation);
 
-		int start = -1;
-		int end = 0;
+		System.out.println(startFrom[0]);
+		System.out.println(startFrom[1]);
+
 		StringBuilder sbMathOperation = new StringBuilder();
-		for (int countPosition = 0; countPosition < positionOfParenthesis.size() / 2; countPosition++) {
+		for (int countPosition = 0; countPosition < numberOfParentheses; countPosition++) {
 			try {
 				System.out.println("Hello World");
 				System.out.println(mathOperation);
 
 				String sbToString;
-				ArrayList<Integer> newPositionOfParenthesis = new ArrayList<Integer>();
-				newPositionOfParenthesis = searchingForParenthesis(mathOperation);
-				int standard = newPositionOfParenthesis.size() / 2;
+				boolean temporaryColumn = false;
 
-				sbMathOperation.append(mathOperation, newPositionOfParenthesis.get(standard + start) + 1,
-						newPositionOfParenthesis.get(standard + end));
+				sbMathOperation.append(mathOperation, startFrom[0] + 1, startFrom[1]);
 				sbToString = sbMathOperation.toString();
 				System.out.println(sbToString);
 				sbMathOperation.delete(0, sbMathOperation.length());
 
+				if (mathOperation.contains("Result") && !sbToString.contains("Result")) {
+					temporaryColumn = true;
+					count++;
+				}
+				
 				StringBuilder sbmo = new StringBuilder(mathOperation);
-				sbmo.replace(newPositionOfParenthesis.get(standard + start),
-						newPositionOfParenthesis.get(standard + end) + 1, "Result");
+				if (temporaryColumn) {
+					sbmo.replace(startFrom[0], startFrom[1] + 1, "TemporaryColumn");
+				} else {
+					sbmo.replace(startFrom[0], startFrom[1] + 1, "Result");
+				}
+				
 				mathOperation = sbmo.toString();
 
-				seperatingTheVariablesOfOperation(lists, sbToString);
+				System.out.println(temporaryColumn);
+				
+				if (sbToString.equals("Result")) {
+					positionOfParenthesis.clear();
+					positionOfParenthesis = searchingForParenthesis(mathOperation);
+					startFrom = whereToStart(positionOfParenthesis, mathOperation);
+					continue;
+				}
+
+				seperatingTheVariablesOfOperation(lists, sbToString, temporaryColumn);
 				System.out.println(lists.get(lists.size() - 1).get(1));
 				System.out.println("I am in!");
+
+				positionOfParenthesis.clear();
+				positionOfParenthesis = searchingForParenthesis(mathOperation);
+				startFrom = whereToStart(positionOfParenthesis, mathOperation);
 
 			} catch (ArrayIndexOutOfBoundsException e) {
 			}
 		}
-
+		for (int i = 1; i <= count; i++) {
+			lists.remove(lists.size() - i - 1);
+		}
 	}
 
-	public static void seperatingTheVariablesOfOperation(ArrayList<ArrayList<String>> lists, String sbToString) {
+	public static void seperatingTheVariablesOfOperation(ArrayList<ArrayList<String>> lists, String sbToString,
+			boolean temporaryColumn) {
 		ArrayList<String> fields = new ArrayList<String>();
 		ArrayList<String> digits = new ArrayList<String>();
 		ArrayList<Integer> position = new ArrayList<Integer>();
 		int positionOfResult = -1;
-		boolean startsWithOperator = false;
 
-		if (!addSymbol && !wasInsideOnce) {
+		if ((!addSymbol && !wasInsideOnce) || temporaryColumn || sbToString.startsWith("Result")) {
 			addSymbol = true;
 			sbToString = addPlusSymbolAtStartOfOperation(sbToString);
 		}
@@ -150,7 +173,6 @@ public class TableArithmetics {
 			} else if (sbToString.charAt(0) == '+' || sbToString.charAt(0) == '-') {
 				int j = i;
 				position.add(j);
-				startsWithOperator = true;
 				try {
 					if (sbToString.charAt(j) == ' ') {
 						sbToString.charAt(++j);
@@ -166,31 +188,49 @@ public class TableArithmetics {
 			System.out.println(position.get(i));
 		}
 
-		executeOperation(lists, fields, digits, position, sbToString, startsWithOperator, positionOfResult);
+		executeOperation(lists, fields, digits, position, sbToString, positionOfResult, temporaryColumn);
 	}
 
 	public static void executeOperation(ArrayList<ArrayList<String>> lists, ArrayList<String> fields,
-			ArrayList<String> digits, ArrayList<Integer> position, String sbToString, boolean startsWithOperator,
-			int positionOfResult) {
+			ArrayList<String> digits, ArrayList<Integer> position, String sbToString, int positionOfResult,
+			boolean temporaryColumn) {
 
 		int countFields = 0;
 		int countDigits = 0;
 		int countHasStoppedForPosition = 1;
 		int sizeOfPositions = position.size();
-		boolean boo = startsWithSymbol(sbToString);
+		String nameOfColumn = "Result";
+		boolean booForSymbol = startsWithSymbol(sbToString);
+		boolean tempColumn = temporaryColumn;
+		boolean boo = booForSymbol || temporaryColumn;
+
+		if (temporaryColumn) {
+			nameOfColumn = "TemporaryColumn";
+		}
+		System.out.println(nameOfColumn);
 
 		if (!boo) {
 			countHasStoppedForPosition = 0;
 		}
 
 		if (positionOfResult != -1) {
-			if (sbToString.charAt(positionOfResult - 1) == '-') {
-				for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-					double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
-					double temp2 = -1;
-					lists.get(lists.size() - 1).set(b, String.valueOf(temp1 * temp2));
+			try {
+				if (sbToString.charAt(positionOfResult - 1) == '-') {
+					for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
+						double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+						double temp2 = -1;
+						lists.get(lists.size() - 1).set(b, String.valueOf(temp1 * temp2));
+					}
+				} else if (sbToString.charAt(positionOfResult - 1) == '/') {
+					for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
+						double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+						lists.get(lists.size() - 1).set(b, String.valueOf(1 / temp1));
+						StringBuilder sbmo = new StringBuilder(sbToString);
+						sbmo.replace(positionOfResult - 1, positionOfResult - 1, "*");
+						sbToString = sbmo.toString();
+					}
 				}
-			}
+			} catch (IndexOutOfBoundsException e) { }
 		}
 
 		System.out.println("I am in! executeOperation");
@@ -199,28 +239,33 @@ public class TableArithmetics {
 				int at = -1;
 				if (Character.isLetter(sbToString.charAt(position.get(countHasStoppedForPosition)))) {
 					at = whereIsField(lists, fields.get(countFields));
+					System.out.println(at);
 					if (lists.get(at).get(0).equals("Result")) {
 						countFields++;
 						countHasStoppedForPosition += 2;
 						continue;
 					}
-					if (!wasInsideOnce) {
+					if (!wasInsideOnce || tempColumn) {
 						wasInsideOnce = true;
-						addColumn(lists, "Result", at);
-						switchForStrings(lists, position, sbToString, countHasStoppedForPosition, at, boo);
+						tempColumn = false;
+						addColumn(lists, nameOfColumn, at);
+						switchForStrings(lists, position, sbToString, countHasStoppedForPosition, at, boo,
+								temporaryColumn);
 					} else {
-						switchForStrings(lists, position, sbToString, countHasStoppedForPosition, at, boo);
+						switchForStrings(lists, position, sbToString, countHasStoppedForPosition, at, boo,
+								temporaryColumn);
 					}
 					countFields++;
 				} else if (Character.isDigit(sbToString.charAt(position.get(countHasStoppedForPosition)))) {
-					if (!wasInsideOnce) {
+					if (!wasInsideOnce || tempColumn) {
 						wasInsideOnce = true;
-						addColumn(lists, "Result", at); // to at na to allaksw
+						tempColumn = false;
+						addColumn(lists, nameOfColumn, at); // to at na to allaksw
 						switchForNumbers(lists, position, sbToString, digits, countDigits, countHasStoppedForPosition,
-								boo);
+								boo, temporaryColumn);
 					} else {
 						switchForNumbers(lists, position, sbToString, digits, countDigits, countHasStoppedForPosition,
-								boo);
+								boo, temporaryColumn);
 					}
 					countDigits++;
 				}
@@ -232,40 +277,45 @@ public class TableArithmetics {
 	}
 
 	public static void switchForStrings(ArrayList<ArrayList<String>> lists, ArrayList<Integer> position,
-			String sbToString, int countHasStopped, int at, boolean boo) {
+			String sbToString, int countHasStopped, int at, boolean boo, boolean temporaryColumn) {
 		System.out.println("I am in! switchForStrings");
+		int where = lists.size() - 1;
+		if (temporaryColumn) {
+			where--;
+		}
 		if (!boo) {
 			countHasStopped++;
 		} else {
 			countHasStopped--;
 		}
+		System.out.println(where);
 		switch (sbToString.charAt(position.get(countHasStopped))) {
 		case '+':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) lists.get(at).get(b));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 + temp2));
+				lists.get(where).set(b, String.valueOf(temp1 + temp2));
 			}
 			break;
 		case '-':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) lists.get(at).get(b));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 - temp2));
+				lists.get(where).set(b, String.valueOf(temp1 - temp2));
 			}
 			break;
 		case '*':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) lists.get(at).get(b));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 * temp2));
+				lists.get(where).set(b, String.valueOf(temp1 * temp2));
 			}
 			break;
 		case '/':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) lists.get(at).get(b));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 / temp2));
+				lists.get(where).set(b, String.valueOf(temp1 / temp2));
 			}
 			break;
 		default:
@@ -274,7 +324,12 @@ public class TableArithmetics {
 	}
 
 	public static void switchForNumbers(ArrayList<ArrayList<String>> lists, ArrayList<Integer> position,
-			String sbToString, ArrayList<String> digits, int countDigits, int countHasStopped, boolean boo) {
+			String sbToString, ArrayList<String> digits, int countDigits, int countHasStopped, boolean boo,
+			boolean temporaryColumn) {
+		int where = lists.size() - 1;
+		if (temporaryColumn) {
+			where--;
+		}
 		if (!boo) {
 			countHasStopped++;
 		} else {
@@ -284,30 +339,30 @@ public class TableArithmetics {
 		switch (sbToString.charAt(position.get(countHasStopped))) {
 		case '+':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) digits.get(countDigits));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 + temp2));
+				lists.get(where).set(b, String.valueOf(temp1 + temp2));
 			}
 			break;
 		case '-':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) digits.get(countDigits));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 - temp2));
+				lists.get(where).set(b, String.valueOf(temp1 - temp2));
 			}
 			break;
 		case '*':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) digits.get(countDigits));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 * temp2));
+				lists.get(where).set(b, String.valueOf(temp1 * temp2));
 			}
 			break;
 		case '/':
 			for (int b = 1; b < lists.get(lists.size() - 1).size(); b++) {
-				double temp1 = Double.parseDouble((String) lists.get(lists.size() - 1).get(b));
+				double temp1 = Double.parseDouble((String) lists.get(where).get(b));
 				double temp2 = Double.parseDouble((String) digits.get(countDigits));
-				lists.get(lists.size() - 1).set(b, String.valueOf(temp1 / temp2));
+				lists.get(where).set(b, String.valueOf(temp1 / temp2));
 			}
 			break;
 		default:
@@ -315,73 +370,31 @@ public class TableArithmetics {
 		}
 	}
 
-	public static String addParenthesisWhereIsNecessary(String mathOperation) {
-		StringBuilder sbmo = new StringBuilder(mathOperation);
-		ArrayList<Integer> positionOfStartEndParenthesis = new ArrayList<Integer>();
-		System.out.println(sbmo.toString());
-		if (sbmo.charAt(0) != '(') {
-			sbmo.insert(0, '(');
-			sbmo.insert(sbmo.length(), ')');
-		}
-		System.out.println(sbmo.toString());
-		for (int i = 0; i < sbmo.length(); i++) {
-			if (sbmo.charAt(i) == '*' || sbmo.charAt(i) == '/') {
-				System.out.println(i);
-				boolean booFront = false;
-				boolean booBack = false;
-				int countBack = i;
-				int countFront = i;
-				while (!booBack) {
-					countBack--;
-					if (!(Character.isLetter(sbmo.charAt(countBack)) || Character.isDigit(sbmo.charAt(countBack)))) {
-						booBack = true;
-						sbmo.insert(++countBack, '(');
-						System.out.println(sbmo.toString());
-					}
+	public static int[] whereToStart(ArrayList<Integer> positionOfParenthesis, String mathOperation) {
+		int maxStartingParenthesis = 0;
+		int[] startFrom = new int[2];
+
+		int max = 0;
+		int tempStartingPosition = -1;
+		for (int i = 0; i < positionOfParenthesis.size(); i++) {
+			if (mathOperation.charAt(positionOfParenthesis.get(i)) == '(') {
+				maxStartingParenthesis++;
+				if (maxStartingParenthesis > max) {
+					max = maxStartingParenthesis;
+					tempStartingPosition = i;
 				}
-				while (!booFront) {
-					try {
-						countFront++;
-						if (!(Character.isLetter(sbmo.charAt(countFront)) || Character.isDigit(sbmo.charAt(countFront))
-								|| sbmo.charAt(countFront) == '*' || sbmo.charAt(countFront) == '/'
-								|| sbmo.charAt(countFront) == '(')) {
-							booFront = true;
-							sbmo.insert(countFront, ')');
-						} else if (sbmo.charAt(countFront) == '(') {
-							System.out.println(sbmo.substring(countFront));
-							positionOfStartEndParenthesis = searchingForParenthesis(sbmo.substring(countFront));
-							int countStartingParenthesis = 0;
-							int countEndingParenthesis = 0;
-							int count = 0;
-							while ((countStartingParenthesis != countEndingParenthesis) || count == 0) {
-								System.out.println("i m in");
-								try {
-									if (sbmo.charAt(positionOfStartEndParenthesis.get(count)) == '(') {
-										countStartingParenthesis++;
-									} else if (sbmo.charAt(positionOfStartEndParenthesis.get(count)) == ')') {
-										countEndingParenthesis++;
-									}
-									count++;
-								} catch (IndexOutOfBoundsException e) {
-									break;
-								}
-							}
-							System.out.println("i m in if");
-							countFront = positionOfStartEndParenthesis.get(--count) + i;
-							System.out.println(countFront);
-							booFront = true;
-							sbmo.insert(countFront, ')');
-							System.out.println(sbmo.toString());
-						}
-					} catch (StringIndexOutOfBoundsException e) {
-					}
-				}
-				i = countFront;
+			} else if (mathOperation.charAt(positionOfParenthesis.get(i)) == ')') {
+				maxStartingParenthesis--;
 			}
 		}
+		startFrom[0] = positionOfParenthesis.get(tempStartingPosition);
+		startFrom[1] = positionOfParenthesis.get(tempStartingPosition + 1);
 
-		mathOperation = sbmo.toString();
-		return mathOperation;
+		return startFrom;
+	}
+
+	public static String addParenthesisWhereIsNecessary(String mathOperation) {
+		return '(' + mathOperation + ')';
 	}
 
 	public static boolean startsWithSymbol(String mathOperation) {
@@ -401,20 +414,25 @@ public class TableArithmetics {
 	}
 
 	public static void addColumn(ArrayList<ArrayList<String>> lists, String name, int at) {
-		lists.add(new ArrayList<String>());
-		lists.get(lists.size() - 1).add(name);
-
-		for (int i = 1; i < lists.get(at).size(); i++) {
-			lists.get(lists.size() - 1).add("0");
+		if (name == "TemporaryColumn") {
+			lists.add(lists.size() - 1, new ArrayList<String>());
+			lists.get(lists.size() - 2).add(name);
+			for (int i = 1; i < lists.get(at).size(); i++) {
+				lists.get(lists.size() - 2).add("0");
+			}
+		} else if (name == "Result") {
+			lists.add(new ArrayList<String>());
+			lists.get(lists.size() - 1).add(name);
+			for (int i = 1; i < lists.get(at).size(); i++) {
+				lists.get(lists.size() - 1).add("0");
+			}
 		}
 	}
 
 	public static String addPlusSymbolAtStartOfOperation(String mathOperation) {
 		if (Character.isLetter(mathOperation.charAt(0)) || Character.isDigit(mathOperation.charAt(0))
 				|| mathOperation.charAt(0) == ' ') {
-			StringBuilder newMathOperation = new StringBuilder();
-			newMathOperation.append("+" + mathOperation);
-			return newMathOperation.toString();
+			return '+' + mathOperation;
 		} else {
 			return mathOperation;
 		}
