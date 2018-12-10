@@ -3,6 +3,8 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 
 public class TableArithmetics {
+	private static int countTemporaryColumns = 0;
+	
 	private static double sum = 0;
 	private static double product = 1;
 	private static double average = 0;
@@ -35,7 +37,6 @@ public class TableArithmetics {
 
 	public static void startingOperationsBetweenColumns(ArrayList<ArrayList<String>> lists, String mathOperation) {
 				
-		int count = 0;
 		int numberOfParentheses;
 		int[] startFrom = new int[2];
 		ArrayList<Integer> positionOfParentheses = new ArrayList<Integer>();
@@ -62,11 +63,11 @@ public class TableArithmetics {
 				}
 				if (mathOperation.contains("Result") && !sbMathOperation.toString().contains("Result")) {
 					temporaryColumn = true;
-					count++;
+					countTemporaryColumns++;
 				}
 				StringBuilder sbmo = new StringBuilder(mathOperation);
 				if (temporaryColumn) {
-					sbmo.replace(startFrom[0], startFrom[1] + 1, "TemporaryColumn" + count);
+					sbmo.replace(startFrom[0], startFrom[1] + 1, "TemporaryColumn" + TableProcessing.numToCode(countTemporaryColumns));
 				} else {
 					sbmo.replace(startFrom[0], startFrom[1] + 1, "Result");
 				}
@@ -79,8 +80,8 @@ public class TableArithmetics {
 			} catch (ArrayIndexOutOfBoundsException e) { }
 		}
 		
-		for (int i = 1; i <= count; i++) {
-			lists.remove(lists.size() - i - 1);
+		for (int i = 0; i < countTemporaryColumns; i++) {
+			lists.remove(lists.size() - 2);
 		}
 	}
 
@@ -154,9 +155,13 @@ public class TableArithmetics {
 		boolean booForSymbol = startsWithSymbol(sbToString);
 		boolean tempColumn = temporaryColumn;
 		boolean boo = booForSymbol || temporaryColumn;
+		
+		if (positionOfResult > 0 && (sbToString.charAt(positionOfResult - 1) == '-' || sbToString.charAt(positionOfResult - 1) == '/')) {
+			sbToString = addPlusSymbolAtStartOfOperation(sbToString);
+		}
 
 		if (temporaryColumn) {
-			nameOfColumn = "TemporaryColumn";
+			nameOfColumn = "TemporaryColumn" + TableProcessing.numToCode(countTemporaryColumns);
 		}
 		System.out.println(nameOfColumn);
 
