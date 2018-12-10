@@ -34,70 +34,51 @@ public class TableArithmetics {
 	}
 
 	public static void startingOperationsBetweenColumns(ArrayList<ArrayList<String>> lists, String mathOperation) {
-
-		ArrayList<Integer> positionOfParenthesis = new ArrayList<Integer>();
-		int[] startFrom = new int[2];
-		int numberOfParentheses;
+				
 		int count = 0;
+		int numberOfParentheses;
+		int[] startFrom = new int[2];
+		ArrayList<Integer> positionOfParentheses = new ArrayList<Integer>();
+		
+		mathOperation = mathOperation.replaceAll("\\s+", "");
+		mathOperation = addParenthesesAtStartAndEnd(mathOperation);
 
-		mathOperation = addParenthesisWhereIsNecessary(mathOperation);
-		System.out.println(mathOperation);
-		positionOfParenthesis = searchingForParenthesis(mathOperation);
-		numberOfParentheses = positionOfParenthesis.size() / 2;
-		System.out.println(numberOfParentheses);
-		startFrom = whereToStart(positionOfParenthesis, mathOperation);
-
-		System.out.println(startFrom[0]);
-		System.out.println(startFrom[1]);
+		positionOfParentheses = searchingForParenthesis(mathOperation);
+		numberOfParentheses = positionOfParentheses.size() / 2;
+		positionOfParentheses.clear();
 
 		StringBuilder sbMathOperation = new StringBuilder();
 		for (int countPosition = 0; countPosition < numberOfParentheses; countPosition++) {
 			try {
-				System.out.println("Hello World");
-				System.out.println(mathOperation);
-
-				String sbToString;
 				boolean temporaryColumn = false;
-
+				positionOfParentheses = searchingForParenthesis(mathOperation);
+				startFrom = whereToStart(positionOfParentheses, mathOperation);
 				sbMathOperation.append(mathOperation, startFrom[0] + 1, startFrom[1]);
-				sbToString = sbMathOperation.toString();
-				System.out.println(sbToString);
-				sbMathOperation.delete(0, sbMathOperation.length());
 
-				if (mathOperation.contains("Result") && !sbToString.contains("Result")) {
+				if (sbMathOperation.toString().matches("Result")) {
+					sbMathOperation.delete(0, sbMathOperation.length());
+					positionOfParentheses.clear();
+					continue;
+				}
+				if (mathOperation.contains("Result") && !sbMathOperation.toString().contains("Result")) {
 					temporaryColumn = true;
 					count++;
 				}
-				
 				StringBuilder sbmo = new StringBuilder(mathOperation);
 				if (temporaryColumn) {
-					sbmo.replace(startFrom[0], startFrom[1] + 1, "TemporaryColumn");
+					sbmo.replace(startFrom[0], startFrom[1] + 1, "TemporaryColumn" + count);
 				} else {
 					sbmo.replace(startFrom[0], startFrom[1] + 1, "Result");
 				}
-				
 				mathOperation = sbmo.toString();
 
-				System.out.println(temporaryColumn);
-				
-				if (sbToString.equals("Result")) {
-					positionOfParenthesis.clear();
-					positionOfParenthesis = searchingForParenthesis(mathOperation);
-					startFrom = whereToStart(positionOfParenthesis, mathOperation);
-					continue;
-				}
-
-				seperatingTheVariablesOfOperation(lists, sbToString, temporaryColumn);
-				System.out.println(lists.get(lists.size() - 1).get(1));
-				System.out.println("I am in!");
-
-				positionOfParenthesis.clear();
-				positionOfParenthesis = searchingForParenthesis(mathOperation);
-				startFrom = whereToStart(positionOfParenthesis, mathOperation);
-
-			} catch (ArrayIndexOutOfBoundsException e) {
-			}
+				seperatingTheVariablesOfOperation(lists, sbMathOperation.toString(), temporaryColumn);
+				sbMathOperation.delete(0, sbMathOperation.length()); 
+				positionOfParentheses.clear();
+		
+			} catch (ArrayIndexOutOfBoundsException e) { }
 		}
+		
 		for (int i = 1; i <= count; i++) {
 			lists.remove(lists.size() - i - 1);
 		}
@@ -115,9 +96,6 @@ public class TableArithmetics {
 			sbToString = addPlusSymbolAtStartOfOperation(sbToString);
 		}
 
-		System.out.println(sbToString);
-
-		System.out.println("I am in! seperatingTheVariablesOfOperation");
 
 		for (int i = 0; i < sbToString.length(); i++) {
 			if (Character.isLetter(sbToString.charAt(i))) {
@@ -133,18 +111,11 @@ public class TableArithmetics {
 						break;
 					}
 				}
-				try {
-					if (sbToString.charAt(j) == ' ') {
-						sbToString.charAt(++j);
-					}
-				} catch (StringIndexOutOfBoundsException e) {
-				} finally {
-					position.add(j);
-				}
 				if (atLeastOneResult(sbFields.toString())) {
 					positionOfResult = position.get(position.size() - 2);
 				}
 				System.out.println("positionOfResult  " + positionOfResult);
+				position.add(j);
 				fields.add(sbFields.toString());
 				i = j;
 			} else if (Character.isDigit(sbToString.charAt(i))) {
@@ -160,34 +131,14 @@ public class TableArithmetics {
 						break;
 					}
 				}
-				try {
-					if (sbToString.charAt(j) == ' ') {
-						sbToString.charAt(++j);
-					}
-				} catch (StringIndexOutOfBoundsException e) {
-				} finally {
-					position.add(j);
-				}
+				position.add(j);
 				digits.add(sbDigits.toString());
 				i = j;
 			} else if (sbToString.charAt(0) == '+' || sbToString.charAt(0) == '-') {
 				int j = i;
 				position.add(j);
-				try {
-					if (sbToString.charAt(j) == ' ') {
-						sbToString.charAt(++j);
-					}
-				} catch (StringIndexOutOfBoundsException e) {
-				}
 			}
 		}
-		for (int i = 0; i < fields.size(); i++) {
-			System.out.println(fields.get(i));
-		}
-		for (int i = 0; i < position.size(); i++) {
-			System.out.println(position.get(i));
-		}
-
 		executeOperation(lists, fields, digits, position, sbToString, positionOfResult, temporaryColumn);
 	}
 
@@ -230,7 +181,8 @@ public class TableArithmetics {
 						sbToString = sbmo.toString();
 					}
 				}
-			} catch (IndexOutOfBoundsException e) { }
+			} catch (IndexOutOfBoundsException e) {
+			}
 		}
 
 		System.out.println("I am in! executeOperation");
@@ -372,9 +324,9 @@ public class TableArithmetics {
 
 	public static int[] whereToStart(ArrayList<Integer> positionOfParenthesis, String mathOperation) {
 		int maxStartingParenthesis = 0;
-		int[] startFrom = new int[2];
-
 		int max = 0;
+		int[] startFrom = new int[2];
+		
 		int tempStartingPosition = -1;
 		for (int i = 0; i < positionOfParenthesis.size(); i++) {
 			if (mathOperation.charAt(positionOfParenthesis.get(i)) == '(') {
@@ -393,7 +345,7 @@ public class TableArithmetics {
 		return startFrom;
 	}
 
-	public static String addParenthesisWhereIsNecessary(String mathOperation) {
+	public static String addParenthesesAtStartAndEnd(String mathOperation) {
 		return '(' + mathOperation + ')';
 	}
 
@@ -414,7 +366,7 @@ public class TableArithmetics {
 	}
 
 	public static void addColumn(ArrayList<ArrayList<String>> lists, String name, int at) {
-		if (name == "TemporaryColumn") {
+		if (name.startsWith("TemporaryColumn")) {
 			lists.add(lists.size() - 1, new ArrayList<String>());
 			lists.get(lists.size() - 2).add(name);
 			for (int i = 1; i < lists.get(at).size(); i++) {
