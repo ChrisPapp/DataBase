@@ -1,4 +1,4 @@
-package com.bitsplease.dbms;
+package com.bitsplease.utilities;
 import java.awt.Toolkit;
 public class Wrong {
   private String soundFilename;

@@ -79,6 +79,9 @@ public class Table implements Serializable {
 
 	@Override
 	public boolean equals(Object o) {
+	  if ( o == this) { // Compare hash codes
+	    return true;
+	  }
 		// If given Object is not a Table return false
 		if (!(o instanceof Table)) {
 			return false;

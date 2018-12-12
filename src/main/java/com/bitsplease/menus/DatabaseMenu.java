@@ -3,9 +3,9 @@ package com.bitsplease.menus;
 import java.util.Scanner;
 
 import com.bitsplease.dbms.Database;
-import com.bitsplease.dbms.PlaySound;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.utilities.MemoryCard;
+import com.bitsplease.utilities.PlaySound;
 
 public class DatabaseMenu extends AbstractMenu {
 	protected Database database;
@@ -47,13 +47,13 @@ public class DatabaseMenu extends AbstractMenu {
 			break;
 		case 6:
 			System.out.println("Exiting... Thanks for choosing BitsPlease");
-			new PlaySound().play("antegeia.wav");
+			new PlaySound().play("antegeia");
 			System.exit(0);
 		case -1:
 			error.printWrong("This is not a number");
 			break;
 		default:
-			System.out.println("Out of bounds");
+			error.printWrong("Out of bounds");
 			break;
 		}
 

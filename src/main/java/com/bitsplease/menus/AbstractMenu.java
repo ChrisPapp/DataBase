@@ -2,14 +2,14 @@ package com.bitsplease.menus;
 
 import java.util.Scanner;
 
-import com.bitsplease.dbms.Wrong;
+import com.bitsplease.utilities.Wrong;
 
 public abstract class AbstractMenu implements Runnable {
 	// Print main menu and run user's choice
 	protected Scanner inputChoice = new Scanner(System.in);
 	protected static int choice;
 	protected boolean showAgain;
-	protected Wrong error = new Wrong();
+	protected Wrong error = new Wrong("buzzer");
 
 	/**
 	 * Runs the menu until showAgain becomes equal to false
