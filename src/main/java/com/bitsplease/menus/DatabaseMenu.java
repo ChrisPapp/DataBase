@@ -47,7 +47,6 @@ public class DatabaseMenu extends AbstractMenu {
 			break;
 		case 6:
 			System.out.println("Exiting... Thanks for choosing BitsPlease");
-			new PlaySound().play("antegeia");
 			System.exit(0);
 		case -1:
 			error.printWrong("This is not a number");

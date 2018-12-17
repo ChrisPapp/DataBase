@@ -93,6 +93,11 @@ public class Table implements Serializable {
 		return table.getName().equals(this.getName());
 
 	}
+	
+	public int hashCode() {
+	    assert false : "hashCode not designed";
+	    return 42;
+	}
 
 	public void print() {
 		if (Printer.isMarginVariable()) {
