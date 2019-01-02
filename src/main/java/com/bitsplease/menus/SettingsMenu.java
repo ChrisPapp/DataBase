@@ -1,34 +1,39 @@
 package com.bitsplease.menus;
 
+import com.bitsplease.gui.ButtonList;
+
 public class SettingsMenu extends AbstractMenu {
 
-	private DisplayMenu displayMenu = new DisplayMenu();
+  private DisplayMenu displayMenu;
 
-	@Override
-	protected void printMenu() {
-		System.out.println("1. Data Display Settings \n" + "2. Audio Settings \n" + "3. Back \n");
+  public SettingsMenu(DatabaseMenu databaseMenu) {
+    super(databaseMenu);
+    displayMenu = new DisplayMenu(this);
+    options = new String[] { "Data Display Settings", "Audio Settings",
+        "Back" };
+    buttons = new ButtonList(options, this);
 
-	}
+  }
 
-	@Override
-	protected void performAction() {
-		switch (getChoice()) {
-		case 1:
-			displayMenu.run();
-			break;
-		case 2:
-			System.out.println("Under Development");
-			break;
-		case 3:
-			showAgain = false;
-			break;
-		case -1:
-			error.printWrong("This is not a number");
-			break;
-		default:
-			error.printWrong("Out of bounds");
-		}
+  @Override
+  public void performAction() {
+    switch (getChoice()) {
+    case 1:
+      displayMenu.run();
+      break;
+    case 2:
+      System.out.println("Under Development");
+      break;
+    case 3:
+      calledFrom.run();
+      break;
+    case -1:
+      error.printWrong("This is not a number");
+      break;
+    default:
+      error.printWrong("Out of bounds");
+    }
 
-	}
+  }
 
 }
