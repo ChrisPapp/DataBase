@@ -2,9 +2,14 @@ package com.bitsplease.menus;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import com.bitsplease.dbms.TableArithmetics;
+
+import javax.swing.SwingUtilities;
+
+import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
+import com.bitsplease.dbms.TableArithmetics;
 import com.bitsplease.dbms.TableProcessing;
+import com.bitsplease.gui.GuiTable;
 import com.bitsplease.utilities.MemoryCard;
 
 public class TableMenu extends AbstractMenu {
@@ -22,8 +27,7 @@ public class TableMenu extends AbstractMenu {
 	}
 
 	public void performAction() {
-		readChoice();
-		switch (choice) {
+		switch (getChoice()) {
 		case 1:
 			table.print();
 			break;

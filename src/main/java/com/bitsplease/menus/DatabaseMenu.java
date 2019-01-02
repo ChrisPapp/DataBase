@@ -21,15 +21,14 @@ public class DatabaseMenu extends AbstractMenu {
 	}
 
 	@Override
-	protected void printMenu() {
+	public void printMenu() {
 		System.out.println("1. Edit a Table \n" + "2. Create new Table \n" + "3. Load Table \n" + "4. Remove Table \n"
-				+ "5. Settings \n" + "6. Exit \n");
+				+ "5. Settings \n" + "6. Exit");
 	}
 
 	@Override
-	protected void performAction() {
-		readChoice();
-		switch (choice) {
+	public void performAction() {
+		switch (getChoice()) {
 		case 1:
 			tableChoiceMenu.run();
 			break;

@@ -12,8 +12,7 @@ public class SettingsMenu extends AbstractMenu {
 
 	@Override
 	protected void performAction() {
-		readChoice();
-		switch (choice) {
+		switch (getChoice()) {
 		case 1:
 			displayMenu.run();
 			break;

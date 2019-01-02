@@ -20,14 +20,13 @@ public class RemoveTableMenu extends AbstractMenu {
 
 	@Override
 	protected void performAction() {
-		readChoice();
-		choice--;
-		if (choice >= 0 && choice < database.getTables().size()) {
-			database.getTables().remove(choice);
-		} else if (choice == database.getTables().size()) {
+		setChoice(getChoice() - 1);
+		if (getChoice() >= 0 && getChoice() < database.getTables().size()) {
+			database.getTables().remove(getChoice());
+		} else if (getChoice() == database.getTables().size()) {
 			// Back
 			showAgain = false;
-		} else if (choice == -2) {
+		} else if (getChoice() == -2) {
 			error.printWrong("This is not a number");
 		} else {
 			error.printWrong("Out of Bounds");

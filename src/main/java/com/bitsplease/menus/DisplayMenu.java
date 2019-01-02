@@ -18,8 +18,7 @@ public class DisplayMenu extends AbstractMenu {
 
 	@Override
 	protected void performAction() {
-		readChoice();
-		switch (choice) {
+		switch (getChoice()) {
 		case 1:
 			Printer.setMarginVariable(true);
 			showAgain = false;
