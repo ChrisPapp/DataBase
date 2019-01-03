@@ -1,18 +1,16 @@
 package com.bitsplease.menus;
 
-import java.util.Scanner;
+import javax.swing.JOptionPane;
 
 import com.bitsplease.dbms.Database;
+import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.gui.ButtonList;
 import com.bitsplease.utilities.MemoryCard;
-import com.bitsplease.utilities.PlaySound;
 
 public class DatabaseMenu extends AbstractMenu {
   protected Database database;
   private SettingsMenu settingsMenu;
-  private TableChoiceMenu tableChoiceMenu;
-  private RemoveTableMenu removeTableMenu;
 
   public DatabaseMenu(Database database) {
     super(null);
@@ -20,8 +18,6 @@ public class DatabaseMenu extends AbstractMenu {
         "Remove Table", "Settings", "Exit" };
     buttons = new ButtonList(options, this);
     this.database = database;
-    removeTableMenu = new RemoveTableMenu(database, this);
-    tableChoiceMenu = new TableChoiceMenu(database, this);
     settingsMenu = new SettingsMenu(this);
   }
 
@@ -29,16 +25,19 @@ public class DatabaseMenu extends AbstractMenu {
   public void performAction() {
     switch (getChoice()) {
     case 1:
-      tableChoiceMenu.run();
+      // Make a new Menu with the current database options
+      new TableChoiceMenu(database, this).run();
       break;
     case 2:
       database.getTables().add(new Table());
       break;
     case 3:
       load();
+      this.showButtons();
       break;
     case 4:
-      removeTableMenu.run();
+      // Make a new Menu with the current database options
+      new RemoveTableMenu(database, this).run();
       break;
     case 5:
       settingsMenu.run();
@@ -57,18 +56,20 @@ public class DatabaseMenu extends AbstractMenu {
   }
 
   private void load() {
-    System.out.println("Enter Table name:");
-    Scanner scanner = new Scanner(System.in);
-    String name = scanner.next();
-    Table suspectTable = MemoryCard.load(name);
-    if (suspectTable != null) {
-      if (database.getTables().contains(suspectTable)) {
-        System.out.println("Overwriting " + suspectTable.getName() + "\n");
-        int index = database.getTables().indexOf(suspectTable);
-        // Overwrite table
-        database.getTables().set(index, suspectTable);
-      } else {
-        database.getTables().add(suspectTable);
+    String name = JOptionPane.showInputDialog(StartMain.getWindow(),
+        "Enter Table Name", "Awesome Table Loader",
+        JOptionPane.QUESTION_MESSAGE);
+    if (name != null) {
+      Table suspectTable = MemoryCard.load(name);
+      if (suspectTable != null) {
+        if (database.getTables().contains(suspectTable)) {
+          System.out.println("Overwriting " + suspectTable.getName() + "\n");
+          int index = database.getTables().indexOf(suspectTable);
+          // Overwrite table
+          database.getTables().set(index, suspectTable);
+        } else {
+          database.getTables().add(suspectTable);
+        }
       }
     }
   }

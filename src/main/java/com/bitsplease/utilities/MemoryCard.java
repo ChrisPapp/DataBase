@@ -19,6 +19,7 @@ import com.bitsplease.dbms.Table;
  *
  */
 public class MemoryCard {
+  static Wrong error = new Wrong("buzzer");
 	private static String filepath = FileSystemView.getFileSystemView().getDefaultDirectory().getPath()
 			+ "\\BitsPleaseTables";
 
@@ -78,7 +79,7 @@ public class MemoryCard {
 			ois.close();
 			return table;
 		} catch (FileNotFoundException e) {
-			System.out.println("Error 404: Not found");
+			error.printWrong("Error 404: File not found");
 		} catch (IOException e) {
 			System.out.println("IO Exception");
 		} catch (ClassNotFoundException e) {

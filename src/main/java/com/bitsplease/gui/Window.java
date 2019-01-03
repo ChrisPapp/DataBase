@@ -28,8 +28,8 @@ public class Window extends JFrame {
     setLayout(new FlowLayout());
     consolePanel = new ConsolePanel();
     add(consolePanel);
-    inputField = new InputField();
-    add(inputField);
+    //inputField = new InputField();
+   // add(inputField);
     setVisible(true);
     // Move the Window to the center of the screen
     setLocationRelativeTo(null);

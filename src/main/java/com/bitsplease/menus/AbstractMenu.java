@@ -23,13 +23,9 @@ public abstract class AbstractMenu extends Thread {
    * Runs the menu until showAgain becomes equal to false
    */
   public void run() {
-    // If showAgain is true, then this will run again
-    // after an action is performed
-    printMenu();
     this.showButtons();
     StartMain.getWindow().add(buttons);
     StartMain.getWindow().getContentPane().revalidate();
-    StartMain.getWindow().getContentPane().repaint();
 
   }
 

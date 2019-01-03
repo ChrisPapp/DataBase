@@ -10,7 +10,7 @@ import javax.swing.JTextField;
 public class InputField extends Panel implements ActionListener {
 
   private JTextField textField;
-  private String currentText = "1";
+  private String currentText;
 
   public InputField() {
     textField = new JTextField(20);
@@ -29,5 +29,13 @@ public class InputField extends Panel implements ActionListener {
 
   public void setCurrentText(String text) {
     this.currentText = text;
+  }
+
+  public JTextField getTextField() {
+    return textField;
+  }
+
+  public void setTextField(JTextField textField) {
+    this.textField = textField;
   }
 }
