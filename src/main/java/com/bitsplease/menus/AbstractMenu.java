@@ -29,17 +29,6 @@ public abstract class AbstractMenu extends Thread {
 
   }
 
-  /**
-   * Takes user input. If the user does not enter an integer it prints a message
-   */
-  public void readChoice() {
-    try {
-      setChoice(Integer.parseInt(inputChoice.nextLine()));
-    } catch (NumberFormatException e) {
-      setChoice(-1);
-    }
-  }
-
   public void hideButtons() {
     buttons.setVisible(false);
   }
@@ -48,14 +37,6 @@ public abstract class AbstractMenu extends Thread {
     buttons.setVisible(true);
   }
 
-  public void readChoiceFromGUI() {
-    try {
-      setChoice(Integer
-          .parseInt(StartMain.getWindow().getInputField().getCurrentText()));
-    } catch (NumberFormatException e) {
-      setChoice(-1);
-    }
-  }
 
   protected void printMenu() {
     for (int i = 0; i < options.length; i++) {

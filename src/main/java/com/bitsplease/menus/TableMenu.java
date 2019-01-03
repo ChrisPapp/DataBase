@@ -3,8 +3,6 @@ package com.bitsplease.menus;
 import java.util.ArrayList;
 import java.util.Scanner;
 
-import javax.swing.SwingUtilities;
-
 import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableArithmetics;
@@ -16,11 +14,12 @@ import com.bitsplease.utilities.MemoryCard;
 public class TableMenu extends AbstractMenu {
   private static Scanner inputOperation = new Scanner(System.in);
   private Table table;
+  private GuiTable guitable;
 
   public TableMenu(TableChoiceMenu menu) {
     super(menu);
-    options = new String[] { "Display Data", "Input Data", "Change Data",
-        "Remove Line", "Remove Column", "Operations Between Columns", "Search",
+    options = new String[] { "Display Data", "Add Row", "Change Data",
+        "Remove Row", "Remove Column", "Operations Between Columns", "Search",
         "Sort", "Save", "Back" };
     buttons = new ButtonList(options, this);
 
@@ -33,16 +32,20 @@ public class TableMenu extends AbstractMenu {
   public void runWith(Table table) {
     // Menu will run with this table
     this.table = table;
+    this.guitable = new GuiTable(table);
+    StartMain.getWindow().add(guitable);
     run();
   }
 
   public void performAction() {
+    guitable.updateTableValues();
     switch (getChoice()) {
     case 1:
       table.print();
       break;
     case 2:
-      table.inputData();
+      guitable.addRow();
+      updateGUI();
       break;
     case 3:
       System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
@@ -71,15 +74,21 @@ public class TableMenu extends AbstractMenu {
     case 9:
       MemoryCard.save(table);
       break;
-    case 0:
-      showAgain = false;
-      break;
-    case -1:
-      error.printWrong("This is not a number");
+    case 10:
+      guitable.updateTableValues();
+      StartMain.getWindow().remove(this.guitable);
+      StartMain.getWindow().getContentPane().validate();
+      StartMain.getWindow().getContentPane().repaint();
+      calledFrom.run();
       break;
     default:
       error.printWrong("Out of Bounds");
       break;
+    }
+    if (getChoice() != 10) {
+      guitable.updateTableValues();
+      updateGUI();
+      this.showButtons();
     }
 
   }
@@ -109,6 +118,13 @@ public class TableMenu extends AbstractMenu {
       TableProcessing.printColumn(cells);
     }
     // input.close();
+  }
+
+  private void updateGUI() {
+    StartMain.getWindow().remove(this.guitable);
+    guitable = new GuiTable(this.table);
+    StartMain.getWindow().add(this.guitable);
+    StartMain.getWindow().getContentPane().validate();
   }
 
 }

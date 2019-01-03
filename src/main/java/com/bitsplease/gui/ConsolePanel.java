@@ -1,20 +1,24 @@
 package com.bitsplease.gui;
 
+import java.awt.Dimension;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.io.PrintStream;
 
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
 public class ConsolePanel extends JPanel{
   public ConsolePanel() {
     JTextArea textArea = new JTextArea(1, 50);
     textArea.setEditable(false);
+    JScrollPane scrollPane = new JScrollPane(textArea);
+    scrollPane.setPreferredSize(new Dimension(500, 300));
     PrintStream printStream = new PrintStream(new CustomOutputStream(textArea));
     System.setOut(printStream);
     System.setErr(printStream);
-    add(textArea);
+    add(scrollPane);
   }
   private class CustomOutputStream extends OutputStream {
     private JTextArea textArea;
