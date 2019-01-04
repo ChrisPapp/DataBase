@@ -2,15 +2,13 @@ package com.bitsplease.menus;
 
 import java.util.ArrayList;
 import java.util.Scanner;
-import com.bitsplease.dbms.TableArithmetics;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableProcessing;
 import com.bitsplease.utilities.MemoryCard;
 
 public class TableMenu extends AbstractMenu {
-	private static Scanner inputOperation = new Scanner(System.in);
 	private Table table;
-	private TableOperationMenu tableOperationMenu = new TableOperationMenu();
+	//private TableOperationMenu tableOperationMenu = new TableOperationMenu();
 
 	public Table getTable() {
 		return table;
@@ -44,7 +42,7 @@ public class TableMenu extends AbstractMenu {
 			TableProcessing.removeColumn(table.getList());
 			break;
 		case 6:
-			tableOperationMenu.runWith(table);
+			new TableOperationMenu(this.table).run();
 			break;
 		case 7:
 			search();
