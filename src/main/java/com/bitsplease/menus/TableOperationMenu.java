@@ -21,9 +21,9 @@ public class TableOperationMenu extends AbstractMenu {
       System.out.print("GIVE THE COLUMN NUMBER:");
       int askedColumn = -1;
       try {
-        askedColumn = inputChoice.nextInt() - 1;
+        askedColumn = Integer.parseInt(inputChoice.nextLine()) - 1;
       } catch (Exception e) {
-        error.printWrong("Out of bounds");
+        error.printWrong("ERROR! Wrong input!");
       }
       BasicArithmeticOperations.sumOfAll(table.getList(), askedColumn);
       BasicArithmeticOperations.productOfAll(table.getList(), askedColumn);
@@ -56,6 +56,6 @@ public class TableOperationMenu extends AbstractMenu {
   @Override
   protected void printMenu() {
     System.out.println("\nMATHEMATICAL OPERATION MENU \n"
-        + "1. SUM & PRODUCT & AVERAGE \n" + "2. OPERATIONS BETWEEN COLUMNS" + "3.BACK");
+        + "1. SUM & PRODUCT & AVERAGE \n" + "2. OPERATIONS BETWEEN COLUMNS\n" + "3. BACK");
   }
 }
