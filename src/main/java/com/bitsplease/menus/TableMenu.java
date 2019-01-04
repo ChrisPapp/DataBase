@@ -10,6 +10,7 @@ import com.bitsplease.utilities.MemoryCard;
 public class TableMenu extends AbstractMenu {
 	private static Scanner inputOperation = new Scanner(System.in);
 	private Table table;
+	private TableOperationMenu tableOperationMenu = new TableOperationMenu();
 
 	public Table getTable() {
 		return table;
@@ -21,7 +22,7 @@ public class TableMenu extends AbstractMenu {
 		run();
 	}
 
-	public void performAction() {
+	protected void performAction() {
 		readChoice();
 		switch (choice) {
 		case 1:
@@ -43,9 +44,7 @@ public class TableMenu extends AbstractMenu {
 			TableProcessing.removeColumn(table.getList());
 			break;
 		case 6:
-			System.out.print(" GIVE OPERATION: ");
-			String askedOperation = inputOperation.nextLine();
-			TableArithmetics.startingOperationsBetweenColumns(table.getList(), askedOperation);
+			tableOperationMenu.runWith(table);
 			break;
 		case 7:
 			search();
@@ -95,10 +94,10 @@ public class TableMenu extends AbstractMenu {
 	}
 
 	@Override
-	protected final void printMenu() {
+	protected void printMenu() {
 		System.out.println(
 				"\n*** DATABASE MENU ***\n" + "  1. DISPLAY DATA \n" + "  2. INPUT DATA \n" + "  3. CHANGE DATA\n"
-						+ "  4. REMOVE LINE\n" + "  5. REMOVE COLUMN\n" + "  6. OPERATIONS BETWEEN COLUMNS \n"
+						+ "  4. REMOVE LINE\n" + "  5. REMOVE COLUMN\n" + "  6. MATHEMATICAL OPERATIONS\n"
 						+ "  7. SEARCH \n" + "  8. SORT \n" + "  9. SAVE \n" + "  0. BACK \n" + "  SELECT AN OPTION: ");
 	}
 }
