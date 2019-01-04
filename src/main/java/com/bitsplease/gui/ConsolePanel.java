@@ -1,4 +1,4 @@
-package com.bitsplease.gui;
+  package com.bitsplease.gui;
 
 import java.awt.Dimension;
 import java.io.IOException;
@@ -9,6 +9,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 
+@SuppressWarnings("serial")
 public class ConsolePanel extends JPanel{
   public ConsolePanel() {
     JTextArea textArea = new JTextArea(1, 50);

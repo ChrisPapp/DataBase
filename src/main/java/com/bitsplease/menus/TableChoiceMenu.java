@@ -3,7 +3,6 @@ package com.bitsplease.menus;
 import com.bitsplease.dbms.Database;
 import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
-import com.bitsplease.gui.GuiTable;
 
 public class TableChoiceMenu extends RemoveTableMenu {
 

@@ -54,7 +54,8 @@ public class TableMenu extends AbstractMenu {
       TableProcessing.changeData(table.getList(), cell);
       break;
     case 4:
-      TableProcessing.removeLine(table.getList());
+      TableProcessing.removeLine(table);
+      updateGUI();
       break;
     case 5:
       TableProcessing.removeColumn(table.getList());

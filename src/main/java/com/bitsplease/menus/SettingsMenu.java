@@ -23,6 +23,7 @@ public class SettingsMenu extends AbstractMenu {
       break;
     case 2:
       System.out.println("Under Development");
+      this.showButtons();
       break;
     case 3:
       calledFrom.run();
