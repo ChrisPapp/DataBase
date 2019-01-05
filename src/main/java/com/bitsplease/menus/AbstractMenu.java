@@ -6,7 +6,7 @@ import com.bitsplease.dbms.StartMain;
 import com.bitsplease.gui.ButtonList;
 import com.bitsplease.utilities.Wrong;
 
-public abstract class AbstractMenu extends Thread {
+public abstract class AbstractMenu implements Runnable {
   // Print main menu and run user's choice
   protected Scanner inputChoice = new Scanner(System.in);
   private static int choice;
@@ -26,6 +26,7 @@ public abstract class AbstractMenu extends Thread {
     this.showButtons();
     StartMain.getWindow().add(buttons);
     StartMain.getWindow().getContentPane().revalidate();
+    StartMain.getWindow().getContentPane().repaint();
 
   }
 

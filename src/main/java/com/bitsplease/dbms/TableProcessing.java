@@ -58,15 +58,17 @@ public class TableProcessing {
      * the column names
      */
     for (int row = 0; row < possibilities.length - 1; row++) {
-      possibilities[row] = ((row + 1) + ". " + table.getList().get(row + 1).get(0));
+      possibilities[row] = ((row + 1) + ". "
+          + table.getList().get(row + 1).get(0));
     }
     String choice = (String) JOptionPane.showInputDialog(StartMain.getWindow(),
         "Select a row to delete", "Turple Exterminator",
         JOptionPane.PLAIN_MESSAGE, icon, possibilities,
         possibilities[possibilities.length - 2]);
-    int position = Character.getNumericValue(choice.charAt(0));
-    System.out.println(position);
-    table.getList().remove(position);
+    if (choice != null) {
+      int position = Character.getNumericValue(choice.charAt(0));
+      table.getList().remove(position);
+    }
     // Rotate back to default
     rotate(table.getList());
   }
@@ -78,15 +80,24 @@ public class TableProcessing {
    * @param lists
    *          to remove a column from it.
    */
-  public static void removeColumn(ArrayList<ArrayList<String>> lists) {
-    System.out.print("WHICH COLUMN DO YOU WANT TO REMOVE? ");
-    Scanner input = new Scanner(System.in);
-    int column = codeToNum(input.nextLine());
-    // input.close();
-    if (column > 0 && column < lists.size()) {
-      lists.remove(column);
-    } else {
-      System.out.println("OUT OF BOUNDS");
+  public static void removeColumn(Table table) {
+    ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("remove.png"));
+    String[] possibilities = new String[table.getList().size()];
+    /*
+     * It's possible to remove every row except the first one, which contains
+     * the column names
+     */
+    for (int column = 0; column < possibilities.length; column++) {
+      possibilities[column] = ((column + 1) + ". "
+          + table.getList().get(column).get(0));
+    }
+    String choice = (String) JOptionPane.showInputDialog(StartMain.getWindow(),
+        "Select a column to delete", "Column Exterminator",
+        JOptionPane.PLAIN_MESSAGE, icon, possibilities,
+        possibilities[possibilities.length - 1]);
+    if (choice != null) {
+      int position = Character.getNumericValue(choice.charAt(0));
+      table.getList().remove(position - 1);
     }
   }
 

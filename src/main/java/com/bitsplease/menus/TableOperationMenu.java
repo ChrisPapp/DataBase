@@ -3,13 +3,24 @@ package com.bitsplease.menus;
 import com.bitsplease.dbms.BasicArithmeticOperations;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableArithmetics;
+import com.bitsplease.gui.ButtonList;
 
 public class TableOperationMenu extends AbstractMenu {
 
   private Table table;
 
-  public TableOperationMenu(Table table, TableMenu menu) {
+  public TableOperationMenu(TableMenu menu) {
     super(menu);
+    options = new String[] { "Sum & Product & Average",
+        "Operations Between Columns", "Back" };
+    buttons = new ButtonList(options,this);
+  }
+
+  public Table getTable() {
+    return table;
+  }
+
+  public void setTable(Table table) {
     this.table = table;
   }
 
@@ -33,7 +44,7 @@ public class TableOperationMenu extends AbstractMenu {
       System.out.print(
           "GIVE THE MATHEMATICAL OPERATION \n (e.g. (columnName + columnName) / 2 = newColumnName):");
       String mathOperation;
-      //inputChoice.nextLine();
+      // inputChoice.nextLine();
       mathOperation = inputChoice.nextLine();
       try {
         TableArithmetics.startingOperationsBetweenColumns(table.getList(),
@@ -44,18 +55,9 @@ public class TableOperationMenu extends AbstractMenu {
       }
       break;
     case 3:
-      showAgain = false;
+      calledFrom.run();
       break;
-    default:
-      error.printWrong("Out of bounds");
     }
 
   }
-
-  @Override
-  protected void printMenu() {
-    System.out.println("\nMATHEMATICAL OPERATION MENU \n"
-        + "1. SUM & PRODUCT & AVERAGE \n" + "2. OPERATIONS BETWEEN COLUMNS" + "3.BACK");
-  }
 }
-

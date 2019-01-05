@@ -12,15 +12,15 @@ import com.bitsplease.gui.GuiTable;
 import com.bitsplease.utilities.MemoryCard;
 
 public class TableMenu extends AbstractMenu {
-  private static Scanner inputOperation = new Scanner(System.in);
   private Table table;
   private GuiTable guitable;
+  private TableOperationMenu tableOperationMenu;
 
   public TableMenu(TableChoiceMenu menu) {
     super(menu);
-    options = new String[] { "Display Data", "Add Row", "Change Data",
-        "Remove Row", "Remove Column", "Operations Between Columns", "Search",
-        "Sort", "Save", "Back" };
+    tableOperationMenu = new TableOperationMenu(this);
+    options = new String[] { "Add Row", "Remove Row", "Remove Column",
+        "Operations Between Columns", "Search", "Sort", "Save", "Back" };
     buttons = new ButtonList(options, this);
 
   }
@@ -41,55 +41,44 @@ public class TableMenu extends AbstractMenu {
     guitable.updateTableValues();
     switch (getChoice()) {
     case 1:
-      table.print();
-      break;
-    case 2:
       guitable.addRow();
       updateGUI();
       break;
-    case 3:
-      System.out.println("WHICH CELL DO YOU WANT TO CHANGE? (Type position)");
-      Scanner input = new Scanner(System.in);
-      String cell = input.nextLine();
-      TableProcessing.changeData(table.getList(), cell);
-      break;
-    case 4:
+    case 2:
       TableProcessing.removeLine(table);
       updateGUI();
       break;
+    case 3:
+      TableProcessing.removeColumn(table);
+      updateGUI();
+      break;
+    case 4:
+      tableOperationMenu.setTable(table);
+      tableOperationMenu.run();
+      break;
     case 5:
-      TableProcessing.removeColumn(table.getList());
-      break;
-    case 6:
-      System.out.print(" GIVE OPERATION: ");
-      String askedOperation = inputOperation.nextLine();
-      TableArithmetics.startingOperationsBetweenColumns(table.getList(),
-          askedOperation);
-      break;
-    case 7:
       search();
       break;
-    case 8:
+    case 6:
       sort();
       break;
-    case 9:
+    case 7:
       MemoryCard.save(table);
       break;
-    case 10:
+    case 8:
       guitable.updateTableValues();
       StartMain.getWindow().remove(this.guitable);
       StartMain.getWindow().getContentPane().validate();
       StartMain.getWindow().getContentPane().repaint();
       calledFrom.run();
       break;
-    default:
-      error.printWrong("Out of Bounds");
-      break;
     }
-    if (getChoice() != 10) {
+    if (getChoice() != 8) {
       guitable.updateTableValues();
       updateGUI();
-      this.showButtons();
+      if (getChoice() != 4) {
+        this.showButtons();
+      }
     }
 
   }
