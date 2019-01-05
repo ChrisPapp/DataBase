@@ -29,6 +29,9 @@ public class BasicArithmeticOperations {
 	public static void displayMore(int askedColumn) {
 		System.out.printf("Column %s \n", TableProcessing.numToCode(askedColumn));
 		System.out.printf("Sum: %f \nProduct: %f \nAverage: %f \n", sum, product, average);
+		sum = 0;
+		product = 1;
+		average = 0;
 	}
 
 }
