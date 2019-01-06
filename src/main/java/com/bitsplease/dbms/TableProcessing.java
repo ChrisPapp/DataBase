@@ -51,7 +51,13 @@ public class TableProcessing {
 	 *            to remove a line from it.
 	 */
 	public static void removeLine(ArrayList<ArrayList<String>> lists) {
-		System.out.print("WHICH LINE DO YOU WANT TO REMOVE? ");
+	  rotate(lists);
+    if (lists.size() == 1) {
+      error.printWrong("The table has no rows");
+      rotate(lists);
+      return;
+    }
+		System.out.print("Which row do you want to remove ");
 		Scanner input = new Scanner(System.in);
 		int line = Integer.parseInt(input.nextLine()) - 1;
 		// input.close();
@@ -59,7 +65,7 @@ public class TableProcessing {
 		if (line > 0 && line < lists.size()) {
 			lists.remove(line);
 		} else {
-			System.out.println("OUT OF BOUNDS");
+			error.printWrong("Out of bounds");
 		}
 		TableProcessing.rotate(lists); // Back to column mode
 	}
@@ -74,6 +80,7 @@ public class TableProcessing {
 	public static void removeColumn(ArrayList<ArrayList<String>> lists) {
 	  if (lists.size() == 1) {
       error.printWrong("This is your last column! Try deleting the whole Table");
+      return;
     }
 		System.out.print("WHICH COLUMN DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
