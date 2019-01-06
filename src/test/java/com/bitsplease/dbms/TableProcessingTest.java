@@ -9,7 +9,6 @@ import org.junit.Test;
 public class TableProcessingTest {
   ArrayList<ArrayList<String>> randomList, sortedList;
 
-
   @Test
   public void testCodeToNum() {
     Assert.assertEquals("failure - wrong result",
@@ -35,17 +34,20 @@ public class TableProcessingTest {
     random.add("3");
     random.add("2");
     randomList.add(random);
+    Table randomTable = new Table("random", randomList);
     ArrayList<String> sorted = new ArrayList<String>();
     sorted.add("1");
     sorted.add("2");
     sorted.add("3");
     sorted.add("4");
     sortedList.add(sorted);
-    TableProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
-    Assert.assertEquals("failure - not sorted", randomList, sortedList);
-    
+    Table sortedTable = new Table("sorted", sortedList);
+    TableProcessing.sort(randomTable, 0, 0, randomList.get(0).size() - 1);
+    Assert.assertEquals("failure - not sorted", randomTable.getList(),
+        sortedTable.getList());
+
   }
-  
+
   @Test
   public void testSortString() {
     randomList = new ArrayList<ArrayList<String>>();
@@ -62,8 +64,11 @@ public class TableProcessingTest {
     sorted.add("c");
     sorted.add("dab");
     sortedList.add(sorted);
-    TableProcessing.sort(randomList, 0, 0, randomList.get(0).size() - 1);
-    Assert.assertEquals("failure - not sorted", randomList, sortedList);   
+    Table randomTable = new Table("random", randomList);
+    Table sortedTable = new Table("sorted", sortedList);
+    TableProcessing.sort(randomTable, 0, 0, randomList.get(0).size() - 1);
+    Assert.assertEquals("failure - not sorted", randomTable.getList(),
+        sortedTable.getList());
   }
-  
+
 }

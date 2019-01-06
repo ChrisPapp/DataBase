@@ -82,7 +82,7 @@ public class TableProcessing {
    *          to remove a column from it.
    */
   public static void removeColumn(Table table) {
-    ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("remove.png"));
+    ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("pickAButton.jpg"));
     int toDelete = GUIcolumnChooser(table, icon, "Select a column to delete",
         "Column Exterminator");
     if (toDelete != -1) {
@@ -120,63 +120,6 @@ public class TableProcessing {
     return -1;
   }
 
-  /**
-   * Change the data stored in a specific cell of the table.
-   * 
-   * @param lists
-   *          to make alterations.
-   * @param cell
-   *          String value of the specific cell user wants to change.
-   */
-  public static void changeData(ArrayList<ArrayList<String>> lists,
-      String cell) {
-    Scanner input = new Scanner(System.in);
-    if (equalsExit(cell)) {
-      System.out.println("DATA CHANGE STOPPED");
-    } else if (cell.matches("\\d+")) { // cell given has only digits
-      // Change whole Line
-      for (int i = 0; i < lists.size(); i++) {
-        changeData(lists, numToCode(i) + cell);
-      }
-    } else if (cell.matches("[A-Z]+")) {
-      // cell given has only upper case characters
-      // Change whole column
-      int column = codeToNum(cell);
-      for (int i = 1; i <= lists.get(column).size(); i++) {
-        changeData(lists, cell + Integer.toString(i));
-      }
-    } else if (cell.matches("[A-Z]+\\d+")) {
-      // cell given has the structure we want
-      // Build a new sequence that will contain only the characters
-      StringBuilder sb = new StringBuilder();
-      int i = 0;
-      do {
-        char currentCharacter = cell.charAt(i);
-        sb.append(currentCharacter);
-      } while (!Character.isDigit(cell.charAt(++i))); // Stop if next char is a
-      // digit
-      String columnCode = sb.toString();
-      // Add the remaining characters (the numbers) to line
-      int line = Integer.parseInt(cell.substring(i)) - 1;
-      int column = codeToNum(columnCode);
-      if (column < lists.size()) {
-        if (line < lists.get(column).size()) {
-          // Catch OutOfBoundsException
-          System.out.print(
-              "ENTER NEW DATA FOR '" + lists.get(column).get(line) + "': ");
-          String data = input.nextLine();
-          System.out.println();
-          lists.get(column).set(line, data);
-        } else {
-          System.out.println("OUT OF BOUNDS");
-        }
-      } else {
-        System.out.println("OUT OF BOUNDS");
-      }
-    } else {
-      System.out.println("WRONG INPUT");
-    }
-  }
 
   /**
    * isNumber examines whether a string value is basically a number.
@@ -225,14 +168,6 @@ public class TableProcessing {
     return sb.reverse().toString(); // Return the reverse
   }
 
-  public static boolean equalsExit(String answer) {
-    // Used when it is needed to check if user types exit
-    if (answer.equals("exit") || answer.equals("Exit")
-        || answer.equals("EXIT")) {
-      return true;
-    } else
-      return false;
-  }
 
   public static void swapLine(final ArrayList<ArrayList<String>> lists,
       final int a, final int b) {
@@ -261,35 +196,35 @@ public class TableProcessing {
     return cells;
   }
 
-  public static void sort(final ArrayList<ArrayList<String>> lists,
+  public static void sort(Table table,
       final int column, final int low, final int high) {
     // This is a Quicksort implementation
     if (low < high) {
 
-      String pivot = (String) lists.get(column).get(high);
+      String pivot = (String) table.getList().get(column).get(high);
       int i = low - 1;
-      boolean allAreNumbers = TableArithmetics.areAllNumbers(lists, column,
+      boolean allAreNumbers = TableArithmetics.areAllNumbers(table.getList(), column,
           false);
       for (int j = low; j < high; j++) {
-        String current = (String) lists.get(column).get(j);
+        String current = (String) table.getList().get(column).get(j);
         if (allAreNumbers) {
           // Numeric Sort
           if (Double.parseDouble(pivot) >= Double.parseDouble(current)) {
             i++;
-            swapLine(lists, i, j);
+            swapLine(table.getList(), i, j);
           }
         } else {
           // Lexicographical Sort
           if (pivot.compareTo(current) == 1 || pivot.equals(current)) {
             i++;
-            swapLine(lists, i, j);
+            swapLine(table.getList(), i, j);
           }
         }
       }
-      swapLine(lists, i + 1, high);
+      swapLine(table.getList(), i + 1, high);
       int pi = i + 1;
-      sort(lists, column, low, pi - 1);
-      sort(lists, column, pi + 1, high);
+      sort(table, column, low, pi - 1);
+      sort(table, column, pi + 1, high);
     }
   }
 

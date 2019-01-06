@@ -34,22 +34,31 @@ public class TableOperationMenu extends AbstractMenu {
     switch (getChoice()) {
     case 1:
       ImageIcon icon = new ImageIcon(
-          ClassLoader.getSystemResource("pickAButton.jpg"));
+          ClassLoader.getSystemResource("calculator.jpg"));
       int askedColumn = TableProcessing.GUIcolumnChooser(table, icon,
           "Select a Column", "Ultimate Column Picker");
       if (askedColumn == -1) {
+        this.showButtons();
         break;
       }
-      BasicArithmeticOperations.sumOfAll(table.getList(), askedColumn);
-      BasicArithmeticOperations.productOfAll(table.getList(), askedColumn);
-      BasicArithmeticOperations.averageOfAll(table.getList(), askedColumn);
-      BasicArithmeticOperations.displayMore(askedColumn);
+      try {
+        BasicArithmeticOperations.sumOfAll(table.getList(), askedColumn);
+        BasicArithmeticOperations.productOfAll(table.getList(), askedColumn);
+        BasicArithmeticOperations.averageOfAll(table.getList(), askedColumn);
+        BasicArithmeticOperations.displayMore(askedColumn);
+      } catch (NumberFormatException e1) {
+        error.printWrong("This column does not exclusively contain numbers");
+      }
       this.showButtons();
       break;
     case 2:
+      String message = "Give the mathematical operation \n (e.g. (columnName + columnName) / 2 = newColumnName):";
       String mathOperation = JOptionPane.showInputDialog(StartMain.getWindow(),
-          "Give the mathematical operation \\n (e.g. (columnName + columnName) / 2 = newColumnName):");
-      // inputChoice.nextLine();
+          message);
+      if (mathOperation == null) {
+        this.showButtons();
+        break;
+      }
       try {
         TableArithmetics.startingOperationsBetweenColumns(table.getList(),
             mathOperation);

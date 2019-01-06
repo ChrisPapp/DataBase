@@ -3,6 +3,9 @@ package com.bitsplease.menus;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableProcessing;
@@ -61,6 +64,7 @@ public class TableMenu extends AbstractMenu {
       break;
     case 6:
       sort();
+      updateGUI();
       break;
     case 7:
       MemoryCard.save(table);
@@ -84,27 +88,25 @@ public class TableMenu extends AbstractMenu {
   }
 
   private void sort() {
-    System.out.println("Which field (1 - " + (table.getList().size()) + ")");
-    TableProcessing.rotate(table.getList()); // Line Mode
-    // Print fields as a column
-    TableProcessing.printColumn(table.getList().get(0));
-    TableProcessing.rotate(table.getList()); // Column Mode
-    Scanner input = new Scanner(System.in);
-    int column = input.nextInt() - 1;
-    TableProcessing.sort(table.getList(), column, 1,
+    ImageIcon icon = new ImageIcon(
+        ClassLoader.getSystemResource("bubbles.jpg"));
+    int column = TableProcessing.GUIcolumnChooser(table, icon,
+        "Sort according to which column?",
+        "The Grand Sortifier requests your choice");
+    TableProcessing.sort(table, column, 1,
         table.getList().get(column).size() - 1);
   }
 
   private void search() {
-    System.out.println("What are you looking for?");
-    Scanner input = new Scanner(System.in);
-    String item = input.nextLine();
+    String item = JOptionPane.showInputDialog(StartMain.getWindow(),
+        "What are you looking for?");
     ArrayList<String> cells = new ArrayList<String>(
         TableProcessing.find(table.getList(), item));
     if (cells.size() == 0) {
-      System.out.println("The item was not found");
+      error.printWrong("The item was not found");
     } else {
-      System.out.println("The item was found in these cells:");
+      JOptionPane.showMessageDialog(StartMain.getWindow(),
+          "The item was found in these cells:");
       TableProcessing.printColumn(cells);
     }
     // input.close();
