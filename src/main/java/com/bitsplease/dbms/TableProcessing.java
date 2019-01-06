@@ -253,7 +253,7 @@ public class TableProcessing {
           }
         } else {
           // Lexicographical Sort
-          if (pivot.compareTo(current) == 1 || pivot.equals(current)) {
+          if (pivot.compareTo(current) >= 0) {
             i++;
             swapLine(table.getList(), i, j);
           }
