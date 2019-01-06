@@ -16,7 +16,7 @@ public class DatabaseMenu extends AbstractMenu {
   public DatabaseMenu(Database database) {
     super(null);
     options = new String[] { "Edit a Table", "Create new Table", "Load Table",
-        "Remove Table", "Settings", "Exit" };
+        "Remove Table", "Exit" };
     buttons = new ButtonList(options, this);
     this.database = database;
     settingsMenu = new SettingsMenu(this);
@@ -45,14 +45,8 @@ public class DatabaseMenu extends AbstractMenu {
       new RemoveTableMenu(database, this).run();
       break;
     case 5:
-      settingsMenu.run();
-      break;
-    case 6:
-      System.out.println("Exiting... Thanks for choosing BitsPlease");
-      new PlaySound().play("antegeia");
+      new PlaySound().play("exit");
       System.exit(0);
-    case -1:
-      error.printWrong("This is not a number");
       break;
     default:
       error.printWrong("Out of bounds");
