@@ -35,7 +35,7 @@ public class TableOperationMenu extends AbstractMenu {
     case 1:
       ImageIcon icon = new ImageIcon(
           ClassLoader.getSystemResource("calculator.jpg"));
-      int askedColumn = TableProcessing.GUIcolumnChooser(table, icon,
+      int askedColumn = TableProcessing.guiColumnChooser(table, icon,
           "Select a Column", "Ultimate Column Picker");
       if (askedColumn == -1) {
         this.showButtons();

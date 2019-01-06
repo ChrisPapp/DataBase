@@ -8,21 +8,37 @@ import com.bitsplease.dbms.Table;
 import com.bitsplease.gui.ButtonList;
 import com.bitsplease.utilities.MemoryCard;
 import com.bitsplease.utilities.PlaySound;
-
+/**
+ * This is a menu that controls a Database Object.
+ * Functions like creating, loading and removing a table
+ * are called with this menu
+ * @author ChrisPapp
+ *
+ */
 public class DatabaseMenu extends AbstractMenu {
-  protected Database database;
-  private SettingsMenu settingsMenu;
+  /**
+   * The Database this Menu controls.
+   */
+  private Database database;
 
-  public DatabaseMenu(Database database) {
+  /**
+   * This Menu is responsible for controlling the functions on a Database
+   * object.
+   *
+   * @param database Show the menu for this database
+   */
+  public DatabaseMenu(final Database database) {
     super(null);
-    options = new String[] { "Edit a Table", "Create new Table", "Load Table",
+    options = new String[] {"Edit a Table", "Create new Table", "Load Table",
         "Remove Table", "Exit" };
     buttons = new ButtonList(options, this);
     this.database = database;
-    settingsMenu = new SettingsMenu(this);
   }
 
   @Override
+  /**
+   * Executes an action based on user's choice.
+   */
   public void performAction() {
     switch (getChoice()) {
     case 1:
@@ -55,6 +71,10 @@ public class DatabaseMenu extends AbstractMenu {
 
   }
 
+  /**
+   * Loads a table from the Documents folder. If the table is already loaded,
+   * the it is overwritten
+   */
   private void load() {
     String name = JOptionPane.showInputDialog(StartMain.getWindow(),
         "Enter Table Name", "Awesome Table Loader",

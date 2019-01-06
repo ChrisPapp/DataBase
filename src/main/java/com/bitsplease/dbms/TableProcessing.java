@@ -2,10 +2,11 @@ package com.bitsplease.dbms;
 
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Scanner;
 
 import javax.swing.ImageIcon;
 import javax.swing.JOptionPane;
+
+import com.bitsplease.utilities.Wrong;
 
 /**
  * This class is used to process a table.
@@ -14,6 +15,8 @@ import javax.swing.JOptionPane;
  *
  */
 public class TableProcessing {
+
+  private static Wrong error = new Wrong("buzzer");
 
   /**
    * Default Constructor is used for this class.
@@ -51,6 +54,11 @@ public class TableProcessing {
    */
   public static void removeLine(Table table) {
     rotate(table.getList());
+    if (table.getList().size() == 1) {
+      error.printWrong("The list has no rows");
+      rotate(table.getList());
+      return;
+    }
     ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("remove.png"));
     String[] possibilities = new String[table.getList().size()];
     /*
@@ -65,11 +73,13 @@ public class TableProcessing {
         "Select a row to delete", "Turple Exterminator",
         JOptionPane.PLAIN_MESSAGE, icon, possibilities,
         possibilities[possibilities.length - 2]);
-    if (choice != null) {
-      int position = Character.getNumericValue(choice.charAt(0));
-      System.out.println(position);
-      table.getList().remove(position);
+    if (choice == null) {
+      rotate(table.getList());
+      return;
     }
+    int position = Character.getNumericValue(choice.charAt(0));
+    table.getList().remove(position);
+
     // Rotate back to default
     rotate(table.getList());
   }
@@ -82,8 +92,13 @@ public class TableProcessing {
    *          to remove a column from it.
    */
   public static void removeColumn(Table table) {
-    ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("pickAButton.jpg"));
-    int toDelete = GUIcolumnChooser(table, icon, "Select a column to delete",
+    if (table.getList().size() == 1) {
+      error
+          .printWrong("This is your last column! Try deleting the whole Table");
+    }
+    ImageIcon icon = new ImageIcon(
+        ClassLoader.getSystemResource("pickAButton.jpg"));
+    int toDelete = guiColumnChooser(table, icon, "Select a column to delete",
         "Column Exterminator");
     if (toDelete != -1) {
       table.getList().remove(toDelete);
@@ -91,7 +106,7 @@ public class TableProcessing {
   }
 
   /**
-   * Show a Dialog Box with the Table's columns as Options
+   * Show a Dialog Box with the Table's columns as Options.
    * 
    * @param table
    *          to get columns from
@@ -103,8 +118,12 @@ public class TableProcessing {
    *          the title of the dialog
    * @return Column index
    */
-  public static int GUIcolumnChooser(Table table, ImageIcon icon,
+  public static int guiColumnChooser(Table table, ImageIcon icon,
       String message, String dialogName) {
+    if (table.getList().size() == 0) {
+      error.printWrong("The list has no columns");
+      return -1;
+    }
     String[] possibilities = new String[table.getList().size()];
     for (int column = 0; column < possibilities.length; column++) {
       possibilities[column] = ((column + 1) + ". "
@@ -119,7 +138,6 @@ public class TableProcessing {
     }
     return -1;
   }
-
 
   /**
    * isNumber examines whether a string value is basically a number.
@@ -168,7 +186,6 @@ public class TableProcessing {
     return sb.reverse().toString(); // Return the reverse
   }
 
-
   public static void swapLine(final ArrayList<ArrayList<String>> lists,
       final int a, final int b) {
     for (int i = 0; i < lists.size(); i++) {
@@ -182,6 +199,15 @@ public class TableProcessing {
     }
   }
 
+  /**
+   * Takes a list from a Table and an item, and searches the list for the item.
+   * 
+   * @param lists
+   *          list from a Table
+   * @param item
+   *          Item to look for
+   * @return list with positions inside the Table
+   */
   public static ArrayList<String> find(final ArrayList<ArrayList<String>> lists,
       final String item) {
     ArrayList<String> cells = new ArrayList<String>();
@@ -196,15 +222,27 @@ public class TableProcessing {
     return cells;
   }
 
-  public static void sort(Table table,
-      final int column, final int low, final int high) {
+  /**
+   * Take a table's column and sort's the whole table according to this column.
+   * 
+   * @param table
+   *          Table to sort
+   * @param column
+   *          Desired Column
+   * @param low
+   *          Starting row
+   * @param high
+   *          Ending row
+   */
+  public static void sort(final Table table, final int column, final int low,
+      final int high) {
     // This is a Quicksort implementation
     if (low < high) {
 
       String pivot = (String) table.getList().get(column).get(high);
       int i = low - 1;
-      boolean allAreNumbers = TableArithmetics.areAllNumbers(table.getList(), column,
-          false);
+      boolean allAreNumbers = TableArithmetics.areAllNumbers(table.getList(),
+          column, false);
       for (int j = low; j < high; j++) {
         String current = (String) table.getList().get(column).get(j);
         if (allAreNumbers) {

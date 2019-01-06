@@ -90,7 +90,7 @@ public class TableMenu extends AbstractMenu {
   private void sort() {
     ImageIcon icon = new ImageIcon(
         ClassLoader.getSystemResource("bubbles.jpg"));
-    int column = TableProcessing.GUIcolumnChooser(table, icon,
+    int column = TableProcessing.guiColumnChooser(table, icon,
         "Sort according to which column?",
         "The Grand Sortifier requests your choice");
     TableProcessing.sort(table, column, 1,
