@@ -5,7 +5,6 @@ import java.util.Scanner;
 
 import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
-import com.bitsplease.dbms.TableArithmetics;
 import com.bitsplease.dbms.TableProcessing;
 import com.bitsplease.gui.ButtonList;
 import com.bitsplease.gui.GuiTable;

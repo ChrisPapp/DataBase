@@ -72,6 +72,7 @@ public class TableArithmetics {
           sbmo.replace(startFrom[0], startFrom[1] + 1, nameOfNewColumn);
         }
         mathOperation = sbmo.toString();
+        System.out.println(lists.get(lists.size() - 1).get(1));
 
         seperatingTheVariablesOfOperation(lists, sbMathOperation.toString(), temporaryColumn);
         sbMathOperation.delete(0, sbMathOperation.length());
@@ -180,8 +181,7 @@ public class TableArithmetics {
     boolean tempColumn = temporaryColumn;
     boolean boo = booForSymbol || temporaryColumn;
 
-    if (positionOfResult > 0
-        && (sbToString.charAt(positionOfResult - 1) == '-' || sbToString.charAt(positionOfResult - 1) == '/')) {
+    if (positionOfResult > 0) {
       sbToString = addPlusSymbolAtStartOfOperation(sbToString);
     }
 
@@ -227,6 +227,11 @@ public class TableArithmetics {
           countFields++;
         } else if (Character.isDigit(sbToString.charAt(position.get(countHasStoppedForPosition)))) {
           if (!wasInsideOnce || tempColumn) {
+            if (!fields.isEmpty()) {
+              at = whereIsField(lists, fields.get(0));
+            } else {
+              at = 1;
+            }
             wasInsideOnce = true;
             tempColumn = false;
             addColumn(lists, nameOfColumn, at);
