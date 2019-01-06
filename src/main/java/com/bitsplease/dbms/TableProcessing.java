@@ -67,6 +67,7 @@ public class TableProcessing {
         possibilities[possibilities.length - 2]);
     if (choice != null) {
       int position = Character.getNumericValue(choice.charAt(0));
+      System.out.println(position);
       table.getList().remove(position);
     }
     // Rotate back to default
@@ -82,23 +83,41 @@ public class TableProcessing {
    */
   public static void removeColumn(Table table) {
     ImageIcon icon = new ImageIcon(ClassLoader.getSystemResource("remove.png"));
+    int toDelete = GUIcolumnChooser(table, icon, "Select a column to delete",
+        "Column Exterminator");
+    if (toDelete != -1) {
+      table.getList().remove(toDelete);
+    }
+  }
+
+  /**
+   * Show a Dialog Box with the Table's columns as Options
+   * 
+   * @param table
+   *          to get columns from
+   * @param icon
+   *          to show
+   * @param message
+   *          to show
+   * @param dialogName
+   *          the title of the dialog
+   * @return Column index
+   */
+  public static int GUIcolumnChooser(Table table, ImageIcon icon,
+      String message, String dialogName) {
     String[] possibilities = new String[table.getList().size()];
-    /*
-     * It's possible to remove every row except the first one, which contains
-     * the column names
-     */
     for (int column = 0; column < possibilities.length; column++) {
       possibilities[column] = ((column + 1) + ". "
           + table.getList().get(column).get(0));
     }
     String choice = (String) JOptionPane.showInputDialog(StartMain.getWindow(),
-        "Select a column to delete", "Column Exterminator",
-        JOptionPane.PLAIN_MESSAGE, icon, possibilities,
+        message, dialogName, JOptionPane.PLAIN_MESSAGE, icon, possibilities,
         possibilities[possibilities.length - 1]);
     if (choice != null) {
       int position = Character.getNumericValue(choice.charAt(0));
-      table.getList().remove(position - 1);
+      return position - 1;
     }
+    return -1;
   }
 
   /**

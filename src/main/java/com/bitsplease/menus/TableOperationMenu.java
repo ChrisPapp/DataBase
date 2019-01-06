@@ -1,8 +1,13 @@
 package com.bitsplease.menus;
 
+import javax.swing.ImageIcon;
+import javax.swing.JOptionPane;
+
 import com.bitsplease.dbms.BasicArithmeticOperations;
+import com.bitsplease.dbms.StartMain;
 import com.bitsplease.dbms.Table;
 import com.bitsplease.dbms.TableArithmetics;
+import com.bitsplease.dbms.TableProcessing;
 import com.bitsplease.gui.ButtonList;
 
 public class TableOperationMenu extends AbstractMenu {
@@ -13,7 +18,7 @@ public class TableOperationMenu extends AbstractMenu {
     super(menu);
     options = new String[] { "Sum & Product & Average",
         "Operations Between Columns", "Back" };
-    buttons = new ButtonList(options,this);
+    buttons = new ButtonList(options, this);
   }
 
   public Table getTable() {
@@ -28,24 +33,23 @@ public class TableOperationMenu extends AbstractMenu {
   public void performAction() {
     switch (getChoice()) {
     case 1:
-      System.out.print("GIVE THE COLUMN NUMBER:");
-      int askedColumn = -1;
-      try {
-        askedColumn = inputChoice.nextInt() - 1;
-      } catch (Exception e) {
-        error.printWrong("Out of bounds");
+      ImageIcon icon = new ImageIcon(
+          ClassLoader.getSystemResource("pickAButton.jpg"));
+      int askedColumn = TableProcessing.GUIcolumnChooser(table, icon,
+          "Select a Column", "Ultimate Column Picker");
+      if (askedColumn == -1) {
+        break;
       }
       BasicArithmeticOperations.sumOfAll(table.getList(), askedColumn);
       BasicArithmeticOperations.productOfAll(table.getList(), askedColumn);
       BasicArithmeticOperations.averageOfAll(table.getList(), askedColumn);
       BasicArithmeticOperations.displayMore(askedColumn);
+      this.showButtons();
       break;
     case 2:
-      System.out.print(
-          "GIVE THE MATHEMATICAL OPERATION \n (e.g. (columnName + columnName) / 2 = newColumnName):");
-      String mathOperation;
+      String mathOperation = JOptionPane.showInputDialog(StartMain.getWindow(),
+          "Give the mathematical operation \\n (e.g. (columnName + columnName) / 2 = newColumnName):");
       // inputChoice.nextLine();
-      mathOperation = inputChoice.nextLine();
       try {
         TableArithmetics.startingOperationsBetweenColumns(table.getList(),
             mathOperation);
@@ -53,6 +57,8 @@ public class TableOperationMenu extends AbstractMenu {
         error.printWrong(
             "ERROR! Something has occured! Check the mathematical operation again!");
       }
+      this.showButtons();
+      ((TableMenu) calledFrom).updateGUI();
       break;
     case 3:
       calledFrom.run();

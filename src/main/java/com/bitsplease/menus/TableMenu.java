@@ -55,6 +55,7 @@ public class TableMenu extends AbstractMenu {
     case 4:
       tableOperationMenu.setTable(table);
       tableOperationMenu.run();
+      updateGUI();
       break;
     case 5:
       search();
@@ -110,11 +111,12 @@ public class TableMenu extends AbstractMenu {
     // input.close();
   }
 
-  private void updateGUI() {
+  public void updateGUI() {
     StartMain.getWindow().remove(this.guitable);
     guitable = new GuiTable(this.table);
     StartMain.getWindow().add(this.guitable);
     StartMain.getWindow().getContentPane().validate();
+    StartMain.getWindow().getContentPane().repaint();
   }
 
 }
