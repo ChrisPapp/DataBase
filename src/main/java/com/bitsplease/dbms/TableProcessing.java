@@ -1,8 +1,10 @@
 package com.bitsplease.dbms;
 
 import java.util.ArrayList;
-import java.util.Scanner;
 import java.util.Collections;
+import java.util.Scanner;
+
+import com.bitsplease.utilities.Wrong;
 
 /**
  * This class is used to process a table.
@@ -11,6 +13,8 @@ import java.util.Collections;
  *
  */
 public class TableProcessing {
+  
+  private static Wrong error = new Wrong("buzzer");
 
 	/**
 	 * Default Constructor is used for this class.
@@ -68,6 +72,9 @@ public class TableProcessing {
 	 *            to remove a column from it.
 	 */
 	public static void removeColumn(ArrayList<ArrayList<String>> lists) {
+	  if (lists.size() == 1) {
+      error.printWrong("This is your last column! Try deleting the whole Table");
+    }
 		System.out.print("WHICH COLUMN DO YOU WANT TO REMOVE? ");
 		Scanner input = new Scanner(System.in);
 		int column = codeToNum(input.nextLine());
@@ -232,7 +239,7 @@ public class TableProcessing {
 					}
 				} else {
 					// Lexicographical Sort
-					if (pivot.compareTo(current) == 1 || pivot.equals(current)) {
+					if (pivot.compareTo(current) >= 0) {
 						i++;
 						swapLine(lists, i, j);
 					}
