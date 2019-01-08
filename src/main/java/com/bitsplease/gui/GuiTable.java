@@ -38,10 +38,9 @@ public class GuiTable extends JPanel {
     DefaultTableModel model = new DefaultTableModel(data, columnNames);
     jtable = new JTable(model);
     JScrollPane scrollPane = new JScrollPane(jtable);
-    jtable.setPreferredScrollableViewportSize(new Dimension(500, 400));
+    jtable.setPreferredScrollableViewportSize(new Dimension(500, 200));
     jtable.setFillsViewportHeight(true);
     add(scrollPane);
-    // this.add(jtable);
   }
 
   /**

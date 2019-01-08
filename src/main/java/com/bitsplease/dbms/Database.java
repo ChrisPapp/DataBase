@@ -2,6 +2,9 @@ package com.bitsplease.dbms;
 
 import java.util.ArrayList;
 
+/**
+ * This hold an ArrayList of tables
+ */
 public class Database {
 
 	private ArrayList<Table> tables;

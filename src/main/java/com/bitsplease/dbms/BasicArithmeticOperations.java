@@ -3,7 +3,10 @@ package com.bitsplease.dbms;
 import java.util.ArrayList;
 
 import javax.swing.JOptionPane;
-
+/**
+ * Calculate the sum, product and average of a table column
+ *
+ */
 public class BasicArithmeticOperations {
 
   private static double sum = 0;
