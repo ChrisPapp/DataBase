@@ -13,6 +13,6 @@ Bitplease_Database has the following functions:
 -Data demonstration
 -Data save (works fine with Windows OS - at experimental stage with other operating systems)
 
-Bitplease_Database can manage multiple tables-databases at the same time.
+Bitplease_Database can manage multiple tables at the same time.
 
 For plenty of documentation please visit the following site: https://nmagoulis.github.io/bitsplease_documentation/
